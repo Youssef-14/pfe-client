@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Utilisateur = mongoose.model('../models/utilisateur.js');
+const Utilisateur = require('../models/utilisateur')
 
 class UtilisateurService {
   async getAllUtilisateurs() {
