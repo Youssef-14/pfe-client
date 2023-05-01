@@ -1,7 +1,6 @@
 const { default: mongoose } = require("mongoose");
 
 const Pod = mongoose.model('Pod', {
-    _id: mongoose.Schema.Types.ObjectId,
     Libelle: {
         type: String,
         required: true,

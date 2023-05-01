@@ -10,6 +10,7 @@ class UtilisateurController {
       const utilisateurs = await this.utilisateurService.getAllUtilisateurs();
       res.status(200).send(utilisateurs);
     } catch (err) {
+      console.log(err);
       res.status(500).send(err);
     }
   }
@@ -31,6 +32,7 @@ class UtilisateurController {
       const utilisateur = await this.utilisateurService.createUtilisateur(req.body);
       res.status(201).send(utilisateur);
     } catch (err) {
+      console.log(err);
       res.status(500).send(err);
     }
   }

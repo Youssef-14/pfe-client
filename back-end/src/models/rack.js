@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Rack = mongoose.model('Rack', {
-    _id: mongoose.Schema.Types.ObjectId,
     Nom: {
         type: String,
         required: true,

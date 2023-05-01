@@ -1,0 +1,35 @@
+const { Pod } = require('../models/pod');
+
+const createPod = async (podData) => {
+  const pod = new Pod(podData);
+  await pod.save();
+  return pod;
+};
+
+const getAllPods = async () => {
+  const pods = await Pod.find();
+  return pods;
+};
+
+const getPodById = async (podId) => {
+  const pod = await Pod.findById(podId);
+  return pod;
+};
+
+const updatePodById = async (podId, podData) => {
+  const pod = await Pod.findByIdAndUpdate(podId, podData, { new: true });
+  return pod;
+};
+
+const deletePodById = async (podId) => {
+  const pod = await Pod.findByIdAndDelete(podId);
+  return pod;
+};
+
+module.exports = {
+  createPod,
+  getAllPods,
+  getPodById,
+  updatePodById,
+  deletePodById,
+};

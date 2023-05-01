@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const Utilisateur = mongoose.model('Utilisateur', {
-    _id: mongoose.Schema.Types.ObjectId,
     Nom: {
         type: String,
         required: true,

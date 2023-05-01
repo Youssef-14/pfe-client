@@ -7,7 +7,6 @@ const utilisateurRoutes = require('./routes/UtilisateurRoutes');
 const app = express();
 const port = process.env.PORT ;
 
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

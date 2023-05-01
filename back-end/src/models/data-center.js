@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const DataCenter = mongoose.model('DataCenter', {
-    _id: mongoose.Schema.Types.ObjectId,
     Libelle: {
         type: String,
         required: true,
