@@ -1,4 +1,4 @@
-const serveurService = require('../services/serveur');
+const serveurService = require('../services/ServeurService');
 
 class ServeurController {
   async getAllServeurs(req, res, next) {

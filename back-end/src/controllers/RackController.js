@@ -1,4 +1,4 @@
-const rackService = require('../services/rack.service');
+const rackService = require('../services/RackService');
 
 async function createRack(req, res, next) {
   try {

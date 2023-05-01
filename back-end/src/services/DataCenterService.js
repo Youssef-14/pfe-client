@@ -1,4 +1,4 @@
-const { DataCenter } = require('../models/dataCenter');
+const { DataCenter } = require('../models/data-center.js');
 
 const getAllDataCenters = async () => {
   return await DataCenter.find();

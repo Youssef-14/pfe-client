@@ -1,4 +1,4 @@
-const podService = require('../services/pod.service');
+const podService = require('../services/PodService');
 
 const createPod = async (req, res) => {
   try {

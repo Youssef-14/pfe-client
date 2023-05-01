@@ -44,16 +44,18 @@ const Serveur = mongoose.model('Serveur', {
         trim: true
     },
     ConsommationRAM: {
-        type: Float,
+        type: Number,
         required: true,
         minlength: 1,
-        trim: true
+        trim: true,
+        decimal: true
     },
     ConsommationCPU: {
-        type: Float,
+        type: Number,
         required: true,
         minlength: 1,
-        trim: true
+        trim: true,
+        decimal: true
     },
     Uptime: {
         type: String,

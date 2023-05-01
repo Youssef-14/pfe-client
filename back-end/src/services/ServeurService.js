@@ -1,4 +1,4 @@
-const { Serveur } = require('../models/serveur');
+const { Serveur } = require('../models/serveur.js');
 
 class ServeurService {
   async getAllServeurs() {

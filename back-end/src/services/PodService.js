@@ -1,4 +1,4 @@
-const { Pod } = require('../models/pod');
+const { Pod } = require('../models/pod.js');
 
 const createPod = async (podData) => {
   const pod = new Pod(podData);

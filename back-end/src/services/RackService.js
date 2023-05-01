@@ -1,4 +1,4 @@
-const { Rack } = require('../models/rack');
+const { Rack } = require('../models/rack.js');
 
 async function createRack(rack) {
   const newRack = new Rack(rack);

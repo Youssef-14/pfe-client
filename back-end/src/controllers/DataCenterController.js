@@ -1,4 +1,4 @@
-const dataCenterService = require('../services/dataCenter');
+const dataCenterService = require('../services/DataCenterService');
 
 const getAllDataCenters = async (req, res) => {
   try {

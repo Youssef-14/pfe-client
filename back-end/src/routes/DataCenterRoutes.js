@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const dataCenterController = require('../controllers/dataCenter');
+const dataCenterController = require('../controllers/DatacenterController');
 
-router.get('/', dataCenterController.getAllDataCenters);
+router.get('/get', dataCenterController.getAllDataCenters);
 router.get('/:id', dataCenterController.getDataCenterById);
 router.post('/', dataCenterController.createDataCenter);
 router.put('/:id', dataCenterController.updateDataCenter);
