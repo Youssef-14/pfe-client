@@ -14,6 +14,10 @@ class UtilisateurService {
     return await utilisateur.save();
   }
 
+  async verifUtilisateur(data) {
+    return await Utilisateur.findOne({ email: data.email, password: data.password });
+  }
+
   async updateUtilisateur(id, data) {
     return await Utilisateur.findByIdAndUpdate(id, data, { new: true });
   }

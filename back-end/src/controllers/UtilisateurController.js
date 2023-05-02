@@ -29,8 +29,17 @@ class UtilisateurController {
 
   async createUtilisateur(req, res) {
     try {
-      const utilisateur = await this.utilisateurService.createUtilisateur(req.body);
-      res.status(201).send(utilisateur);
+      await this.utilisateurService.createUtilisateur(req.body);
+      res.status(201).send({res : "ajoout avec succes"});
+    } catch (err) {
+      console.log(err);
+      res.status(500).send(err);
+    }
+  }
+  async verifierUtilisateur(req, res) {
+    try {
+      const utilisateur = await this.utilisateurService.verifUtilisateur(req.body);
+      res.status(200).send({message:"utilisateur existe",token:utilisateur._id});
     } catch (err) {
       console.log(err);
       res.status(500).send(err);

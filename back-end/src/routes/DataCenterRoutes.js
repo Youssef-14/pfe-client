@@ -4,7 +4,7 @@ const dataCenterController = require('../controllers/DatacenterController');
 
 router.get('/get', dataCenterController.getAllDataCenters);
 router.get('/:id', dataCenterController.getDataCenterById);
-router.post('/', dataCenterController.createDataCenter);
+router.post('/add', dataCenterController.createDataCenter);
 router.put('/:id', dataCenterController.updateDataCenter);
 router.delete('/:id', dataCenterController.deleteDataCenter);
 

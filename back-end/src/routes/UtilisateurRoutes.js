@@ -6,7 +6,8 @@ const utilisateurController = new UtilisateurController();
 
 router.get('/get', utilisateurController.getAllUtilisateurs.bind(utilisateurController));
 router.get('/:id', utilisateurController.getUtilisateurById.bind(utilisateurController));
-router.post('/add', utilisateurController.createUtilisateur.bind(utilisateurController));
+router.post('/signup', utilisateurController.createUtilisateur.bind(utilisateurController));
+router.post('/signin', utilisateurController.verifierUtilisateur.bind(utilisateurController));
 router.put('/:id', utilisateurController.updateUtilisateur.bind(utilisateurController));
 router.delete('/:id', utilisateurController.deleteUtilisateur.bind(utilisateurController));
 

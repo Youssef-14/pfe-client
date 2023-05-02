@@ -1,7 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config();
-require('./config/connect');
 const utilisateurRoutes = require('./routes/UtilisateurRoutes');
 const datacenterRoutes = require('./routes/DatacenterRoutes');
 const serverRoutes = require('./routes/ServeurRoutes');
@@ -9,6 +7,8 @@ const rackRoutes = require('./routes/RackRoutes');
 const podRoutes = require('./routes/PodRoutes');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+require('dotenv').config();
+require('./config/connect');
 
 const app = express();
 const port = process.env.PORT ;
