@@ -19,7 +19,7 @@ class UtilisateurController {
     try {
       const utilisateur = await this.utilisateurService.getUtilisateurById(req.params.id);
       if (!utilisateur) {
-        return res.status(404).send({ error: 'Utilisateur not found' });
+        return res.status(404).send({ error: 'Utilisateur n\'existe pas' });
       }
       res.status(200).send(utilisateur);
     } catch (err) {
@@ -30,15 +30,19 @@ class UtilisateurController {
   async createUtilisateur(req, res) {
     try {
       await this.utilisateurService.createUtilisateur(req.body);
-      res.status(201).send({res : "ajoout avec succes"});
+      res.status(201).send({res : "ajout avec succes"});
     } catch (err) {
       console.log(err);
       res.status(500).send(err);
     }
   }
+
   async verifierUtilisateur(req, res) {
     try {
       const utilisateur = await this.utilisateurService.verifUtilisateur(req.body);
+      if (utilisateur == null) {
+        return res.status(404).send({ error: 'Utilisateur not found' });
+      }
       res.status(200).send({message:"utilisateur existe",token:utilisateur._id});
     } catch (err) {
       console.log(err);
