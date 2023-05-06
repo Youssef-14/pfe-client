@@ -50,7 +50,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Routes
 app.use('/users', utilisateurRoutes);
 app.use('/datacenters', datacenterRoutes);
-app.use('/servers', serverRoutes);
+app.use('/serveurs', serverRoutes);
 app.use('/racks', rackRoutes);
 app.use('/pods', podRoutes);
 

@@ -1,4 +1,5 @@
 const UtilisateurService = require('../services/UtilisateurService');
+const jwt = require('jsonwebtoken');
 
 class UtilisateurController {
   constructor() {
@@ -29,7 +30,10 @@ class UtilisateurController {
 
   async createUtilisateur(req, res) {
     try {
-      await this.utilisateurService.createUtilisateur(req.body);
+      var response = await this.utilisateurService.createUtilisateur(req.body);
+      if (response == -1){
+        return res.status(409).send({ error: 'Utilisateur existe deja' });
+      }
       res.status(201).send({res : "ajout avec succes"});
     } catch (err) {
       console.log(err);
@@ -39,11 +43,17 @@ class UtilisateurController {
 
   async verifierUtilisateur(req, res) {
     try {
+      /*const { email, password } = req.body;
+      if (!email || !password || email.length < 5 || password.length < 5) {
+        return res.status(400).send({ error: 'Email and password are required' });
+      }*/
       const utilisateur = await this.utilisateurService.verifUtilisateur(req.body);
+      
       if (utilisateur == null) {
         return res.status(404).send({ error: 'Utilisateur not found' });
       }
-      res.status(200).send({message:"utilisateur existe",token:utilisateur._id});
+      const accessToken = jwt.sign({ id:utilisateur._id, Role: utilisateur.IsAdmin }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+      res.status(200).send({message:"utilisateur existe",token:accessToken});
     } catch (err) {
       console.log(err);
       res.status(500).send(err);
@@ -56,7 +66,7 @@ class UtilisateurController {
       if (!utilisateur) {
         return res.status(404).send({ error: 'Utilisateur not found' });
       }
-      res.status(200).send(utilisateur);
+      res.status(200).send({message:"update avec succes"});
     } catch (err) {
       res.status(500).send(err);
     }
@@ -68,7 +78,7 @@ class UtilisateurController {
       if (!utilisateur) {
         return res.status(404).send({ error: 'Utilisateur not found' });
       }
-      res.status(204).send();
+      res.status(204).send({message:"delete avec succes"});
     } catch (err) {
       res.status(500).send(err);
     }

@@ -1,4 +1,5 @@
 const serveurService = require('../services/ServeurService');
+const { DataCenter } = require('../models/data-center.js');
 
 class ServeurController {
   async getAllServeurs(req, res, next) {
@@ -19,9 +20,15 @@ class ServeurController {
     }
   }
 
-  async createServeur(req, res, next) {
+  async addServeur(req, res, next) {
     try {
-      const serveur = await serveurService.createServeur(req.body);
+      const serveur = await serveurService.addServeur(req.body);
+      const datacenterId = req.body.datacenterId;
+      const updatedDatacenter = await DataCenter.findOneAndUpdate(
+        { _id: datacenterId },
+        { $push: { serveurs: serveur._id } },
+        { new: true }
+      );
       res.status(201).json(serveur);
     } catch (err) {
       next(err);

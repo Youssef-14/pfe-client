@@ -9,7 +9,7 @@ class ServeurService {
     return await Serveur.findById(id);
   }
 
-  async createServeur(serveur) {
+  async addServeur(serveur) {
     const newServeur = new Serveur(serveur);
     return await newServeur.save();
   }
