@@ -30,6 +30,20 @@ const getPodById = async (req, res) => {
   }
 };
 
+const getPodsByDatacenterId = async (req, res) => {
+  try {
+    const pods = await podService.getPodsByDatacenterId(req.params.id);
+    if (!pods) {
+      return res.status(404).send();
+    }
+    res.send(pods);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+
+
 const updatePodById = async (req, res) => {
   try {
     const pod = await podService.updatePodById(req.params.id, req.body);
@@ -60,4 +74,5 @@ module.exports = {
   getPodById,
   updatePodById,
   deletePodById,
+  getPodsByDatacenterId,
 };

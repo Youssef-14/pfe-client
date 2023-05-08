@@ -9,9 +9,18 @@ class ServeurService {
     return await Serveur.findById(id);
   }
 
+  async getServeurByDataCenterId(id) {
+    return await Serveur.find({ DataCenter: id });
+  }
+
   async addServeur(serveur) {
-    const newServeur = new Serveur(serveur);
-    return await newServeur.save();
+    try{
+      const newServeur = new Serveur(serveur);
+      return await newServeur.save();
+    }catch(err){
+      console.log(err);
+    }
+    
   }
 
   async updateServeur(id, serveur) {

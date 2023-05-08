@@ -16,6 +16,11 @@ const getPodById = async (podId) => {
   return pod;
 };
 
+const getPodsByDatacenterId = async (datacenterId) => {
+  const pods = await Pod.find({ datacenterId });
+  return pods;
+};
+
 const updatePodById = async (podId, podData) => {
   const pod = await Pod.findByIdAndUpdate(podId, podData, { new: true });
   return pod;
@@ -32,4 +37,5 @@ module.exports = {
   getPodById,
   updatePodById,
   deletePodById,
+  getPodsByDatacenterId,
 };
