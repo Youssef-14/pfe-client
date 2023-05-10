@@ -75,9 +75,9 @@ const Serveur = mongoose.model('Serveur', {
         minlength: 1,
         trim: true
     },
-    DataCenter: {
+    Rack: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'DataCenter'
+        ref: 'Rack'
     }
 });
 

@@ -13,7 +13,7 @@ const Utilisateur = mongoose.model('Utilisateur', {
         minlength: 1,
         trim: true
     },
-    Email: {
+    Username: {
         type: String,
         required: true,
         minlength: 1,

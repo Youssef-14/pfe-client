@@ -19,10 +19,6 @@ const DataCenter = mongoose.model('DataCenter', {
         minlength: 1,
         trim: true
     },
-    serveurs: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Serveur'
-    }],
     pods: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pod'

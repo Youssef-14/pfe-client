@@ -21,7 +21,7 @@ class UtilisateurService {
   async createUtilisateur(data) {
     try {
       const user = await Utilisateur.findOne({
-        "Email":data.Email
+        "Username":data.Username
       });
       if (user){
         return -1;
@@ -39,7 +39,7 @@ class UtilisateurService {
   async verifUtilisateur(data) {
     try {
       const user = await Utilisateur.findOne({
-        "Email":data.Email
+        "UserName":data.UserName
       });
       if (!user) {
         return null;

@@ -1,9 +1,12 @@
 const { Pod } = require('../models/pod.js');
 
 const createPod = async (podData) => {
-  const pod = new Pod(podData);
-  await pod.save();
-  return pod;
+  try {
+    const pod = new Pod(podData);
+    await pod.save();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getAllPods = async () => {

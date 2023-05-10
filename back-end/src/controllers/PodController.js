@@ -2,7 +2,24 @@ const podService = require('../services/PodService');
 
 const createPod = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.body.DataCenter)) {
+      res.status(400).json({ message: 'Invalid DataCenter ID' });
+      return;
+    }
+
+    const finddatacenter = await DataCenter.findById(req.body.DataCenter);
+    if (!finddatacenter) {
+      res.status(404).json({ message: 'Invalid DataCenter ID' });
+      return;
+    }
     const pod = await podService.createPod(req.body);
+
+    const datacenterId = req.body.DataCenter;
+      await DataCenter.findOneAndUpdate(
+        { _id: datacenterId },
+        { $push: { pods: pod._id } },
+        { new: true }
+      );
     res.status(201).send(pod);
   } catch (error) {
     res.status(400).send(error);

@@ -1,0 +1,78 @@
+.list {
+    background-color: white;
+    margin-top: 10%;
+    height: 200%;
+
+}
+
+.searchAdmin {
+    height: 50px;
+    font: 1em sans-serif;
+}
+
+#contacts {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+#contacts h1 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 36px;
+    color: rgb(255, 255, 255);
+}
+
+#contacts p {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+}
+
+h1 {
+    text-align: center;
+}
+
+#contact-outer {
+    display: flex;
+    justify-content: center
+}
+
+
+
+#contact-outer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center
+}
+
+
+#contact-inner {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%)
+}
+
+
+
+#inner {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%);
+    -ms-transform: translate(-50%);
+    transform: translate(-50%)
+}
+
+.table td {
+    word-wrap: break-word;
+    max-width: 200px;
+}
+
+.pP {
+    font: 1em sans-serif;
+}

@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+:root {
+    --main-color: #fff;
+    --second-color: #347deb;
+    --box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 
+body {
+    background-image: linear-gradient(310deg, #df98fa, #3945f4);
+    font-family: sans-serif;
+} */
+
+#container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--main-color);
+    width: 80%;
+    max-width: 1200px;
+    height: 80%;
+    max-height: 800px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    box-shadow: var(--box-shadow);
+    transition-duration: 1s;
+}
+
+#left,
+#right {
+    margin: auto;
+    width: 95%;
+    height: 96%;
+    border-radius: 10px;
+}
+
+#left {
+    background-image: url("https://www.ionos.fr/digitalguide/fileadmin/_processed_/b/a/csm_rechenzentrum-t_8a37bd35fd.webp");
+    background-size: cover;
+    background-position: center;
+    box-shadow: var(--box-shadow);
+}
+
+#right {
+    margin-top: 20%;
+}
+
+#welcome,
+#content {
+    margin: 3% 5%;
+    text-shadow: var(--box-shadow);
+    color: white;
+}
+
+#welcome {
+    font-size: 7vw;
+    font-weight: 300;
+    margin-top: 41%;
+    text-shadow: var(--box-shadow);
+}
+
+#login {
+    padding-top: 4%;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 100;
+    text-shadow: var(--box-shadow);
+}
+
+.client-info {
+    display: block;
+    margin: 3% auto;
+    width: 60%;
+    height: 5%;
+    max-height: 50px;
+    border: solid #999 1px;
+    border-radius: 5px;
+    text-indent: 15px;
+    transition: all 200ms;
+    box-shadow: var(--box-shadow);
+}
+
+.client-info:focus {
+    width: 80%;
+}
+
+label {
+    position: absolute;
+    margin: -5% 35%;
+    font-size: 1.2vw;
+    white-space: nowrap;
+    background: #fff;
+    padding: 0 5px;
+    color: #999;
+    transition: all 200ms;
+    text-shadow: var(--box-shadow);
+}
+
+#email:focus~label[for="email"] {
+    margin: -5% 5%;
+}
+
+#password:focus~label[for="password"] {
+    margin: -5% 5%;
+}
+
+#submit {
+    border: none;
+    background-color: #5558ff;
+    color: white;
+    width: 60%;
+}
+
+#submit:hover {
+    background-color: #df98fa;
+}

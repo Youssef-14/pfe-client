@@ -13,6 +13,10 @@ const Rack = mongoose.model('Rack', {
         minlength: 1,
         trim: true
     },
+    serveurs: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Serveur'
+    }],
     Pod: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pod'

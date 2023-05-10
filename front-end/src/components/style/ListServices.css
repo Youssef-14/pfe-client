@@ -1,0 +1,98 @@
+/* Default styles */
+.table-wrapper {
+    margin-top: 50px;
+    padding: 20px 25px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+    max-width: 1200px;
+    /* add a max width to make it responsive */
+}
+
+.ManageServer {
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.table-title {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    font-size: 20px;
+    color: #000;
+}
+
+.table-title h2 {
+    margin-top: 0;
+    font-weight: 600;
+}
+
+.table-responsive {
+    margin: 30px 0;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+
+    /* Hide the add and delete buttons on small screens */
+    .table-title .col-sm-6:last-child {
+        display: none;
+    }
+
+    /* Make the table rows stack on small screens */
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-striped tbody tr:nth-of-type(even) {
+        background-color: #fff;
+    }
+
+    .table tbody tr {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin-bottom: 15px;
+        border: none;
+    }
+
+    .table tbody td {
+        display: block;
+        text-align: right;
+        padding: 10px;
+        font-size: 13px;
+        border-bottom: 1px dotted #ccc;
+    }
+
+    .table tbody td:before {
+        content: attr(data-th) ": ";
+        font-weight: bold;
+        display: inline-block;
+        width: 120px;
+        margin-left: -120px;
+        text-align: left;
+    }
+
+    .table tbody td:last-child {
+        border-bottom: 0;
+    }
+
+    /* Make the pagination buttons stack on small screens */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .pagination li {
+        margin: 10px;
+    }
+
+    .pagination li:first-child,
+    .pagination li:last-child {
+        margin: 10px 0;
+    }
+}

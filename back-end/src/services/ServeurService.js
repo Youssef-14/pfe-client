@@ -20,7 +20,6 @@ class ServeurService {
     }catch(err){
       console.log(err);
     }
-    
   }
 
   async updateServeur(id, serveur) {
