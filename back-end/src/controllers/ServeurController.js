@@ -36,18 +36,18 @@ class ServeurController {
         res.status(400).json({ message: 'Invalid DataCenter ID' });
         return;
       }
-      const rackId = req.body.Rack;
-      if (!rackId) {
+      const findRack = await Rack.findById(req.body.Pod);
+      if (!findRack) {
         res.status(400).json({ message: 'Invalid DataCenter ID' });
         return;
       }
       const serveur = await serveurService.addServeur(req.body);
       await Rack.findOneAndUpdate(
-        { _id: rackId },
+        { _id: req.body.Rack },
         { $push: { serveurs: serveur._id } },
         { new: true }
       );
-      res.status(201).json("serveur created successfully");
+      res.status(201).json({ message:"serveur created successfully"});
     } catch (err) {
       next(err);
     }
