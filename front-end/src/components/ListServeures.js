@@ -189,12 +189,17 @@
 // }
 
 // export default ListServicesVisteur;
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './style/ListServices.css'
-function ListServicesVisteur() {
+import './style/ListServices.css';
+
+function ListServeures() {
     const [servers, setServers] = useState([]);
+    const [formData, setFormData] = useState({
+        hostname: '',
+        ip: '',
+        owner: '',
+    });
 
     useEffect(() => {
         axios
@@ -207,21 +212,122 @@ function ListServicesVisteur() {
             });
     }, []);
 
+    const handleInputChange = event => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = event => {
+        event.preventDefault();
+        axios
+            .post('http://localhost:3001/serveurs/post', formData)
+            .then(response => {
+                setServers([...servers, response.data]);
+                setFormData({
+                    hostname: '',
+                    ip: '',
+                    owner: '',
+                });
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
     return (
         <div className="container">
             <h1>List of servers</h1>
-            <ul>
-                {servers.map(server => (
-                    <li key={server.id}>
-                        <p>Name: {server.name}</p>
-                        <p>Hostname: {server.hostname}</p>
-                        <p>IP Address: {server.ip_address}</p>
-                        {/* Add other server properties here */}
-                    </li>
-                ))}
-            </ul>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Serveur</th>
+                        <th>Hostname</th>
+                        <th>IP</th>
+                        <th>IP management</th>
+                        <th>RAM</th>
+                        <th>CPU</th>
+                        <th>Consommation RAM</th>
+                        <th>Consommation CPU</th>
+                        <th>Modèle</th>
+                        <th>Constructeur</th>
+                        <th>RACK</th>
+                        <th>POD</th>
+                        <th>Owner</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {servers.map(server => (
+                        <tr key={server.id}>
+                            <td>{server._id}</td>
+                            <td>{server.Rack}</td>
+                            <td>{server.IP}</td>
+                            <td>{server.IPManagment}</td>
+                            <td>{server.RAM}</td>
+                            <td>{server.CPU}</td>
+                            <td>{server.ConsommationRAM}</td>
+                            <td>{server.ConsommationCPU}</td>
+                            <td>{server.ip_address}</td>
+                            <td>{server.ip_address}</td>
+                            <td>{server.Rack}</td>
+                            <td>{server.ip_address}</td>
+                            <td>{server.Owner}</td>
+                            <td>{server.Login}</td>
+                            <td>{server.Password}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            <h2>Add a new server</h2>
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <p>Hostname:</p>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="hostname"
+                        value={formData.hostname}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <p>IP:</p>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="ip"
+                        value={formData.ip}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <p htmlFor="owner">Owner:</p>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="owner"
+                        value={formData.owner}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <p htmlFor="owner">Owner:</p>
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="owner"
+                        value={formData.owner}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <button type="submit" className="btn btn-primary">Submit</button>
+            </form>
         </div>
     );
 }
 
-export default ListServicesVisteur;
+export default ListServeures;

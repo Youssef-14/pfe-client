@@ -10,7 +10,7 @@ class ServeurService {
       };
     });
   }
-  
+
 
   async getServeurById(id) {
     return await Serveur.findById(id);
@@ -21,10 +21,10 @@ class ServeurService {
   }
 
   async addServeur(serveur) {
-    try{
+    try {
       const newServeur = new Serveur(serveur);
       return await newServeur.save();
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
   }

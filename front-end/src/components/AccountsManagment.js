@@ -3,166 +3,166 @@ import React, { useState } from 'react';
 import './style/ListServices.css'
 
 
-function 
-AccountsManagment() {
+function
+    AccountsManagment() {
     return (
         <div className='ManageServer'>
 
-            
-            
 
-                <link
-                    rel="stylesheet"
-                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
-                />
-                <link
-                    rel="stylesheet"
-                    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-                />
-                <div className="container-xl">
 
-                    <div className="table-wrapper">
-                        <div className="table-title">
-                            <div className="row">
-                                <div className="col-sm-6">
-                                    <h2>
-                                        Manage <b>server</b>
-                                    </h2>
-                                </div>
-                                <div className="col-sm-6">
+
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            />
+            <link
+                rel="stylesheet"
+                href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+            />
+            <div className="container-xl">
+
+                <div className="table-wrapper">
+                    <div className="table-title">
+                        <div className="row">
+                            <div className="col-sm-6">
+                                <h2>
+                                    Manage <b>server</b>
+                                </h2>
+                            </div>
+                            <div className="col-sm-6">
+                                <a
+                                    href="#addEmployeeModal"
+                                    className="btn btn-success"
+                                    data-toggle="modal"
+                                >
+                                    <i className="material-icons"></i>{" "}
+
+                                </a>
+                                <a
+                                    href="#deleteEmployeeModal"
+                                    className="btn btn-danger"
+                                    data-toggle="modal"
+                                >
+                                    <i className="material-icons"></i>
+                                    {/* <span>Delete</span> */}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <table className="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+
+                                </th>
+                                <th>User Name</th>
+                                <th>USERID</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Mot de passe</th>
+                                <th>Privillège</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span className="custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            id="checkbox1"
+                                            name="options[]"
+                                            defaultValue={1}
+                                        />
+                                        <label htmlFor="checkbox1" />
+                                    </span>
+                                </td>
+                                <td>1</td>
+                                <td>flen1234</td>
+                                <td>benfoulen</td>
+                                <td>flen</td>
+                                <td> azerty123</td>
+                                <td>admin</td>
+
+
+                                <td>
                                     <a
-                                        href="#addEmployeeModal"
-                                        className="btn btn-success"
+                                        href="#editEmployeeModal"
+                                        className="edit"
                                         data-toggle="modal"
                                     >
-                                        <i className="material-icons"></i>{" "}
-
+                                        <i
+                                            className="material-icons"
+                                            data-toggle="tooltip"
+                                            title="Edit"
+                                        >
+                                            
+                                        </i>
                                     </a>
                                     <a
                                         href="#deleteEmployeeModal"
-                                        className="btn btn-danger"
+                                        className="delete"
                                         data-toggle="modal"
                                     >
-                                        <i className="material-icons"></i>
-                                        {/* <span>Delete</span> */}
+                                        <i
+                                            className="material-icons"
+                                            data-toggle="tooltip"
+                                            title="Delete"
+                                        >
+                                            
+                                        </i>
                                     </a>
-                                </div>
-                            </div>
-                        </div>
-                        <table className="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>
-                                
-                                    </th>
-                                    <th>User Name</th>
-                                    <th>USERID</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Mot de passe</th>
-                                    <th>Privillège</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <span className="custom-checkbox">
-                                            <input
-                                                type="checkbox"
-                                                id="checkbox1"
-                                                name="options[]"
-                                                defaultValue={1}
-                                            />
-                                            <label htmlFor="checkbox1" />
-                                        </span>
-                                    </td>
-                                    <td>1</td>
-                                    <td>flen1234</td>
-                                    <td>benfoulen</td>
-                                    <td>flen</td>
-                                    <td> azerty123</td>
-                                    <td>admin</td>
-                                  
-                                  
-                                    <td>
-                                        <a
-                                            href="#editEmployeeModal"
-                                            className="edit"
-                                            data-toggle="modal"
-                                        >
-                                            <i
-                                                className="material-icons"
-                                                data-toggle="tooltip"
-                                                title="Edit"
-                                            >
-                                                
-                                            </i>
-                                        </a>
-                                        <a
-                                            href="#deleteEmployeeModal"
-                                            className="delete"
-                                            data-toggle="modal"
-                                        >
-                                            <i
-                                                className="material-icons"
-                                                data-toggle="tooltip"
-                                                title="Delete"
-                                            >
-                                                
-                                            </i>
-                                        </a>
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
 
-                            </tbody>
-                        </table>
-                        <div className="clearfix">
-                            <div className="hint-text">
-                                Showing <b>5</b> out of <b>25</b> entries
-                            </div>
-                            <ul className="pagination">
-                                <li className="page-item disabled">
-                                    <a href="#">Previous</a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        1
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        2
-                                    </a>
-                                </li>
-                                <li className="page-item active">
-                                    <a href="#" className="page-link">
-                                        3
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        4
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        5
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        Next
-                                    </a>
-                                </li>
-                            </ul>
+                        </tbody>
+                    </table>
+                    <div className="clearfix">
+                        <div className="hint-text">
+                            Showing <b>5</b> out of <b>25</b> entries
                         </div>
+                        <ul className="pagination">
+                            <li className="page-item disabled">
+                                <a href="#">Previous</a>
+                            </li>
+                            <li className="page-item">
+                                <a href="#" className="page-link">
+                                    1
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a href="#" className="page-link">
+                                    2
+                                </a>
+                            </li>
+                            <li className="page-item active">
+                                <a href="#" className="page-link">
+                                    3
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a href="#" className="page-link">
+                                    4
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a href="#" className="page-link">
+                                    5
+                                </a>
+                            </li>
+                            <li className="page-item">
+                                <a href="#" className="page-link">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-
                 </div>
 
+            </div>
 
-      
+
+
 
         </div>
     );
@@ -170,142 +170,3 @@ AccountsManagment() {
 
 export default AccountsManagment;
 
-
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import './style/ListServices.css';
-
-// function ListServicesVisteur() {
-//   const [servers, setServers] = useState([]);
-
-//   useEffect(() => {
-//     axios
-//       .get('http://localhost:3000/api/servers')
-//       .then((response) => {
-//         setServers(response.data);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   }, []);
-
-//   return (
-//     <div className='ManageServer'>
-
-//       <>
-//         <meta charSet='utf-8' />
-//         <meta
-//           name='viewport'
-//           content='width=device-width, initial-scale=1, shrink-to-fit=no'
-//         />
-
-//         <link
-//           rel='stylesheet'
-//           href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round'
-//         />
-//         <link
-//           rel='stylesheet'
-//           href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'
-//         />
-//         <link
-//           rel='stylesheet'
-//           href='https://fonts.googleapis.com/icon?family=Material+Icons'
-//         />
-//         <link
-//           rel='stylesheet'
-//           href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
-//         />
-//         <div className='container-xl'>
-//           <div className='table-wrapper'>
-//             <div className='table-title'>
-//               <div className='row'>
-//                 <div className='col-sm-6'>
-//                   <h2>
-//                     Manage <b>server</b>
-//                   </h2>
-//                 </div>
-//                 <div className='col-sm-6'>
-//                   <a
-//                     href='#addEmployeeModal'
-//                     className='btn btn-success'
-//                     data-toggle='modal'
-//                   >
-//                     <i className='material-icons'></i>{' '}
-//                   </a>
-//                   <a
-//                     href='#deleteEmployeeModal'
-//                     className='btn btn-danger'
-//                     data-toggle='modal'
-//                   >
-//                     <i className='material-icons'></i>
-//                     {/* <span>Delete</span> */}
-//                   </a>
-//                 </div>
-//               </div>
-//             </div>
-//             <table className='table table-striped table-hover'>
-//               <thead>
-//                 <tr>
-//                   <th>
-//                     <span className='custom-checkbox'>
-//                       <input type='checkbox' id='selectAll' />
-//                       <label htmlFor='selectAll' />
-//                     </span>
-//                   </th>
-//                   <th>Serveur</th>
-//                   <th>Hostname</th>
-//                   <th>IP</th>
-//                   <th>IP management</th>
-//                   <th>RAM</th>
-//                   <th>CPU</th>
-//                   <th>Consommation RAM</th>
-//                   <th>Consommation CPU</th>
-//                   <th>Modèle</th>
-//                   <th>Constructeur</th>
-//                   <th>RACK</th>
-//                   <th>POD</th>
-//                   <th>Owner</th>
-//                   <th>username</th>
-//                   <th>password</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {servers.map((server) => (
-//                   <tr key={server.id}>
-//                     <td>
-//                       <span className='custom-checkbox'>
-//                         <input
-//                           type='checkbox'
-//                           id={`checkbox${server.id}`}
-//                           name='options[]'
-//                           defaultValue={1}
-//                         />
-//                         <label htmlFor={`checkbox${server.id}`} />
-//                       </span>
-//                     </td>
-//                     <td>{server.name}</td>
-//                     <td>{server.hostname}</td>
-                   
-//                     <td>{server.status}</td>
-//                     <td>{server.os}</td>
-//                     <td>{server.cpu}</td>
-//                     <td>{server.memory}</td>
-//                     <td>{server.storage}</td>
-//                     <td>
-//                       <button
-//                         className='edit'
-//                         onClick={() => handleEdit(server.id)}
-//                       >
-//                         Edit
-//                       </button>
-//                       <button
-//                         className='delete'
-//                         onClick={() => handleDelete(server.id)}
-//                       >
-//                         Delete
-//                       </button>
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-              

@@ -1,211 +1,174 @@
-import './style/Crud.css'
-import React, { useState } from 'react';
-const [showAddRow, setShowAddRow] = useState(false);
-const [newEmployee, setNewEmployee] = useState({
-    name: "",
-    department: "",
-    phone: "",
-});
+import './style/ListServices.css'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const handleAddRowClick = () => {
-    setShowAddRow(true);
-};
+const Table = () => {
+    const [employees, setEmployees] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-const handleAddClick = () => {
-    if (newEmployee.name && newEmployee.department && newEmployee.phone) {
-        const newEmployees = [...employees, { ...newEmployee, id: employees.length + 1 }];
-        setEmployees(newEmployees);
-        setNewEmployee({ name: "", department: "", phone: "" });
-        setShowAddRow(false);
+    useEffect(() => {
+        axios.get('http://localhost:3001/users/getaccounts')
+            .then(response => {
+                setEmployees(response.data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error(error);
+                setLoading(false);
+            });
+    }, []);
+
+    const addEmployeeRow = () => {
+        setEmployees([
+            ...employees,
+            { name: '', department: '', phone: '', password: '', privillege: '' },
+        ]);
+    };
+
+    const editEmployeeRow = (index, event) => {
+        const values = [...employees];
+        values[index][event.target.name] = event.target.value;
+        setEmployees(values);
+    };
+
+    const deleteEmployeeRow = (index) => {
+        const values = [...employees];
+        axios.delete(`http://localhost:3001/users/delete/${values[index]._id}`)
+            .then(() => {
+                values.splice(index, 1);
+                setEmployees(values);
+            })
+            .catch(error => console.error(error));
+    };
+
+    const submitEmployeeRow = (index) => {
+        const values = [...employees];
+        const inputFields = document
+            .querySelectorAll(`#employee-${index} input[type="text"]`);
+        const empty = Array.from(inputFields)
+            .some((input) => !input.value);
+        if (!empty) {
+            inputFields.forEach((input) => {
+                values[index][input.name] = input.value;
+            });
+            axios.put(`http://localhost:3001/users/update/${values[index]._id}`, values[index])
+                .then(() => setEmployees(values))
+                .catch(error => console.error(error));
+        }
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
     }
-};
-
-const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setNewEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
-};
-
-const handleEditClick = (index) => {
-    const updatedEmployees = [...employees];
-    updatedEmployees[index] = {
-        ...updatedEmployees[index],
-        editing: true,
-    };
-    setEmployees(updatedEmployees);
-};
-
-const handleSaveClick = (index) => {
-    const updatedEmployees = [...employees];
-    updatedEmployees[index] = {
-        ...updatedEmployees[index],
-        editing: false,
-    };
-    setEmployees(updatedEmployees);
-};
-
-const handleDeleteClick = (id) => {
-    const updatedEmployees = employees.filter((employee) => employee.id !== id);
-    setEmployees(updatedEmployees);
-};
-
-
-function EmployeeTable() {
 
     return (
-        <div className="container-lg">
-            <div className="table-responsive">
-                <div className="table-wrapper">
-                    <div className="table-title">
-                        <div className="row">
-                            <div className="col-sm-8">
-                                <h2>
-                                    Employee <b>Details</b>
-                                </h2>
-                            </div>
-                            <div className="col-sm-4">
+        <div className="table-wrapper">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans" />
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+
+            <div className="table-title">
+                <h2>uesres management</h2>
+                <button
+                    type="button"
+                    className="btn btn-primary add-new"
+                    onClick={addEmployeeRow}
+                >
+                    <i className="fa fa-plus" />
+                    Add New
+                </button>
+            </div>
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>USERID</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Mot de passe</th>
+                        <th>Privillège</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {employees.map((employee, index) => (
+                        <tr key={`employee-${index}`} id={`employee-${index}`}>
+                            <td>
+                                <input
+                                    type="text"
+                                    name="USERID"
+                                    className="form-control"
+                                    value={employee._id}
+                                    disabled
+                                />
+                            </td>
+                            <td><input
+                                type="text"
+                                name="Nom"
+                                className="form-control"
+                                value={employee.Nom}
+                                onChange={(event) => editEmployeeRow(index, event)}
+                            />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    name="Prénom"
+                                    className="form-control"
+                                    value={employee.Prenom}
+                                    onChange={(event) => editEmployeeRow(index, event)}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    name="Motdepasse"
+                                    className="form-control"
+                                    value={employee.Password}
+                                    onChange={(event) => editEmployeeRow(index, event)}
+                                />
+                            </td>
+                            <td>
+                                <input
+                                    type="text"
+                                    name="Privillège"
+                                    className="form-control"
+                                    value={employee.IsAdmin ? "Admin" : "User"}
+                                    onChange={(event) => editEmployeeRow(index, event)}
+                                    disabled
+                                />
+                            </td>
+                            <td>
                                 <button
                                     type="button"
-                                    className="btn btn-info add-new"
-                                    onClick={handleAddRowClick}
+                                    className="btn btn-success add"
+                                    onClick={() => submitEmployeeRow(index)}
                                 >
-                                    <i className="fa fa-plus"></i> Add New
+                                    <i className="fa fa-check" />
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-                    <table className="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Department</th>
-                                <th>Phone</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {employees.map((employee, index) => (
-                                <tr key={employee.id}>
-                                    <td>
-                                        {employee.editing ? (
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="name"
-                                                value={employee.name}
-                                                onChange={(event) =>
-                                                    setEmployees(
-                                                        employees.map((emp, idx) =>
-                                                            idx === index
-                                                                ? { ...emp, name: event.target.value }
-                                                                : emp
-                                                        )
-                                                    )
-                                                }
-                                            />
-                                        ) : (
-                                            employee.name
-                                        )}
-                                    </td>
-                                    <td>
-                                        {employee.editing ? (
-                                            <input
-                                                type=" text"
-                                                className="form-control"
-                                                name="department"
-                                                value={employee.department}
-                                                onChange={(event) =>
-                                                    setEmployees(
-                                                        employees.map((emp) =>
-                                                            emp.id === employee.id
-                                                                ? { ...emp, department: event.target.value }
-                                                                : emp
-                                                        )
-                                                    )
-                                                }
-                                            />
-                                        ) : (
-                                            employee.department
-                                        )}
-                                    </td>
-                                    <td>
-                                        {employee.editing ? (
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                name="phone"
-                                                value={employee.phone}
-                                                onChange={(event) =>
-                                                    setEmployees(
-                                                        employees.map((emp) =>
-                                                            emp.id === employee.id
-                                                                ? { ...emp, phone: event.target.value }
-                                                                : emp
-                                                        )
-                                                    )
-                                                }
-                                            />
-                                        ) : (
-                                            employee.phone
-                                        )}
-                                    </td>
-                                    <td>
-                                        <button
-                                            className="btn btn-sm btn-primary me-2"
-                                            onClick={() => handleEditClick(employee.id)}
-                                        >
-                                            {employee.editing ? "Save" : "Edit"}
-                                        </button>
-                                        <button
-                                            className="btn btn-sm btn-danger"
-                                            onClick={() => handleDeleteClick(employee.id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                            {showAddRow && (
-                                <tr>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="name"
-                                            value={newEmployee.name}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="department"
-                                            value={newEmployee.department}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            name="phone"
-                                            value={newEmployee.phone}
-                                            onChange={handleInputChange}
-                                        />
-                                    </td>
-                                    <td>
-                                        <button className="btn btn-sm btn-success" onClick={handleAddClick}>
-                                            Add
-                                        </button>
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary edit"
+                                    onClick={() => { }}
+                                >
+                                    <i className="fa fa-pencil" />
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger delete"
+                                    onClick={() => deleteEmployeeRow(index, employee._id)}
+                                >
+                                    <i className="fa fa-trash" />
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
+};
 
-}
-export default EmployeeTable;
+export default Table;
+
+
