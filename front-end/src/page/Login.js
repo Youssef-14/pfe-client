@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../components/style/login.css';
-import {  getUserRole} from "../_services/account.services";
+import { getUserRole } from "../_services/account.services";
 
 function Login() {
     const [UserName, setEmail] = useState('');
@@ -22,7 +22,7 @@ function Login() {
         console.log(data);
         if (data.token) {
             localStorage.setItem('token', data.token);
-            //navigate('/home');
+            navigate('/home');
             console.log(getUserRole());
         }
     }
