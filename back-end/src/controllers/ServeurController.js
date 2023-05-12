@@ -1,5 +1,5 @@
 const serveurService = require('../services/ServeurService');
-const { DataCenter } = require('../models/data-center.js');
+const { Rack } = require('../models/rack.js');
 const mongoose = require('mongoose');
 
 class ServeurController {
@@ -32,23 +32,22 @@ class ServeurController {
 
   async addServeur(req, res, next) {
     try {
-      if (!mongoose.Types.ObjectId.isValid(req.body.DataCenter)) {
+      if (!mongoose.Types.ObjectId.isValid(req.body.Rack)) {
         res.status(400).json({ message: 'Invalid DataCenter ID' });
         return;
       }
-      const finddatacenter = await DataCenter.findById(req.body.DataCenter);
-      if (!finddatacenter) {
-        res.status(404).json({ message: 'Invalid DataCenter ID' });
+      const rackId = req.body.Rack;
+      if (!rackId) {
+        res.status(400).json({ message: 'Invalid DataCenter ID' });
         return;
       }
       const serveur = await serveurService.addServeur(req.body);
-      const datacenterId = req.body.DataCenter;
-      await DataCenter.findOneAndUpdate(
-        { _id: datacenterId },
+      await Rack.findOneAndUpdate(
+        { _id: rackId },
         { $push: { serveurs: serveur._id } },
         { new: true }
       );
-      res.status(201).json(serveur);
+      res.status(201).json("serveur created successfully");
     } catch (err) {
       next(err);
     }

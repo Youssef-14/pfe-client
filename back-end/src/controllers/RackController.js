@@ -1,58 +1,72 @@
-const rackService = require('../services/RackService');
+const { Pod } = require('../models/pod');
+const RackService = require('../services/RackService');
+const mongoose = require('mongoose');
 
-async function createRack(req, res, next) {
-  try {
-    const newRack = await rackService.createRack(req.body);
-    res.json(newRack);
-  } catch (error) {
-    next(error);
-  }
-}
-
-async function getRackById(req, res, next) {
-  try {
-    const rack = await rackService.getRackById(req.params.id);
-    if (rack) {
-      res.json(rack);
-    } else {
-      res.status(404).json({ message: 'Rack not found' });
+class RackController {
+  static async createRack(req, res, next) {
+    try {
+      if (!mongoose.Types.ObjectId.isValid(req.body.Pod)) {
+        res.status(400).json({ message: 'Invalid DataCenter ID' });
+        return;
+      }
+      
+      const podId = req.body.DataCenter;
+      const findpod = await Pod.findById(req.body.Pod);
+      if (!findpod) {
+        res.status(404).json({ message: 'Invalid DataCenter ID' });
+        return;
+      }
+      const newRack = await RackService.createRack(req.body);
+        await Pod.findOneAndUpdate(
+          { _id: podId },
+          { $push: { pods: newRack._id } },
+          { new: true }
+        );
+      res.status(201).send("rack created successfully");
+    } catch (error) {
+      next(error);
     }
-  } catch (error) {
-    next(error);
+  }
+
+  static async getRackById(req, res, next) {
+    try {
+      const rack = await RackService.getRackById(req.params.id);
+      if (rack) {
+        res.json(rack);
+      } else {
+        res.status(404).json({ message: 'Rack not found' });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getAllRacks(req, res, next) {
+    try {
+      const racks = await RackService.getAllRacks();
+      res.json(racks);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateRack(req, res, next) {
+    try {
+      const updatedRack = await RackService.updateRack(req.params.id, req.body);
+      res.json(updatedRack);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteRack(req, res, next) {
+    try {
+      await RackService.deleteRack(req.params.id);
+      res.json({ message: 'Rack deleted successfully' });
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
-async function getAllRacks(req, res, next) {
-  try {
-    const racks = await rackService.getAllRacks();
-    res.json(racks);
-  } catch (error) {
-    next(error);
-  }
-}
-
-async function updateRack(req, res, next) {
-  try {
-    const updatedRack = await rackService.updateRack(req.params.id, req.body);
-    res.json(updatedRack);
-  } catch (error) {
-    next(error);
-  }
-}
-
-async function deleteRack(req, res, next) {
-  try {
-    await rackService.deleteRack(req.params.id);
-    res.json({ message: 'Rack deleted successfully' });
-  } catch (error) {
-    next(error);
-  }
-}
-
-module.exports = {
-  createRack,
-  getRackById,
-  getAllRacks,
-  updateRack,
-  deleteRack,
-};
+module.exports = RackController;
