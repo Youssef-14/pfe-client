@@ -4,7 +4,7 @@ const UtilisateurController = require('../controllers/UtilisateurController');
 
 const utilisateurController = new UtilisateurController();
 
-router.get('/get', utilisateurController.getAllUtilisateurs.bind(utilisateurController));
+router.get('/getaccounts', utilisateurController.getAllUtilisateurs.bind(utilisateurController));
 router.get('/:id', utilisateurController.getUtilisateurById.bind(utilisateurController));
 router.post('/signup', utilisateurController.createUtilisateur.bind(utilisateurController));
 router.post('/signin', utilisateurController.verifierUtilisateur.bind(utilisateurController));
