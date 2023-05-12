@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const dataCenterController = require('../controllers/DatacenterController');
+const dataCenterController = require('../controllers/DataCenterController');
 
 router.get('/get', dataCenterController.getAllDataCenters);
 router.get('/:id', dataCenterController.getDataCenterById);

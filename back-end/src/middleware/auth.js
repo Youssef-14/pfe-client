@@ -1,15 +1,15 @@
-const jwt = require('jsonwebtoken');
-
-function auth(req, res, next) {
-  const token = req.header('auth-token');
-  if (!token) return res.status(401).send('Access denied.');
-
-  try {
-    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-    req.user = verified;
-    next();
-  } catch (err) {
-    res.status(400).send('Invalid token.');
-  }
-}
-exports.auth = auth;
+const requireAdminAuth = (req, res, next) => {
+    passport.authenticate('jwt', { session: false }, (err, user, info) => {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+            return res.status(401).json({ message: 'Authentication failed' });
+        }
+        if (!user.IsAdmin) {
+            return res.status(403).json({ message: 'Not authorized' });
+        }
+        req.user = user;
+        next();
+    })(req, res, next);
+};

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const utilisateurRoutes = require('./routes/UtilisateurRoutes');
-const datacenterRoutes = require('./routes/DatacenterRoutes');
+const datacenterRoutes = require('./routes/DataCenterRoutes');
 const serverRoutes = require('./routes/ServeurRoutes');
 const rackRoutes = require('./routes/RackRoutes');
 const podRoutes = require('./routes/PodRoutes');
@@ -10,8 +10,6 @@ require('./config/connect');
 
 const app = express();
 const port = process.env.PORT ;
-
-
 
 // Middleware
 app.use(express.json());
