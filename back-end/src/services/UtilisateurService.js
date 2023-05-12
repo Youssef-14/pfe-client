@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 class UtilisateurService {
   async getAllUtilisateurs() {
     try {
-      return await Utilisateur.find({IsAdmin: false});
+      return await Utilisateur.find({ IsAdmin: false });
     } catch (err) {
       throw err;
     }
@@ -21,9 +21,9 @@ class UtilisateurService {
   async createUtilisateur(data) {
     try {
       const user = await Utilisateur.findOne({
-        "Username":data.Username
+        "Username": data.Username
       });
-      if (user){
+      if (user) {
         return -1;
       }
       const utilisateur = new Utilisateur(data);
@@ -35,11 +35,11 @@ class UtilisateurService {
       throw err;
     }
   }
-  
+
   async verifUtilisateur(data) {
     try {
       const user = await Utilisateur.findOne({
-        "UserName":data.UserName
+        "UserName": data.UserName
       });
       if (!user) {
         return null;
@@ -54,8 +54,8 @@ class UtilisateurService {
       throw err;
     }
   }
-  
-  
+
+
   async updateUtilisateur(id, data) {
     try {
       return await Utilisateur.findByIdAndUpdate(id, data, { new: true });
