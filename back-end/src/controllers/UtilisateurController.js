@@ -43,10 +43,6 @@ class UtilisateurController {
 
   async verifierUtilisateur(req, res) {
     try {
-      /*const { email, password } = req.body;
-      if (!email || !password || email.length < 5 || password.length < 5) {
-        return res.status(400).send({ error: 'Email and password are required' });
-      }*/
       const utilisateur = await this.utilisateurService.verifUtilisateur(req.body);
       
       if (utilisateur == null) {
