@@ -2,15 +2,22 @@ const { Serveur } = require('../models/serveur.js');
 
 class ServeurService {
   async getAllServeurs() {
-    return await Serveur.find();
+    const serveurs = await Serveur.find();
+    return serveurs.map((serveur, index) => {
+      return {
+        "n°": index,
+        ...serveur.toObject()
+      };
+    });
   }
+  
 
   async getServeurById(id) {
     return await Serveur.findById(id);
   }
 
-  async getServeurByDataCenterId(id) {
-    return await Serveur.find({ DataCenter: id });
+  async getServeurByRackId(id) {
+    return await Serveur.find({ Rack: id });
   }
 
   async addServeur(serveur) {
