@@ -71,6 +71,7 @@ class UtilisateurController {
   async deleteUtilisateur(req, res) {
     try {
       const utilisateur = await this.utilisateurService.deleteUtilisateur(req.params.id);
+      
       if (!utilisateur) {
         return res.status(404).send({ error: 'Utilisateur not found' });
       }

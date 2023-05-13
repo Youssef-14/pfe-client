@@ -78,11 +78,19 @@ class PodController {
 
   static async deletePodById(req, res) {
     try {
+      const dataCenter = await podService.getPodById(req.params.id);
+      const dataCenterId = dataCenter.DataCenter;
+      
+      await DataCenter.findOneAndUpdate(
+        { _id: dataCenterId },
+        { $pull: { pods: req.params.id } },
+        { new: true }
+      );
       const pod = await podService.deletePodById(req.params.id);
       if (!pod) {
         return res.status(404).send();
       }
-      res.send(pod);
+      res.send("pod deleted successfully");
     } catch (error) {
       res.status(500).send(error);
     }

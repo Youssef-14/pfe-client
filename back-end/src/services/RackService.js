@@ -7,7 +7,7 @@ class RackService {
   }
 
   static async getRackById(id) {
-    return await Rack.findById(id).populate('Pod');
+    return await Rack.findById(id);
   }
 
   static async getAllRacks() {
