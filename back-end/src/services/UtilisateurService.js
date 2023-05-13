@@ -30,10 +30,7 @@ class UtilisateurService {
       utilisateur.Role="Utilisateur";
       const salt = await bcrypt.genSalt(10);
       utilisateur.Password = await bcrypt.hash(utilisateur.Password, salt);
-      console.log(utilisateur);
-      const ch=  await utilisateur.save();
-      console.log(ch);
-      return ch;
+      return await utilisateur.save();
     } catch (err) {
       throw err;
     }
