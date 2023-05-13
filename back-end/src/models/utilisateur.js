@@ -28,7 +28,7 @@ const Utilisateur = mongoose.model('Utilisateur', {
     },
     Role: {
         type: String,
-        required: true,
+        required: false,
         minlength: 1,
         trim: true
     }
