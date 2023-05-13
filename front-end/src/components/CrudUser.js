@@ -42,6 +42,17 @@ const Table = () => {
             .catch(error => console.error(error));
     };
 
+    const updateEmployeeRow = (index) => {
+        const values = [...employees];
+        const updatedEmployee = values[index];
+        axios.put(`http://localhost:3001/users/update/${updatedEmployee._id}`, updatedEmployee)
+            .then(() => {
+                setEmployees(values);
+            })
+            .catch(error => console.error(error));
+    };
+    
+
     const submitEmployeeRow = (index) => {
         const values = [...employees];
         const inputFields = document
@@ -52,7 +63,7 @@ const Table = () => {
             inputFields.forEach((input) => {
                 values[index][input.name] = input.value;
             });
-            axios.put(`http://localhost:3001/users/update/${values[index]._id}`)
+            axios.post(`http://localhost:3001/users/signup`)
                 .then(() => setEmployees(values))
                 .catch(error => console.error(error));
         }
@@ -70,7 +81,7 @@ const Table = () => {
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
 
             <div className="table-title">
-                <h2>uesres management</h2>
+                <h2>users management</h2>
                 <button
                     type="button"
                     className="btn btn-primary add-new"
@@ -150,7 +161,7 @@ const Table = () => {
                                 <button
                                     type="button"
                                     className="btn btn-primary edit"
-                                    onClick={() => { }}
+                                    onClick={() => { updateEmployeeRow(index, employee._id) }}
                                 >
                                     <i className="fa fa-pencil" />
                                 </button>
@@ -170,5 +181,3 @@ const Table = () => {
     );
 };
 export default Table;
-
-
