@@ -48,7 +48,7 @@ class UtilisateurController {
       if (utilisateur == null) {
         return res.status(404).send({ error: 'Utilisateur not found' });
       }
-      const accessToken = jwt.sign({ id:utilisateur._id, Role: utilisateur.IsAdmin }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+      const accessToken = jwt.sign({ id:utilisateur._id, Role: utilisateur.Role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
       res.status(200).send({message:"utilisateur existe",token:accessToken});
     } catch (err) {
       console.log(err);
