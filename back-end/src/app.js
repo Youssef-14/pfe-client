@@ -10,7 +10,7 @@ require('dotenv').config();
 require('./config/connect');
 
 const app = express();
-const port = process.env.PORT ;
+const port = process.env.PORT;
 
 // Middleware
 app.use(express.json());
@@ -29,7 +29,7 @@ app.use('/racks', rackRoutes);
 app.use('/pods', podRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
 });
 
 // Start server

@@ -52,7 +52,7 @@ const Table = () => {
             inputFields.forEach((input) => {
                 values[index][input.name] = input.value;
             });
-            axios.put(`http://localhost:3001/users/${values[index]._id}`)
+            axios.put(`http://localhost:3001/users/update/${values[index]._id}`)
                 .then(() => setEmployees(values))
                 .catch(error => console.error(error));
         }
