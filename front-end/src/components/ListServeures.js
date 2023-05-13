@@ -206,9 +206,11 @@ function ListServeures() {
             .get('http://localhost:3001/serveurs/get')
             .then(response => {
                 setServers(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.log(error);
+
             });
     }, []);
 
@@ -274,6 +276,7 @@ function ListServeures() {
                         <th>Owner</th>
                         <th>Username</th>
                         <th>Password</th>
+                        <th>action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -284,18 +287,18 @@ function ListServeures() {
                         <tr key={server.id}>
 
 
-                            <td>{server._id}</td>
+                            <td>{server.__v}</td>
                             <td>{server.Rack}</td>
-                            <td>{server.IP}</td>
-                            <td>{server.IPManagment}</td>
+                            <td>{server.__v}</td>
                             <td>{server.RAM}</td>
+                            <td>{server.IP}</td>
                             <td>{server.CPU}</td>
                             <td>{server.ConsommationRAM}</td>
                             <td>{server.ConsommationCPU}</td>
-                            <td>{server.ip_address}</td>
+                            <td>{server.Model}</td>
                             <td>{server.ip_address}</td>
                             <td>{server.Rack}</td>
-                            <td>{server.ip_address}</td>
+                            <td>{server.Role}</td>
                             <td>{server.Owner}</td>
                             <td>{server.Login}</td>
                             <td>{server.Password}</td>
