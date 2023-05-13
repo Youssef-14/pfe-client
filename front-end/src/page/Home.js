@@ -4,11 +4,11 @@ import ListServeures from '../components/ListServeures';
 
 const Home = () => {
     return (
-        <div className="center-container">
-            <div className="center-content">
-                <ListServeures />
-            </div>
+
+        <div>
+            <ListServeures />
         </div>
+
     );
 }
 

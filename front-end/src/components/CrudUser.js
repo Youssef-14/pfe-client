@@ -1,174 +1,159 @@
-import './style/ListServices.css'
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-// import { getUserRole } from "../_services/account.services";
-const Table = () => {
-    const [employees, setEmployees] = useState([]);
-    const [loading, setLoading] = useState(true);
+import React from "react";
+import ReactDOM from "react-dom";
+import CRUDTable, {
+    Fields,
+    Field,
+    CreateForm,
+    UpdateForm,
+    DeleteForm
+} from "react-crud-table";
 
-    useEffect(() => {
-        axios.get('http://localhost:3001/users/getaccounts')
-            .then(response => {
-                setEmployees(response.data);
-                setLoading(false);
+// Component's Base CSS
+import "../components/style/Crud.css";
 
-            })
-            .catch(error => {
-                console.error(error);
-                setLoading(false);
-            });
-    }, []);
 
-    const addEmployeeRow = () => {
-        setEmployees([
-            ...employees,
-            { name: '', department: '', phone: '', password: '', privillege: '' },
-        ]);
-    };
 
-    const editEmployeeRow = (index, event) => {
-        const values = [...employees];
-        values[index][event.target.name] = event.target.value;
-        setEmployees(values);
-    };
+let Users = [
+    {
+        id: 1,
+        name: "Tran Manh Cuong",
+        description: "User from class SE1604"
+    },
+    {
+        id: 2,
+        name: "Tran Van Nhan",
+        description: "User from class SE1602"
+    },
+];
 
-    const deleteEmployeeRow = (index) => {
-        const values = [...employees];
-        axios.delete(`http://localhost:3001/users/delete/${values[index]._id}`)
-            .then(() => {
-                values.splice(index, 1);
-                setEmployees(values);
-            })
-            .catch(error => console.error(error));
-    };
+const SORTERS = {
+    NUMBER_ASCENDING: mapper => (a, b) => mapper(a) - mapper(b),
+    NUMBER_DESCENDING: mapper => (a, b) => mapper(b) - mapper(a),
+    STRING_ASCENDING: mapper => (a, b) => mapper(a).localeCompare(mapper(b)),
+    STRING_DESCENDING: mapper => (a, b) => mapper(b).localeCompare(mapper(a))
+};
 
-    const submitEmployeeRow = (index) => {
-        const values = [...employees];
-        const inputFields = document
-            .querySelectorAll(`#employee-${index} input[type="text"]`);
-        const empty = Array.from(inputFields)
-            .some((input) => !input.value);
-        if (!empty) {
-            inputFields.forEach((input) => {
-                values[index][input.name] = input.value;
-            });
-            axios.put(`http://localhost:3001/users/update/${values[index]._id}`)
-                .then(() => setEmployees(values))
-                .catch(error => console.error(error));
-        }
-    };
+const getSorter = data => {
+    const mapper = x => x[data.field];
+    let sorter = SORTERS.STRING_ASCENDING(mapper);
 
-    if (loading) {
-        return <div>Loading...</div>;
+    if (data.field === "id") {
+        sorter =
+            data.direction === "ascending"
+                ? SORTERS.NUMBER_ASCENDING(mapper)
+                : SORTERS.NUMBER_DESCENDING(mapper);
+    } else {
+        sorter =
+            data.direction === "ascending"
+                ? SORTERS.STRING_ASCENDING(mapper)
+                : SORTERS.STRING_DESCENDING(mapper);
     }
 
-    return (
-        <div className="table-wrapper">
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans" />
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-
-            <div className="table-title">
-                <h2>uesres management</h2>
-                <button
-                    type="button"
-                    className="btn btn-primary add-new"
-                    onClick={addEmployeeRow}
-                >
-                    <i className="fa fa-plus" />
-                    Add New
-                </button>
-            </div>
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th>USERID</th>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Mot de passe</th>
-                        <th>Privillège</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {employees.map((employee, index) => (
-                        <tr key={`employee-${index}`} id={`employee-${index}`}>
-                            <td>
-                                <input
-                                    type="text"
-                                    name="USERID"
-                                    className="form-control"
-                                    value={employee._id}
-                                    disabled
-                                />
-                            </td>
-                            <td><input
-                                type="text"
-                                name="Nom"
-                                className="form-control"
-                                value={employee.Nom}
-                                onChange={(event) => editEmployeeRow(index, event)}
-                            />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    name="Prénom"
-                                    className="form-control"
-                                    value={employee.Prenom}
-                                    onChange={(event) => editEmployeeRow(index, event)}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    name="Motdepasse"
-                                    className="form-control"
-                                    value={employee.Password}
-                                    onChange={(event) => editEmployeeRow(index, event)}
-                                />
-                            </td>
-                            <td>
-                                <input
-                                    type="text"
-                                    name="Privillège"
-                                    className="form-control"
-                                    value={employee.IsAdmin ? "Admin" : "User"}
-                                    onChange={(event) => editEmployeeRow(index, event)}
-                                    disabled
-                                />
-                            </td>
-                            <td>
-                                <button
-                                    type="button"
-                                    className="btn btn-success add"
-                                    onClick={() => submitEmployeeRow(index)}
-                                >
-                                    <i className="fa fa-check" />
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-primary edit"
-                                    onClick={() => { }}
-                                >
-                                    <i className="fa fa-pencil" />
-                                </button>
-                                <button
-                                    type="button"
-                                    className="btn btn-danger delete"
-                                    onClick={() => deleteEmployeeRow(index, employee._id)}
-                                >
-                                    <i className="fa fa-trash" />
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    );
+    return sorter;
 };
-export default Table;
 
+let count = Users.length;
+const service = {
+    fetchItems: payload => {
+        let result = Array.from(Users);
+        result = result.sort(getSorter(payload.sort));
+        return Promise.resolve(result);
+    },
+    create: User => {
+        count += 1;
+        Users.push({
+            ...User,
+            id: count
+        });
+        return Promise.resolve(User);
+    },
+    update: data => {
+        const User = Users.find(t => t.id === data.id);
+        User.name = data.name;
+        User.description = data.description;
+        return Promise.resolve(User);
+    },
+    delete: data => {
+        const User = Users.find(t => t.id === data.id);
+        Users = Users.filter(t => t.id !== User.id);
+        return Promise.resolve(User);
+    }
+};
+
+const styles = {
+    container: { margin: "auto", width: "fit-content" }
+};
+
+const CrudUser = () => (
+    <div style={styles.container}>
+        <CRUDTable
+            caption="Users List"
+            fetchItems={payload => service.fetchItems(payload)}
+        >
+            <Fields>
+                <Field name="id" label="USERID" hideInCreateForm hideInUpdateForm />
+                <Field name="name" label="Nom" placeholder="Name" />
+
+                <Field name="Prénom" label="Prénom" placeholder="Prénom" />
+                <Field name="Mot de passe" label="Mot de passe" />
+                <Field name="Privillège" label="Privillège" />
+
+            </Fields>
+            <CreateForm
+                name="User Creation"
+                message="Create a new User!"
+                trigger="Create User"
+                onSubmit={User => service.create(User)}
+                submitText="Create"
+                validate={values => {
+                    const errors = {};
+                    if (!values.name) {
+                        errors.name = "Please, provide User's name";
+                    }
+
+                    if (!values.description) {
+                        errors.description = "Please, provide User's description";
+                    }
+
+                    return errors;
+                }}
+            />
+
+            <UpdateForm
+                name="User Update Process"
+                message="Update User"
+                trigger="Update"
+                onSubmit={User => service.update(User)}
+                submitText="Update"
+                validate={values => {
+                    const errors = {};
+                    if (!values.name) {
+                        errors.name = "Please, provide User's name";
+                    }
+
+                    if (!values.description) {
+                        errors.description = "Please, provide stundent's description";
+                    }
+
+                    return errors;
+                }}
+            />
+
+            <DeleteForm
+                name="User Delete Process"
+                message="Are you sure you want to delete User?"
+                trigger="Delete"
+                onSubmit={User => service.delete(User)}
+                submitText="Delete"
+                validate={values => {
+                    const errors = {};
+                    if (!values.id) {
+                        errors.id = "Please, provide id";
+                    }
+                    return errors;
+                }}
+            />
+        </CRUDTable>
+    </div>
+); export default CrudUser
 
