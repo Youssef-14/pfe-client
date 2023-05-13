@@ -7,22 +7,22 @@
 //     return (
 //         <div className='ManageServer'>
 
-//             <>
-//                 <meta charSet="utf-8" />
-//                 <meta
-//                     name="viewport"
-//                     content="width=device-width, initial-scale=1, shrink-to-fit=no"
-//                 />
+// <>
+//     <meta charSet="utf-8" />
+//     <meta
+//         name="viewport"
+//         content="width=device-width, initial-scale=1, shrink-to-fit=no"
+//     />
 
 
-//                 <link
-//                     rel="stylesheet"
-//                     href="https://fonts.googleapis.com/icon?family=Material+Icons"
-//                 />
-//                 <link
-//                     rel="stylesheet"
-//                     href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-//                 />
+//     <link
+//         rel="stylesheet"
+//         href="https://fonts.googleapis.com/icon?family=Material+Icons"
+//     />
+//     <link
+//         rel="stylesheet"
+//         href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+//     />
 //                 <div className="container-xl">
 
 //                     <div className="table-wrapper">
@@ -105,35 +105,35 @@
 //                                     <td>John Doe</td>
 //                                     <td>jdoe</td>
 //                                     <td>132123</td>
-//                                     <td>
-//                                         <a
-//                                             href="#editEmployeeModal"
-//                                             className="edit"
-//                                             data-toggle="modal"
-//                                         >
-//                                             <i
-//                                                 className="material-icons"
-//                                                 data-toggle="tooltip"
-//                                                 title="Edit"
-//                                             >
-//                                                 
-//                                             </i>
-//                                         </a>
-//                                         <a
-//                                             href="#deleteEmployeeModal"
-//                                             className="delete"
-//                                             data-toggle="modal"
-//                                         >
-//                                             <i
-//                                                 className="material-icons"
-//                                                 data-toggle="tooltip"
-//                                                 title="Delete"
-//                                             >
-//                                                 
-//                                             </i>
-//                                         </a>
-//                                     </td>
-//                                 </tr>
+//     <td>
+//         <a
+//             href="#editEmployeeModal"
+//             className="edit"
+//             data-toggle="modal"
+//         >
+//             <i
+//                 className="material-icons"
+//                 data-toggle="tooltip"
+//                 title="Edit"
+//             >
+//                 
+//             </i>
+//         </a>
+//         <a
+//             href="#deleteEmployeeModal"
+//             className="delete"
+//             data-toggle="modal"
+//         >
+//             <i
+//                 className="material-icons"
+//                 data-toggle="tooltip"
+//                 title="Delete"
+//             >
+//                 
+//             </i>
+//         </a>
+//     </td>
+// </tr>
 
 //                             </tbody>
 //                         </table>
@@ -239,6 +239,22 @@ function ListServeures() {
 
     return (
         <div className="container">
+            <>
+                <meta charSet="utf-8" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+                />
+
+
+                <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+                />
+                <link
+                    rel="stylesheet"
+                    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                /></>
             <h1>List of servers</h1>
             <table className="table table-striped">
                 <thead>
@@ -261,8 +277,13 @@ function ListServeures() {
                     </tr>
                 </thead>
                 <tbody>
+                    <tr>
+
+                    </tr>
                     {servers.map(server => (
                         <tr key={server.id}>
+
+
                             <td>{server._id}</td>
                             <td>{server.Rack}</td>
                             <td>{server.IP}</td>
@@ -278,7 +299,20 @@ function ListServeures() {
                             <td>{server.Owner}</td>
                             <td>{server.Login}</td>
                             <td>{server.Password}</td>
+                            <td>
+                                <a href="#editEmployeeModal" className="edit" data-toggle="modal">
+                                    <i className="material-icons" data-toggle="tooltip" title="Edit">
+                                        
+                                    </i>
+                                </a>
+                                <a href="#deleteEmployeeModal" className="delete" data-toggle="modal">
+                                    <i className="material-icons" data-toggle="tooltip" title="Delete">
+                                        
+                                    </i>
+                                </a>
+                            </td>
                         </tr>
+
                     ))}
                 </tbody>
             </table>
