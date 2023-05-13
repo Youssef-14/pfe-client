@@ -8,7 +8,7 @@ router.get('/getaccounts', utilisateurController.getAllUtilisateurs.bind(utilisa
 router.get('/:id', utilisateurController.getUtilisateurById.bind(utilisateurController));
 router.post('/signup', utilisateurController.createUtilisateur.bind(utilisateurController));
 router.post('/signin', utilisateurController.verifierUtilisateur.bind(utilisateurController));
-router.put(':id', utilisateurController.updateUtilisateur.bind(utilisateurController));
+router.put('/update/:id', utilisateurController.updateUtilisateur.bind(utilisateurController));
 router.delete('/delete/:id', utilisateurController.deleteUtilisateur.bind(utilisateurController));
 
 module.exports = router;

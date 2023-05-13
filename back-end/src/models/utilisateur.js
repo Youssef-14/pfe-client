@@ -26,12 +26,12 @@ const Utilisateur = mongoose.model('Utilisateur', {
         minlength: 1,
         trim: true
     },
-    IsAdmin: {
-        type: Boolean,
+    Role: {
+        type: String,
         required: true,
         minlength: 1,
         trim: true
-    },
+    }
 });
 
 module.exports = { Utilisateur };
