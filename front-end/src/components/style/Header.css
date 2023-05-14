@@ -6,7 +6,7 @@
 
 #h {
     text-decoration: none;
-    color: rgb(20, 9, 18);
+    color: rgb(255, 255, 255);
     position: relative;
 }
 
@@ -21,11 +21,13 @@
     /* Replace with your desired gradient */
     visibility: hidden;
     opacity: 0;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s ease-in-out;
+
 }
 
 #h:hover {
-    color: #000000;
+    color: #91edf0;
+
     /* Replace with your desired hover color */
 }
 

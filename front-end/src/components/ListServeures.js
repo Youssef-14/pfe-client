@@ -46,7 +46,7 @@ function CrudUser(props) {
         <Container className="App">
             <Row>
                 <Col>
-                    <h1 style={{ margin: "20px 0" }}>liste des serveurs</h1>
+                    <h2 style={{ margin: "20px 0" }}>liste des serveurs</h2>
                 </Col>
             </Row>
             <Row>
@@ -60,7 +60,7 @@ function CrudUser(props) {
             </Row>
             <Row>
                 <Col>
-                    <ModalForm buttonLabel="Add Item" addItemToState={addItemToState} />
+                    <ModalForm buttonLabel="Add Serveur" addItemToState={addItemToState} />
                 </Col>
             </Row>
 

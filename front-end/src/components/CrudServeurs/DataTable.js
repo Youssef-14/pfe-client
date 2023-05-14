@@ -1,23 +1,18 @@
 import React from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal'
+import axios from 'axios'
 
 function DataTable(props) {
+
   const deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if (confirmDelete) {
-      fetch('http://localhost:3000/crud', {
-        method: 'delete',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          id
-        })
-      })
-        .then(response => response.json())
-        .then(item => {
-          props.deleteItemFromState(id)
+      axios.delete(`http://localhost:3001/serveurs/delete/${id}`)
+        .then(response => {
+          props.deleteItemFromState(id);
+          //refresh the page
+          window.location.reload(false);
         })
         .catch(err => console.log(err))
     }
@@ -27,16 +22,23 @@ function DataTable(props) {
     return (
       <tr key={item._id}>
         <th scope="row">{item._id}</th>
-        <td>{item.__v}</td>
+        <td>{item._id}</td>
         <td>{item.IP}</td>
+        <td>{item.IPManagment}</td>
         <td>{item.RAM}</td>
-        <td>{item.Password}</td>
+        <td>{item.Model}</td>
+        <td>{item.Rack}</td>
+        <td>{item.Pod}</td>
+        <td>{item.Owner}</td>
+        <td>{item.username}</td>
+        <td>{item.password}</td>
+
 
         <td>
           <div style={{ width: "110px" }}>
             <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState} />
             {' '}
-            <Button color="danger" onClick={() => deleteItem(item.id)}>Del</Button>
+            <Button color="danger" onClick={() => deleteItem(item._id)}>Del</Button>
           </div>
         </td>
       </tr>
@@ -48,18 +50,15 @@ function DataTable(props) {
       <thead>
         <tr>
           <th>Serveur</th>
-          <th>Hostname</th>
           <th>IP</th>
-          <th>IP management</th>
+          <th>	IP management</th>
           <th>RAM</th>
           <th>Modèle</th>
-          <th>Constructeur</th>
           <th>RACK</th>
           <th>POD</th>
           <th>Owner</th>
           <th>username</th>
           <th>password</th>
-
         </tr>
       </thead>
       <tbody>

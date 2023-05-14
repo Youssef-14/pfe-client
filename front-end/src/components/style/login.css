@@ -16,11 +16,11 @@ body {
     overflow: hidden;
 }
 
-/* 
+
 body {
-    background-image: linear-gradient(310deg, #df98fa, #3945f4);
+    background-image: linear-gradient(310deg, #eac5ef, #5e5687);
     font-family: sans-serif;
-} */
+}
 
 #container {
     position: absolute;
