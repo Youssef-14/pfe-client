@@ -15,9 +15,9 @@ const IPRenderer = ({ field }) => <textarea {...field} />;
 
 const service = {
     fetchItems: () => axios.get("http://localhost:3001/serveurs/get").then(res => res.data),
-    create: server => Promise.resolve(server),
-    update: data => Promise.resolve(data),
-    delete: data => Promise.resolve(data)
+    create: server => axios.post("http://localhost:3001/serveurs/add", server).then(res => res.data),
+    update: data => axios.put("http://localhost:3001/serveurs/update", data).then(res => res.data),
+    delete: data => axios.delete("http://localhost:3001/serveurs/delete"+data._id).then(res => res.data)
 };
 
 const styles = {
