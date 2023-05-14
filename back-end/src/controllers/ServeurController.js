@@ -33,12 +33,12 @@ class ServeurController {
   async addServeur(req, res, next) {
     try {
       if (!mongoose.Types.ObjectId.isValid(req.body.Rack)) {
-        res.status(400).json({ message: 'Invalid DataCenter ID' });
+        res.status(400).json({ message: 'Invalid Rack ID' });
         return;
       }
       const findRack = await Rack.findById(req.body.Pod);
       if (!findRack) {
-        res.status(400).json({ message: 'Invalid DataCenter ID' });
+        res.status(400).json({ message: 'Invalid Rack ID' });
         return;
       }
       const serveur = await serveurService.addServeur(req.body);
