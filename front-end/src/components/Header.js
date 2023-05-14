@@ -14,7 +14,7 @@ import { getUserRole } from "../_services/account.services";
 function Header() {
     if (getUserRole() == 'Admin') {
         return (
-            <Navbar bg="light" expand="lg">
+            <Navbar bg="black" expand="lg">
                 <Container fluid>
                     <Link to='/Home'><img src={logo} className="logo" alt="not found" /></Link>
 
