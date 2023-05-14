@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import ModalForm from "../components/CrudUser/Modal";
 import DataTable from "../components/CrudUser/DataTable";
+import "../components/CrudUser/CrudUser.css";
 import axios from "axios";
 
 function CrudUser(props) {
