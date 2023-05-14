@@ -6,18 +6,16 @@ import "../components/CrudUser/CrudUser.css";
 import axios from "axios";
 
 function CrudUser(props) {
-  const [items, setItems] = useState([
-  ]);
+  const [items, setItems] = useState([]);
 
   const getItems = () => {
     axios.get("http://localhost:3001/users/getaccounts").then((response) => {
-        setItems(response.data);
-        console.log(response.data);
-        }
-        )
-        .catch((error) => {
+      setItems(response.data);
+      console.log(response.data);
+    })
+      .catch((error) => {
         console.log(error);
-        });
+      });
   };
 
   const addItemToState = (item) => {
@@ -64,8 +62,15 @@ function CrudUser(props) {
           <ModalForm buttonLabel="Add Item" addItemToState={addItemToState} />
         </Col>
       </Row>
+      <style>
+        {`
+        td {
+          max-width: 10%;
+        }
+      `}
+      </style>
     </Container>
   );
 }
 
-export default CrudUser
+export default CrudUser;

@@ -92,7 +92,7 @@ function AddEditForm(props) {
   return (
     <Form onSubmit={props.item ? submitFormEdit : submitFormAdd}>
       <FormGroup>
-        <Label for="first">First Name</Label>
+        <Label for="first">Username</Label>
         <Input
           type="text"
           name="first"
@@ -102,7 +102,7 @@ function AddEditForm(props) {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="last">Last Name</Label>
+        <Label for="last">Name</Label>
         <Input
           type="text"
           name="last"
@@ -112,7 +112,7 @@ function AddEditForm(props) {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="email">Email</Label>
+        <Label for="email">Prenom</Label>
         <Input
           type="email"
           name="email"
@@ -122,35 +122,14 @@ function AddEditForm(props) {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="phone">Phone</Label>
-        <Input
-          type="text"
-          name="phone"
-          id="phone"
-          onChange={onChange}
-          value={form.phone === null ? "" : form.phone}
-          placeholder="ex. 555-555-5555"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="location">Location</Label>
+        <Label for="password">Password</Label>
         <Input
           type="text"
           name="location"
           id="location"
           onChange={onChange}
           value={form.location === null ? "" : form.location}
-          placeholder="City, State"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label for="hobby">Hobby</Label>
-        <Input
-          type="text"
-          name="hobby"
-          id="hobby"
-          onChange={onChange}
-          value={form.hobby}
+          placeholder="Password"
         />
       </FormGroup>
       <Button>Submit</Button>
