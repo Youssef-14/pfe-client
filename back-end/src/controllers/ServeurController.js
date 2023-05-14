@@ -64,6 +64,12 @@ class ServeurController {
 
   async deleteServeur(req, res, next) {
     try {
+      const rackId = await serveurService.getServeurById(req.params.id).Rack;
+      await Rack.findOneAndUpdate(
+        { _id: rackId },
+        { $pull: { serveurs: req.params.id } },
+        { new: true }
+      );
       await serveurService.deleteServeur(req.params.id);
       res.sendStatus(204);
     } catch (err) {

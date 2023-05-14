@@ -10,7 +10,7 @@ class RackController {
         return;
       }
       
-      const podId = req.body.DataCenter;
+      const podId = req.body.Pod;
       const findpod = await Pod.findById(req.body.Pod);
       if (!findpod) {
         res.status(404).json({ message: 'Invalid DataCenter ID' });
@@ -19,7 +19,7 @@ class RackController {
       const newRack = await RackService.createRack(req.body);
         await Pod.findOneAndUpdate(
           { _id: podId },
-          { $push: { pods: newRack._id } },
+          { $push: { Racks: newRack._id } },
           { new: true }
         );
       res.status(201).send({ message:"rack created successfully"});
@@ -61,6 +61,14 @@ class RackController {
 
   static async deleteRack(req, res, next) {
     try {
+      const pod = await RackService.getRackById(req.params.id);
+      const podId=pod.Pod;
+      const ch=await Pod.findOneAndUpdate(
+        { _id: podId },
+        { $pull: { Racks: req.params.id } },
+        { new: true }
+      );
+      console.log(ch);
       await RackService.deleteRack(req.params.id);
       res.json({ message: 'Rack deleted successfully' });
     } catch (error) {
