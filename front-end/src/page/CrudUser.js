@@ -3,6 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import ModalForm from "../components/CrudUser/Modal";
 import DataTable from "../components/CrudUser/DataTable";
 import '../components/style/Crud.css'
+
 import axios from "axios";
 
 function CrudUser(props) {
@@ -10,11 +11,11 @@ function CrudUser(props) {
 
   const getItems = () => {
     axios.get("http://localhost:3001/users/getaccounts").then((response) => {
-        setItems(response.data);
-        
-        }
-        )
-        .catch((error) => {
+      setItems(response.data);
+
+    }
+    )
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -44,34 +45,36 @@ function CrudUser(props) {
 
   return (
     <div>
-    <Container className="App">
-      <Row>
-        <Col>
-          <h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <DataTable
-            items={items}
-            updateState={updateState}
-            deleteItemFromState={deleteItemFromState}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <ModalForm buttonLabel="Add Item" addItemToState={addItemToState} />
-        </Col>
-      </Row>
-      <style>
-        {`
+      <Container className="App">
+        <Row>
+          <Col>
+            <h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div style={{ height: "500px", overflowY: "scroll" }}>
+              <DataTable
+                items={items}
+                updateState={updateState}
+                deleteItemFromState={deleteItemFromState}
+              />
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <ModalForm buttonLabel="Add Item" addItemToState={addItemToState} />
+          </Col>
+        </Row>
+        <style>
+          {`
         td {
           max-width: 10%;
         }
       `}
-      </style>
-    </Container>
+        </style>
+      </Container>
     </div>
   );
 }

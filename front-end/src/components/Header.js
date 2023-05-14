@@ -12,7 +12,8 @@ import { BsSearch } from 'react-icons/bs';
 
 function Header() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="dark" expand="lg">
+
             <Container fluid>
                 <Link to='/Home'><img src={logo} className="logo" alt="not found" /></Link>
 
