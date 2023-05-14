@@ -21,7 +21,7 @@ function Login() {
         const data = await response.json();
         if (data.token!==undefined) {
             localStorage.setItem('token', data.token);
-            //navigate('/home');
+            navigate('/home');
             console.log(getUserRole());
         }
     }
