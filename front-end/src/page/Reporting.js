@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
-import ModalForm from "../components/CrudServeurs/Modal";
-import DataTable from "../components/CrudServeurs/DataTable";
+import ModalForm from "../components/GetReporting/Modal";
+import DataTable from "../components/GetReporting/DataTable";
 import '../components/style/Crud.css'
 import axios from "axios";
 

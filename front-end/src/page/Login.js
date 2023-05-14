@@ -41,7 +41,7 @@ function Login() {
                     <br />
                     <form onSubmit={handleSubmit}>
                         <input
-                            type="email"
+                            type="txt"
                             id="email"
                             className="client-info"
                             value={UserName}
