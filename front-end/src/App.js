@@ -6,7 +6,7 @@ import NotFound from './page/NotFound';
 import Home from './page/Home';
 // import AccountsManagment from './components/AccountsManagment'
 import Login from './page/Login';
-import Example from './page/admin';
+// import Example from './page/admin';
 import Reporting from './page/Reporting';
 import Header from './components/Header';
 // import Table from './components/CrudUser';
