@@ -36,7 +36,7 @@ class ServeurController {
         res.status(400).json({ message: 'Invalid Rack ID' });
         return;
       }
-      const findRack = await Rack.findById(req.body.Pod);
+      const findRack = await Rack.findById(req.body.Rack);
       if (!findRack) {
         res.status(400).json({ message: 'Invalid Rack ID' });
         return;
