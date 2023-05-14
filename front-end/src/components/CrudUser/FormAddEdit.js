@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import axios from "axios";
 
 function AddEditForm(props) {
   const [form, setValues] = useState({
@@ -15,107 +14,122 @@ function AddEditForm(props) {
   };
 
   const submitFormAdd = (e) => {
+    console.log(props.item);
     e.preventDefault();
 
-    const user = {
-      Nom: form.Nom, //form.Nom,
-      Prenom: form.Prenom,
-      Username: form.Username,
-      Password: form.Password,
-      Privillège: form.Privillège
-    }
-
-    axios.post('http://localhost:3001/users/signup', user)
-      .then(response => {
-        const item = response.data;
-        if (Array.isArray(item)) {
-          props.addItemToState(item[0])
-          props.toggle()
-        } else {
-          console.log('failure')
-        }
-        //refresh the page
-        window.location.reload(false);
-      })
-      .catch(err => console.log(err))
+    props.addItemToState(form);
+    props.toggle();
   };
 
   const submitFormEdit = (e) => {
     e.preventDefault();
-    const user = {
-      Nom: form.Nom,
-      Prenom: form.Prenom,
-      Username: form.Username,
-      Password: form.Password,
-      Privillège: form.Privillège
-
-    }
-    console.log(user);
-
-    axios.put(`http://localhost:3001/users/update/${form._id}`, user)
-      .then((response) => {
-        const item = response.data;
-        if (Array.isArray(item)) {
-          props.updateState(item[0]);
-          props.toggle();
-        } else {
-          console.log("failure");
-        }
-        //refresh the page
-        window.location.reload(false);
-      })
-      .catch((err) => console.log(err));
+    props.updateState(form);
+    props.toggle();
   };
 
   useEffect(() => {
     if (props.item) {
-      const { _id, Username, Nom, Prenom, Password, Privillège } = props.item;
-      setValues({ _id, Username, Nom, Prenom, Password, Privillège });
+      const { _id, IP, IPManagment, RAM, Model, Rack, Pod, Owner, username, password } = props.item;
+      setValues({ _id, IP, IPManagment, RAM, Model, Rack, Pod, Owner, username, password });
     }
   }, [props.item]);
 
   return (
     <Form onSubmit={props.item ? submitFormEdit : submitFormAdd}>
       <FormGroup>
-        <Label for="username">Username</Label>
+        <Label for="first">IP</Label>
         <Input
           type="text"
-          name="Username"
-          id="username"
+          name="first"
+          id="first"
           onChange={onChange}
-          value={form.Username === null ? "" : form.Username}
+          value={form.IP === null ? "" : form.IP}
         />
       </FormGroup>
       <FormGroup>
-        <Label for="nom">Nom</Label>
+        <Label for="last">IPManagment</Label>
         <Input
           type="text"
-          name="Nom"
-          id="nom"
+          name="last"
+          id="last"
           onChange={onChange}
-          value={form.Nom == null ? "" : form.Nom}
-        />
-
-      </FormGroup>
-      <FormGroup>
-        <Label for="prenom">Prenom</Label>
-        <Input
-          type="text"
-          name="Prenom"
-          id="prenom"
-          onChange={onChange}
-          value={form.Prenom === null ? "" : form.Prenom}
+          value={form.IPManagment === null ? "" : form.IPManagment}
         />
       </FormGroup>
       <FormGroup>
-        <Label for="password">Password</Label>
+        <Label for="email">RAM</Label>
+        <Input
+          type="email"
+          name="email"
+          id="email"
+          onChange={onChange}
+          value={form.RAM === null ? "" : form.RAM}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Model">Model</Label>
         <Input
           type="text"
-          name="Password"
-          id="password"
+          name="location"
+          id="location"
           onChange={onChange}
-          value={form.Password === null ? "" : form.Password}
-          placeholder="Password"
+          value={form.Model === null ? "" : form.Model}
+          placeholder="Model"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Rack">Rack</Label>
+        <Input
+          type="text"
+          name="location"
+          id="location"
+          onChange={onChange}
+          value={form.Rack === null ? "" : form.Rack}
+          placeholder="Rack"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Pod">Pod</Label>
+        <Input
+          type="text"
+          name="location"
+          id="location"
+          onChange={onChange}
+          value={form.Pod === null ? "" : form.Pod}
+          placeholder="Pod"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Owner">Owner</Label>
+        <Input
+          type="text"
+          name="location"
+          id="location"
+          onChange={onChange}
+          value={form.Owner === null ? "" : form.Owner}
+          placeholder="Owner"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Model">username</Label>
+        <Input
+          type="text"
+          name="location"
+          id="location"
+          onChange={onChange}
+          value={form.username === null ? "" : form.username}
+          placeholder="username"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Model">Password</Label>
+        <Input
+          type="text"
+          name="location"
+          id="location"
+          onChange={onChange}
+          value={form.password === null ? "" : form.password}
+          placeholder="password"
         />
       </FormGroup>
       <Button>Submit</Button>
