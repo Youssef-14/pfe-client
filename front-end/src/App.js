@@ -10,7 +10,7 @@ import Example from './page/admin';
 import Reporting from './page/Reporting';
 import Header from './components/Header';
 // import Table from './components/CrudUser';
-import CrudUser from './components/CrudUser';
+import CrudUser from './page/CrudUser';
 function App() {
 
   return (

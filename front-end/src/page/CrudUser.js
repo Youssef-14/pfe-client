@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
-import ModalForm from "./Modal";
-import DataTable from "./DataTable";
+import ModalForm from "../components/CrudUser/Modal";
+import DataTable from "../components/CrudUser/DataTable";
 import axios from "axios";
 
 function CrudUser(props) {
