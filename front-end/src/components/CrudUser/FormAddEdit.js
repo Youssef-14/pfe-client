@@ -48,8 +48,7 @@ function AddEditForm(props) {
     }
     console.log(user);
 
-    
-    axios.put("http://localhost:3000/users/", user)
+    axios.put(`http://localhost:3001/users/update/${form._id}`,user)
       .then((response) => {
         const item = response.data;
         if (Array.isArray(item)) {
