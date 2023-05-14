@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
-import ModalForm from "../components/CrudUser/Modal";
-import DataTable from "../components/CrudUser/DataTable";
+import ModalForm from "../components/CrudServeurs/Modal";
+import DataTable from "../components/CrudServeurs/DataTable";
 import '../components/style/Crud.css'
 import axios from "axios";
 
@@ -46,7 +46,7 @@ function CrudUser(props) {
         <Container className="App">
             <Row>
                 <Col>
-                    <h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
+                    <h1 style={{ margin: "20px 0" }}>liste des serveurs</h1>
                 </Col>
             </Row>
             <Row>
