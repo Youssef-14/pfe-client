@@ -47,7 +47,7 @@ function Login() {
                             value={UserName}
                             onChange={(event) => setEmail(event.target.value)}
                         />
-                        <label htmlFor="email">Username</label>
+                        <label htmlFor="email" className='a'>Username</label>
                         <input
                             type="password"
                             id="password"
@@ -55,7 +55,7 @@ function Login() {
                             value={Password}
                             onChange={(event) => setPassword(event.target.value)}
                         />
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password" className='a'>Password</label>
                         <input
                             type="submit"
                             id="submit"

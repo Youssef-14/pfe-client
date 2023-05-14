@@ -97,7 +97,7 @@ body {
     width: 80%;
 }
 
-label {
+.a {
     position: absolute;
     margin: -5% 35%;
     font-size: 1.2vw;

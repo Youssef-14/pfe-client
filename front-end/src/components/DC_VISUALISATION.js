@@ -1,290 +1,174 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import CRUDTable, {
+    Fields,
+    Field,
+    CreateForm,
+    UpdateForm,
+    DeleteForm,
+} from "react-crud-table";
 
-import React, { useState } from 'react';
-import './style/DC_VISUALISATION.css'
+// Component's Base CSS
+import "../components/style/Crud.css";
 
+const apiUrl = "http://localhost:3001/racks/get";
 
-function DC_VISUALISATION() {
+const SORTERS = {
+    NUMBER_ASCENDING: (mapper) => (a, b) => mapper(a) - mapper(b),
+    NUMBER_DESCENDING: (mapper) => (a, b) => mapper(b) - mapper(a),
+    STRING_ASCENDING: (mapper) => (a, b) =>
+        mapper(a).localeCompare(mapper(b)),
+    STRING_DESCENDING: (mapper) => (a, b) =>
+        mapper(b).localeCompare(mapper(a)),
+};
+
+const getSorter = (data) => {
+    const mapper = (x) => x[data.field];
+    let sorter = SORTERS.STRING_ASCENDING(mapper);
+
+    if (data.field === "id") {
+        sorter =
+            data.direction === "ascending"
+                ? SORTERS.NUMBER_ASCENDING(mapper)
+                : SORTERS.NUMBER_DESCENDING(mapper);
+    } else {
+        sorter =
+            data.direction === "ascending"
+                ? SORTERS.STRING_ASCENDING(mapper)
+                : SORTERS.STRING_DESCENDING(mapper);
+    }
+
+    return sorter;
+};
+
+const DC_VISUALISATION = () => {
+    const [racks, setRacks] = useState([]);
+
+    useEffect(() => {
+        axios.get(apiUrl).then((response) => {
+            setRacks(response.data);
+
+        });
+    }, []);
+
+    const service = {
+        fetchItems: (payload) => {
+            let result = Array.from(racks);
+            result = result.sort(getSorter(payload.sort));
+            return Promise.resolve(result);
+        },
+        create: (rack) => {
+            const newRack = { ...rack };
+            axios.post(apiUrl, newRack).then((response) => {
+                setRacks([...racks, response.data]);
+            });
+            return Promise.resolve(newRack);
+        },
+        update: (data) => {
+            const updatedRack = { ...data };
+            axios.put(`${apiUrl}/${data.id}`, updatedRack).then((response) => {
+                const updatedRacks = [...racks];
+                const index = updatedRacks.findIndex((r) => r.id === response.data.id);
+                updatedRacks[index] = response.data;
+                setRacks(updatedRacks);
+            });
+            return Promise.resolve(updatedRack);
+        },
+        delete: (data) => {
+            axios.delete(`${apiUrl}/${data.id}`).then(() => {
+                setRacks(racks.filter((r) => r.id !== data.id));
+            });
+            return Promise.resolve(data);
+        },
+    };
+
+    const styles = {
+        container: { margin: "auto", width: "fit-content" },
+    };
+
     return (
-        <div className='ManageServer'>
- 
-                <link
-                    rel="stylesheet"
-                    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        <div style={styles.container}>
+            <CRUDTable caption="Racks List" fetchItems={(payload) => service.fetchItems(payload)}>
+                <Fields>
+                    <Field name="id" label="Rack ID" hideInCreateForm hideInUpdateForm />
+                    <Field name="name" label="Name" placeholder="Name" />
+                    <Field name="description" label="Description" placeholder="Description" />
+                </Fields>
+                <CreateForm
+                    name="Rack Creation"
+                    message="Create a new rack!"
+                    trigger="Create Rack"
+                    onSubmit={(rack) => {
+                        axios.post("http://localhost:3001/racks/post", rack)
+                            .then((response) => {
+                                // Add the new rack to the local array
+                                const newRack = response.data;
+                                racks.push(newRack);
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
+                    }}
+                    submitText="Create"
+                    validate={(values) => {
+                        const errors = {};
+                        if (!values.rack_number) {
+                            errors.rack_number = "Please, provide rack number";
+                        }
+                        return errors;
+                    }}
+                />    <UpdateForm
+                    name="Rack Update Process"
+                    message="Update Rack"
+                    trigger="Update"
+                    onSubmit={(rack) => {
+                        axios.put(`http://localhost:3001/racks/put/${rack.id}`, rack)
+                            .then((response) => {
+                                // Update the local array with the updated rack
+                                const updatedRack = response.data;
+                                const index = racks.findIndex((r) => r.id === updatedRack.id);
+                                racks[index] = updatedRack;
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
+                    }}
+                    submitText="Update"
+                    validate={(values) => {
+                        const errors = {};
+                        if (!values.rack_number) {
+                            errors.rack_number = "Please, provide rack number";
+                        }
+                        return errors;
+                    }}
                 />
-              
-                <div className="container-xl1">
 
-                <div className="table-wrapper1" style={{ margin: "0 auto" }}>
-                        <div className="table-title1">
-                            <div className="row1">
-                                
-                                <div className="col-sm-61">
-                                    <a
-                                        href="#addEmployeeModal"
-                                        className="btn btn-success"
-                                        data-toggle="modal"
-                                    >
-                                        <i className="material-icons"></i>{" "}
-
-                                    </a>
-                                    <a
-                                        href="#deleteEmployeeModal"
-                                        className="btn btn-danger"
-                                        data-toggle="modal"
-                                    >
-                                        <i className="material-icons"></i>
-                                        {/* <span>Delete</span> */}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <table className="table table-striped table-hover1">
-                            <thead>
-                                <tr>
-                                    <th>
-                                
-                                    </th>
-                                    <th>Rack</th>
-                                    <th>POD</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <span className="custom-checkbox">
-                                            <input
-                                                type="checkbox"
-                                                id="checkbox1"
-                                                name="options[]"
-                                                defaultValue={1}
-                                            />
-                                            <label htmlFor="checkbox1" />
-                                        </span>
-                                    </td>
-                                    <td>TWeb1</td>
-                                    <td>webserver.example.com</td>
-                                   
-                                    <td>
-                                        <a
-                                            href="#editEmployeeModal"
-                                            className="edit"
-                                            data-toggle="modal"
-                                        >
-                                            <i
-                                                className="material-icons"
-                                                data-toggle="tooltip"
-                                                title="Edit"
-                                            >
-                                                
-                                            </i>
-                                        </a>
-                                        <a
-                                            href="#deleteEmployeeModal"
-                                            className="delete"
-                                            data-toggle="modal"
-                                        >
-                                            <i
-                                                className="material-icons"
-                                                data-toggle="tooltip"
-                                                title="Delete"
-                                            >
-                                                
-                                            </i>
-                                        </a>
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                        <div className="clearfix">
-                            <div className="hint-text">
-                                Showing <b>5</b> out of <b>25</b> entries
-                            </div>
-                            <ul className="pagination">
-                                <li className="page-item disabled">
-                                    <a href="#">Previous</a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        1
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        2
-                                    </a>
-                                </li>
-                                <li className="page-item active">
-                                    <a href="#" className="page-link">
-                                        3
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        4
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        5
-                                    </a>
-                                </li>
-                                <li className="page-item">
-                                    <a href="#" className="page-link">
-                                        Next
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
-
-           
-
+                <DeleteForm
+                    name="Rack Delete Process"
+                    message="Are you sure you want to delete Rack?"
+                    trigger="Delete"
+                    onSubmit={(rack) => {
+                        axios.delete(`http://localhost:3001/racks/delete/${rack.id}`)
+                            .then((response) => {
+                                // Remove the deleted rack from the local array
+                                racks = racks.filter((r) => r.id !== rack.id);
+                            })
+                            .catch((error) => {
+                                console.error(error);
+                            });
+                    }}
+                    submitText="Delete"
+                    validate={(values) => {
+                        const errors = {};
+                        if (!values.id) {
+                            errors.id = "Please, provide id";
+                        }
+                        return errors;
+                    }}
+                />
+            </CRUDTable>
         </div>
     );
-}
+};
 
 export default DC_VISUALISATION;
-
-
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import './style/ListServices.css';
-
-// function ListServicesVisteur() {
-//   const [servers, setServers] = useState([]);
-
-//   useEffect(() => {
-//     axios
-//       .get('http://localhost:3000/api/servers')
-//       .then((response) => {
-//         setServers(response.data);
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   }, []);
-
-//   return (
-//     <div className='ManageServer'>
-
-//       <>
-//         <meta charSet='utf-8' />
-//         <meta
-//           name='viewport'
-//           content='width=device-width, initial-scale=1, shrink-to-fit=no'
-//         />
-
-//         <link
-//           rel='stylesheet'
-//           href='https://fonts.googleapis.com/css?family=Roboto|Varela+Round'
-//         />
-//         <link
-//           rel='stylesheet'
-//           href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css'
-//         />
-//         <link
-//           rel='stylesheet'
-//           href='https://fonts.googleapis.com/icon?family=Material+Icons'
-//         />
-//         <link
-//           rel='stylesheet'
-//           href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
-//         />
-//         <div className='container-xl'>
-//           <div className='table-wrapper'>
-//             <div className='table-title'>
-//               <div className='row'>
-//                 <div className='col-sm-6'>
-//                   <h2>
-//                     Manage <b>server</b>
-//                   </h2>
-//                 </div>
-//                 <div className='col-sm-6'>
-//                   <a
-//                     href='#addEmployeeModal'
-//                     className='btn btn-success'
-//                     data-toggle='modal'
-//                   >
-//                     <i className='material-icons'></i>{' '}
-//                   </a>
-//                   <a
-//                     href='#deleteEmployeeModal'
-//                     className='btn btn-danger'
-//                     data-toggle='modal'
-//                   >
-//                     <i className='material-icons'></i>
-//                     {/* <span>Delete</span> */}
-//                   </a>
-//                 </div>
-//               </div>
-//             </div>
-//             <table className='table table-striped table-hover'>
-//               <thead>
-//                 <tr>
-//                   <th>
-//                     <span className='custom-checkbox'>
-//                       <input type='checkbox' id='selectAll' />
-//                       <label htmlFor='selectAll' />
-//                     </span>
-//                   </th>
-//                   <th>Serveur</th>
-//                   <th>Hostname</th>
-//                   <th>IP</th>
-//                   <th>IP management</th>
-//                   <th>RAM</th>
-//                   <th>CPU</th>
-//                   <th>Consommation RAM</th>
-//                   <th>Consommation CPU</th>
-//                   <th>Modèle</th>
-//                   <th>Constructeur</th>
-//                   <th>RACK</th>
-//                   <th>POD</th>
-//                   <th>Owner</th>
-//                   <th>username</th>
-//                   <th>password</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {servers.map((server) => (
-//                   <tr key={server.id}>
-//                     <td>
-//                       <span className='custom-checkbox'>
-//                         <input
-//                           type='checkbox'
-//                           id={`checkbox${server.id}`}
-//                           name='options[]'
-//                           defaultValue={1}
-//                         />
-//                         <label htmlFor={`checkbox${server.id}`} />
-//                       </span>
-//                     </td>
-//                     <td>{server.name}</td>
-//                     <td>{server.hostname}</td>
-                   
-//                     <td>{server.status}</td>
-//                     <td>{server.os}</td>
-//                     <td>{server.cpu}</td>
-//                     <td>{server.memory}</td>
-//                     <td>{server.storage}</td>
-//                     <td>
-//                       <button
-//                         className='edit'
-//                         onClick={() => handleEdit(server.id)}
-//                       >
-//                         Edit
-//                       </button>
-//                       <button
-//                         className='delete'
-//                         onClick={() => handleDelete(server.id)}
-//                       >
-//                         Delete
-//                       </button>
-//                     </td>
-//                   </tr>
-//                 ))}
-//               </tbody>
-              
