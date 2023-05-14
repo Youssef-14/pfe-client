@@ -11,7 +11,6 @@ function CrudUser(props) {
   const getItems = () => {
     axios.get("http://localhost:3001/users/getaccounts").then((response) => {
         setItems(response.data);
-        console.log(response.data);
         }
         )
         .catch((error) => {
@@ -43,6 +42,7 @@ function CrudUser(props) {
   }, []);
 
   return (
+    <div>
     <Container className="App">
       <Row>
         <Col>
@@ -71,6 +71,7 @@ function CrudUser(props) {
       `}
       </style>
     </Container>
+    </div>
   );
 }
 

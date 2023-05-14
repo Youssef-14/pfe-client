@@ -1,25 +1,20 @@
 import React from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal'
+import axios from 'axios'
 
 function DataTable(props){
+  
   const deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if(confirmDelete){
-      fetch('http://localhost:3000/crud', {
-      method: 'delete',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id
-      })
-    })
-      .then(response => response.json())
-      .then(item => {
-        props.deleteItemFromState(id)
-      })
-      .catch(err => console.log(err))
+      axios.delete(`http://localhost:3001/users/delete/${id}`)
+        .then(response => {
+          props.deleteItemFromState(id);
+          //refresh the page
+          window.location.reload(false);
+        })
+        .catch(err => console.log(err))
     }
   }
 
@@ -36,12 +31,12 @@ function DataTable(props){
           <div style={{width:"110px"}}>
             <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState}/>
             {' '}
-            <Button color="danger" onClick={() => deleteItem(item.id)}>Del</Button>
+            <Button color="danger" onClick={() => deleteItem(item._id)}>Del</Button>
           </div>
         </td>
       </tr>
-      )
-    })
+    )
+  })
 
   return (
     <Table responsive hover>
@@ -51,9 +46,8 @@ function DataTable(props){
           <th>username</th>
           <th>Name</th>
           <th>Prenom</th>
-            <th>Password</th>
+          <th>Password</th>
           <th>Actions</th>
-
         </tr>
       </thead>
       <tbody>

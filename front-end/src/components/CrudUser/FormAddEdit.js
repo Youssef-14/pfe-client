@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import axios from "axios";
 
 function AddEditForm(props) {
   const [form, setValues] = useState({
@@ -14,66 +15,51 @@ function AddEditForm(props) {
   };
 
   const submitFormAdd = (e) => {
-    console.log(props.item);
     e.preventDefault();
-    // fetch('http://localhost:3000/crud', {
-    //   method: 'post',
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({
-    //     first: form.first,
-    //     last: form.last,
-    //     email: form.email,
-    //     phone: form.phone,
-    //     location: form.location,
-    //     hobby: form.hobby
-    //   })
-    // })
-    //   .then(response => response.json())
-    //   .then(item => {
-    //     if(Array.isArray(item)) {
-    //       props.addItemToState(item[0])
-    //       props.toggle()
-    //     } else {
-    //       console.log('failure')
-    //     }
-    //   })
-    //   .catch(err => console.log(err))
-    props.addItemToState(form);
-    props.toggle();
+
+    const user = {
+      Nom: form.Name, //form.Nom,
+      Prenom: form.Prenom,
+      Username: form.Username,
+      Password: form.Password
+    }
+    console.log(user);
+
+    axios.post('http://localhost:3001/users/signup', user)
+      .then(response => {
+        const item = response.data;
+        if(Array.isArray(item)) {
+          props.addItemToState(item[0])
+          props.toggle()
+        } else {
+          console.log('failure')
+        }
+      })
+      .catch(err => console.log(err))
   };
 
   const submitFormEdit = (e) => {
     e.preventDefault();
-    // fetch("http://localhost:3000/crud", {
-    //   method: "put",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     id: form.id,
-    //     first: form.first,
-    //     last: form.last,
-    //     email: form.email,
-    //     phone: form.phone,
-    //     location: form.location,
-    //     hobby: form.hobby
-    //   })
-    // })
-    //   .then((response) => response.json())
-    //   .then((item) => {
-    //     if (Array.isArray(item)) {
-    //       // console.log(item[0])
-    //       props.updateState(item[0]);
-    //       props.toggle();
-    //     } else {
-    //       console.log("failure");
-    //     }
-    //   })
-    //   .catch((err) => console.log(err));
-    props.updateState(form);
-    props.toggle();
+    const user = {
+      Nom: form.Nom,
+      Prenom: form.Prenom,
+      Username: form.Username,
+      Password: form.Password
+    }
+    console.log(user);
+
+    
+    axios.put("http://localhost:3000/users/", user)
+      .then((response) => {
+        const item = response.data;
+        if (Array.isArray(item)) {
+          props.updateState(item[0]);
+          props.toggle();
+        } else {
+          console.log("failure");
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -86,31 +72,32 @@ function AddEditForm(props) {
   return (
     <Form onSubmit={props.item ? submitFormEdit : submitFormAdd}>
       <FormGroup>
-        <Label for="first">Username</Label>
+        <Label for="username">Username</Label>
         <Input
           type="text"
-          name="first"
-          id="first"
+          name="Username"
+          id="username"
           onChange={onChange}
           value={form.Username === null ? "" : form.Username}
         />
       </FormGroup>
       <FormGroup>
-        <Label for="last">Name</Label>
+        <Label for="nom">Nom</Label>
         <Input
-          type="text"
-          name="last"
-          id="last"
-          onChange={onChange}
-          value={form.Nom === null ? "" : form.Nom}
-        />
+        type="text"
+        name="Nom"
+        id="nom"
+        onChange={onChange}
+        value={form.Nom == null ? "" : form.Nom}
+      />
+
       </FormGroup>
       <FormGroup>
-        <Label for="email">Prenom</Label>
+        <Label for="prenom">Prenom</Label>
         <Input
-          type="email"
-          name="email"
-          id="email"
+          type="text"
+          name="Prenom"
+          id="prenom"
           onChange={onChange}
           value={form.Prenom === null ? "" : form.Prenom}
         />
@@ -119,8 +106,8 @@ function AddEditForm(props) {
         <Label for="password">Password</Label>
         <Input
           type="text"
-          name="location"
-          id="location"
+          name="Password"
+          id="password"
           onChange={onChange}
           value={form.Password === null ? "" : form.Password}
           placeholder="Password"
