@@ -9,7 +9,7 @@ function CrudUser(props) {
     const [items, setItems] = useState([]);
 
     const getItems = () => {
-        axios.get("http://localhost:3001/users/getaccounts").then((response) => {
+        axios.get("http://localhost:3001/serveurs/get").then((response) => {
             setItems(response.data);
             console.log(response.data);
         }
