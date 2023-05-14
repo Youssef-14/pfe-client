@@ -2,15 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 function AddEditForm(props) {
-  const [form, setValues] = useState({
-    id: 0,
-    first: "",
-    last: "",
-    email: "",
-    phone: "",
-    location: "",
-    hobby: ""
-  });
+  const [form, setValues] = useState();
 
   const onChange = (e) => {
     setValues({
