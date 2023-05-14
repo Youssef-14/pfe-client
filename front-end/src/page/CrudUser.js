@@ -11,6 +11,7 @@ function CrudUser(props) {
   const getItems = () => {
     axios.get("http://localhost:3001/users/getaccounts").then((response) => {
         setItems(response.data);
+        console.log(response.data);
         }
         )
         .catch((error) => {

@@ -1,122 +1,71 @@
 import React, { useState, useEffect } from "react";
+import { Container, Row, Col } from "reactstrap";
+import ModalForm from "../components/CrudUser/Modal";
+import DataTable from "../components/CrudUser/DataTable";
+import '../components/style/Crud.css'
 import axios from "axios";
-import CRUDTable, {
-    Fields,
-    Field,
-    CreateForm,
-    UpdateForm,
-    DeleteForm
-} from "react-crud-table";
 
-// Component's Base CSS
-import "../components/style/Crud.css";
+function CrudUser(props) {
+    const [items, setItems] = useState([]);
 
+    const getItems = () => {
+        axios.get("http://localhost:3001/serveurs/get").then((response) => {
+            setItems(response.data);
+            console.log(response.data);
+        }
+        )
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
+    const addItemToState = (item) => {
+        setItems([...items, item]);
+    };
 
-const service = {
-    fetchItems: () => axios.get("http://localhost:3001/serveurs/get").then(res => res.data),
-    create: server => axios.post("http://localhost:3001/serveurs/add", server).then(res => res.data),
-    update: data => axios.put("http://localhost:3001/serveurs/update", data).then(res => res.data),
-    delete: data => axios.delete("http://localhost:3001/serveurs/delete"+data._id).then(res => res.data)
-};
+    const updateState = (item) => {
+        const itemIndex = items.findIndex((data) => data.id === item.id);
+        const newArray = [
+            ...items.slice(0, itemIndex),
+            item,
+            ...items.slice(itemIndex + 1)
+        ];
+        setItems(newArray);
+    };
 
-const styles = {
-    container: { margin: "auto", width: "fit-content" }
-};
-
-const ListServeures = () => {
-    const [data, setData] = useState([]);
+    const deleteItemFromState = (id) => {
+        const updatedItems = items.filter((item) => item.id !== id);
+        setItems(updatedItems);
+    };
 
     useEffect(() => {
-        service.fetchItems().then(res => setData(res));
+        getItems();
     }, []);
 
     return (
-        <div className="outer">
-            <div style={styles.container}>
-                <CRUDTable
-                    caption="server List"
-                    fetchItems={payload => Promise.resolve(data)}
-                >
-                    <Fields>
-
-
-                        <Field name="_id" label="server ID" hideInCreateForm hideInUpdateForm />
-                        <Field name="Login" label="Name" placeholder="Name" />
-                        <Field name="IP" label="IP" />
-                        <Field name="IPManagment" label="IP Management" />
-                        <Field name="RAM" label="RAM" />
-                        <Field name="CPU" label="CPU" />
-                        <Field name="Model" label="Modèle" />
-                        <Field name="Constructeur" label="Constructeur" />
-                        <Field name="Rack" label="RACK" />
-                        <Field name="POD" label="POD" />
-                        <Field name="Owner" label="Owner" />
-                        <Field name="Username" label="Username" />
-                        <Field name="Password" label="Password" />
-
-
-
-                    </Fields>
-
-                    <CreateForm
-                        name="server Creation"
-                        message="Create a new server!"
-                        trigger="Create server"
-                        onSubmit={server => service.create(server)}
-                        submitText="Create"
-                        validate={values => {
-                            const errors = {};
-                            if (!values.name) {
-                                errors.name = "Please, provide server's name";
-                            }
-
-                            if (!values.IP) {
-                                errors.IP = "Please, provide server's IP";
-                            }
-
-                            return errors;
-                        }}
+        <Container className="App">
+            <Row>
+                <Col>
+                    <h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <DataTable
+                        items={items}
+                        updateState={updateState}
+                        deleteItemFromState={deleteItemFromState}
                     />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <ModalForm buttonLabel="Add Item" addItemToState={addItemToState} />
+                </Col>
+            </Row>
 
-                    <UpdateForm
-                        name="server Update Process"
-                        message="Update server"
-                        trigger="Update"
-                        onSubmit={server => service.update(server)}
-                        submitText="Update"
-                        validate={values => {
-                            const errors = {};
-                            if (!values.Name) {
-                                errors.Name = "Please, provide server's name";
-                            }
-
-                            if (!values.IP) {
-                                errors.IP = "Please, provide stundent's IP";
-                            }
-
-                            return errors;
-                        }}
-                    />
-
-                    <DeleteForm
-                        name="server Delete Process"
-                        message="Are you sure you want to delete server?"
-                        trigger="Delete"
-                        onSubmit={server => service.delete(server)}
-                        submitText="Delete"
-                        validate={values => {
-                            const errors = {};
-                            if (!values.id) {
-                                errors.id = "Please, provide id";
-                            }
-                            return errors;
-                        }}
-                    />
-                </CRUDTable>
-            </div>
-        </div>
+        </Container>
     );
-};
+}
 
-export default ListServeures;
+export default CrudUser;
