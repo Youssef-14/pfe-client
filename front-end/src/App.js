@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/Home" element={<React.Fragment><Header /><Home /></React.Fragment>} />
         <Route path="/DC_VISUALISATION" element={<React.Fragment><Header /><DC_VISUALISATION /></React.Fragment>} />
-        <Route path="/AccountsManagment" element={<React.Fragment><Header /><CrudUser /></React.Fragment>} />
+        <Route path="/AccountsManagement" element={<React.Fragment><Header /><CrudUser /></React.Fragment>} />
         <Route path="/Reporting" element={<React.Fragment><Header /><Reporting /></React.Fragment>} />
 
         <Route path='*' element={<NotFound />} />
