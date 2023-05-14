@@ -27,7 +27,7 @@ function AddEditForm(props) {
     axios.post('http://localhost:3001/users/signup', user)
       .then(response => {
         const item = response.data;
-        if(Array.isArray(item)) {
+        if (Array.isArray(item)) {
           props.addItemToState(item[0])
           props.toggle()
         } else {
@@ -49,7 +49,7 @@ function AddEditForm(props) {
     }
     console.log(user);
 
-    axios.put(`http://localhost:3001/users/update/${form._id}`,user)
+    axios.put(`http://localhost:3001/users/update/${form._id}`, user)
       .then((response) => {
         const item = response.data;
         if (Array.isArray(item)) {
@@ -66,8 +66,8 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (props.item) {
-      const { _id,Username, Nom,Prenom, Password } = props.item;
-      setValues({ _id, Username,Nom,Prenom, Password });
+      const { _id, Username, Nom, Prenom, Password } = props.item;
+      setValues({ _id, Username, Nom, Prenom, Password });
     }
   }, [props.item]);
 
@@ -86,12 +86,12 @@ function AddEditForm(props) {
       <FormGroup>
         <Label for="nom">Nom</Label>
         <Input
-        type="text"
-        name="Nom"
-        id="nom"
-        onChange={onChange}
-        value={form.Nom == null ? "" : form.Nom}
-      />
+          type="text"
+          name="Nom"
+          id="nom"
+          onChange={onChange}
+          value={form.Nom == null ? "" : form.Nom}
+        />
 
       </FormGroup>
       <FormGroup>
