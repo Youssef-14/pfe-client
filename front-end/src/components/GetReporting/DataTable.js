@@ -23,22 +23,15 @@ function DataTable(props) {
       <tr key={item._id}>
         <th scope="row">{item._id}</th>
         <td>{item._id}</td>
-        <td>{item.IP}</td>
-        <td>{item.IPManagment}</td>
-        <td>{item.RAM}</td>
-        <td>{item.Model}</td>
-        <td>{item.Rack}</td>
-        <td>{item.Pod}</td>
-        <td>{item.Owner}</td>
-        <td>{item.username}</td>
-        <td>{item.password}</td>
+        <td>{item.ConsommationRAM}</td>
+        <td>{item.ConsommationCPU}</td>
+        <td>{item.Uptime}</td>
+
 
 
         <td>
-          <div style={{ width: "110px" }}>
-            <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState} />
-            {' '}
-            <Button color="danger" onClick={() => deleteItem(item._id)}>Del</Button>
+          <div >
+            <br /><br /><br />
           </div>
         </td>
       </tr>
@@ -49,16 +42,11 @@ function DataTable(props) {
     <Table responsive hover>
       <thead>
         <tr>
-          <th>Serveur</th>
+          <th>Serveur ID</th>
           <th>IP</th>
-          <th>	IP management</th>
-          <th>RAM</th>
-          <th>Modèle</th>
-          <th>RACK</th>
-          <th>POD</th>
-          <th>Owner</th>
-          <th>username</th>
-          <th>password</th>
+          <th>	consom ram</th>
+          <th>onsom CPU</th>
+          <th>Uptime</th>
         </tr>
       </thead>
       <tbody>

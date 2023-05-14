@@ -58,11 +58,7 @@ function Reporting(props) {
                     />
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <ModalForm buttonLabel="Add Serveure" addItemToState={addItemToState} />
-                </Col>
-            </Row>
+
 
         </Container>
     );
