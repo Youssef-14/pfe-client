@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import ModalForm from "../components/CrudUser/Modal";
 import DataTable from "../components/CrudUser/DataTable";
-import "../components/CrudUser/CrudUser.css";
+import '../components/style/Crud.css'
 import axios from "axios";
 
 function CrudUser(props) {
@@ -10,10 +10,11 @@ function CrudUser(props) {
 
   const getItems = () => {
     axios.get("http://localhost:3001/users/getaccounts").then((response) => {
-      setItems(response.data);
-      console.log(response.data);
-    })
-      .catch((error) => {
+        setItems(response.data);
+        console.log(response.data);
+        }
+        )
+        .catch((error) => {
         console.log(error);
       });
   };
