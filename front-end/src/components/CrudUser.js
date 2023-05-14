@@ -1,40 +1,27 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import CRUDTable, {
     Fields,
     Field,
     CreateForm,
     UpdateForm,
-    DeleteForm
+    DeleteForm,
 } from "react-crud-table";
 
 // Component's Base CSS
 import "../components/style/Crud.css";
 
-
-
-let Users = [
-    {
-        id: 1,
-        name: "Tran Manh Cuong",
-        description: "User from class SE1604"
-    },
-    {
-        id: 2,
-        name: "Tran Van Nhan",
-        description: "User from class SE1602"
-    },
-];
-
 const SORTERS = {
-    NUMBER_ASCENDING: mapper => (a, b) => mapper(a) - mapper(b),
-    NUMBER_DESCENDING: mapper => (a, b) => mapper(b) - mapper(a),
-    STRING_ASCENDING: mapper => (a, b) => mapper(a).localeCompare(mapper(b)),
-    STRING_DESCENDING: mapper => (a, b) => mapper(b).localeCompare(mapper(a))
+    NUMBER_ASCENDING: (mapper) => (a, b) => mapper(a) - mapper(b),
+    NUMBER_DESCENDING: (mapper) => (a, b) => mapper(b) - mapper(a),
+    STRING_ASCENDING: (mapper) => (a, b) =>
+        mapper(a).localeCompare(mapper(b)),
+    STRING_DESCENDING: (mapper) => (a, b) =>
+        mapper(b).localeCompare(mapper(a)),
 };
 
-const getSorter = data => {
-    const mapper = x => x[data.field];
+const getSorter = (data) => {
+    const mapper = (x) => x[data.field];
     let sorter = SORTERS.STRING_ASCENDING(mapper);
 
     if (data.field === "id") {
@@ -52,108 +39,154 @@ const getSorter = data => {
     return sorter;
 };
 
-let count = Users.length;
 const service = {
-    fetchItems: payload => {
-        let result = Array.from(Users);
-        result = result.sort(getSorter(payload.sort));
-        return Promise.resolve(result);
-    },
-    create: User => {
-        count += 1;
-        Users.push({
-            ...User,
-            id: count
-        });
+    fetchItems: () =>
+        axios.get("http://localhost:3001/users/getaccounts").then((response) => {
+            return Promise.resolve(response.data);
+        }),
+    create: (User) => {
+        // Implement create operation
         return Promise.resolve(User);
     },
-    update: data => {
-        const User = Users.find(t => t.id === data.id);
-        User.name = data.name;
-        User.description = data.description;
-        return Promise.resolve(User);
+    update: (data) => {
+        // Implement update operation
+        return Promise.resolve(data);
     },
-    delete: data => {
-        const User = Users.find(t => t.id === data.id);
-        Users = Users.filter(t => t.id !== User.id);
-        return Promise.resolve(User);
-    }
+    delete: (data) => {
+        // Implement delete operation
+        return Promise.resolve(data);
+    },
 };
+
+
 
 const styles = {
-    container: { margin: "auto", width: "fit-content" }
+    container: { margin: "auto", width: "fit-content" },
 };
 
-const CrudUser = () => (
-    <div style={styles.container}>
-        <CRUDTable
-            caption="Users List"
-            fetchItems={payload => service.fetchItems(payload)}
-        >
-            <Fields>
-                <Field name="id" label="USERID" hideInCreateForm hideInUpdateForm />
-                <Field name="name" label="Nom" placeholder="Name" />
+const CrudUser = () => {
+    const [users, setUsers] = useState([]);
 
-                <Field name="Prénom" label="Prénom" placeholder="Prénom" />
-                <Field name="Mot de passe" label="Mot de passe" />
-                <Field name="Privillège" label="Privillège" />
+    useEffect(() => {
+        service.fetchItems().then((data) => {
+            setUsers(data);
+        });
+    }, []);
 
-            </Fields>
-            <CreateForm
-                name="User Creation"
-                message="Create a new User!"
-                trigger="Create User"
-                onSubmit={User => service.create(User)}
-                submitText="Create"
-                validate={values => {
-                    const errors = {};
-                    if (!values.name) {
-                        errors.name = "Please, provide User's name";
-                    }
+    return (
+        <div style={styles.container}>
+            <CRUDTable
+                caption="Users List"
+                fetchItems={() => Promise.resolve(users)}
+            >
+                <Fields>
+                    <Field name="_id" label="USERID" hideInCreateForm hideInUpdateForm />
+                    <Field name="Nom" label="Nom" placeholder="Nom" />
+                    <Field name="Prenom" label="Prénom" placeholder="Prénom" />
+                    <Field name="Password" label="Mot de passe" />
+                    <Field name="Role" label="Privillège" />
+                </Fields>
+                <CreateForm
+                    name="User Creation"
+                    message="Create a new User!"
+                    trigger="Create User"
+                    onSubmit={(User) => service.create(User)}
+                    submitText="Create"
+                    validate={(values) => {
+                        const errors = {};
+                        if (!values.Nom) {
+                            errors.Nom = "Please, provide User's Nom";
+                        }
 
-                    if (!values.description) {
-                        errors.description = "Please, provide User's description";
-                    }
+                        if (!values.Prénom) {
+                            errors.Prénom = "Please, provide User's Prénom";
+                        }
 
-                    return errors;
-                }}
-            />
+                        if (!values["Mot de passe"]) {
+                            errors["Mot de passe"] = "Please, provide User's Mot de passe";
+                        }
 
-            <UpdateForm
-                name="User Update Process"
-                message="Update User"
-                trigger="Update"
-                onSubmit={User => service.update(User)}
-                submitText="Update"
-                validate={values => {
-                    const errors = {};
-                    if (!values.name) {
-                        errors.name = "Please, provide User's name";
-                    }
+                        if (!values.Privillège) {
+                            errors.Privillège = "Please, provide the user's Privillège";
+                        } return errors;
+                    }}
+                />
 
-                    if (!values.description) {
-                        errors.description = "Please, provide stundent's description";
-                    }
+                <UpdateForm
+                    name="User Update Process"
+                    message="Update User"
+                    trigger="Update"
+                    onSubmit={(user) => {
+                        const { id, ...updatedUser } = user;
+                        return axios
+                            .put(`http://localhost:3001/users/getaccounts/${id}`, updatedUser)
+                            .then((response) => {
+                                const { data } = response;
+                                const updatedItem = {
+                                    id: data.id,
+                                    name: data.Nom,
+                                    Prénom: data.Prénom,
+                                    "Mot de passe": data["Mot de passe"],
+                                    Privillège: data.Privillège,
+                                };
+                                const index = users.findIndex((user) => user.id === data.id);
+                                if (index !== -1) {
+                                    users.splice(index, 1, updatedItem);
+                                }
+                                return data;
+                            });
+                    }}
+                    submitText="Update"
+                    validate={(values) => {
+                        const errors = {};
+                        if (!values.name) {
+                            errors.name = "Please, provide User's name";
+                        }
 
-                    return errors;
-                }}
-            />
+                        if (!values.Prénom) {
+                            errors.Prénom = "Please, provide the user's Prénom";
+                        }
 
-            <DeleteForm
-                name="User Delete Process"
-                message="Are you sure you want to delete User?"
-                trigger="Delete"
-                onSubmit={User => service.delete(User)}
-                submitText="Delete"
-                validate={values => {
-                    const errors = {};
-                    if (!values.id) {
-                        errors.id = "Please, provide id";
-                    }
-                    return errors;
-                }}
-            />
-        </CRUDTable>
-    </div>
-); export default CrudUser
+                        if (!values["Mot de passe"]) {
+                            errors["Mot de passe"] = "Please, provide the user's Mot de passe";
+                        }
 
+                        if (!values.Privillège) {
+                            errors.Privillège = "Please, provide the user's Privillège";
+                        }
+
+                        return errors;
+                    }}
+                />
+
+                <DeleteForm
+                    name="User Delete Process"
+                    message="Are you sure you want to delete User?"
+                    trigger="Delete"
+                    onSubmit={(user) => {
+                        return axios
+                            .delete(`http://localhost:3001/users/getaccounts/${user.id}`)
+                            .then((response) => {
+                                const { data } = response;
+                                const index = users.findIndex((user) => user.id === data.id);
+                                if (index !== -1) {
+                                    users.splice(index, 1);
+                                }
+                                return data;
+                            });
+                    }}
+                    submitText="Delete"
+                    validate={(values) => {
+                        const errors = {};
+                        if (!values.id) {
+                            errors.id = "Please, provide id";
+                        }
+                        return errors;
+                    }}
+                />
+            </CRUDTable>
+        </div>
+    );
+};
+
+export default CrudUser;

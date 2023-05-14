@@ -5,7 +5,7 @@ import ListServeures from '../components/ListServeures';
 const Home = () => {
     return (
 
-        <div>
+        <div className='outer'>
             <ListServeures />
         </div>
 

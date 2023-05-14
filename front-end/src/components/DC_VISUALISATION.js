@@ -99,7 +99,7 @@ const DC_VISUALISATION = () => {
                     message="Create a new rack!"
                     trigger="Create Rack"
                     onSubmit={(rack) => {
-                        axios.post("http://localhost:3001/racks/post", rack)
+                        axios.post("http://localhost:3001/racks/add", rack)
                             .then((response) => {
                                 // Add the new rack to the local array
                                 const newRack = response.data;

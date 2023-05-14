@@ -11,7 +11,7 @@ import CRUDTable, {
 // Component's Base CSS
 import "../components/style/Crud.css";
 
-const IPRenderer = ({ field }) => <textarea {...field} />;
+
 
 const service = {
     fetchItems: () => axios.get("http://localhost:3001/serveurs/get").then(res => res.data),
