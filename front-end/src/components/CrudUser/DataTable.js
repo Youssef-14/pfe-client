@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal'
+import axios from 'axios'
 
 function DataTable(props) {
   const deleteItem = id => {
@@ -36,7 +37,7 @@ function DataTable(props) {
           <div style={{ width: "110px" }}>
             <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState} />
             {' '}
-            <Button color="danger" onClick={() => deleteItem(item.id)}>Del</Button>
+            <Button color="danger" onClick={() => deleteItem(item._id)}>Del</Button>
           </div>
         </td>
       </tr>
@@ -53,7 +54,6 @@ function DataTable(props) {
           <th>Prenom</th>
           <th>Password</th>
           <th>Actions</th>
-
         </tr>
       </thead>
       <tbody>
