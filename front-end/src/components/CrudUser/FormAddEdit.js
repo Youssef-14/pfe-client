@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 function AddEditForm(props) {
-  const [form, setValues] = useState();
+  const [form, setValues] = useState({
+
+  });
 
   const onChange = (e) => {
     setValues({
@@ -76,8 +78,8 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (props.item) {
-      const { id, first, last, email, phone, location, hobby } = props.item;
-      setValues({ id, first, last, email, phone, location, hobby });
+      const { _id,Username, Nom,Prenom, Password } = props.item;
+      setValues({ _id, Username,Nom,Prenom, Password });
     }
   }, [props.item]);
 
@@ -90,7 +92,7 @@ function AddEditForm(props) {
           name="first"
           id="first"
           onChange={onChange}
-          value={form.first === null ? "" : form.first}
+          value={form.Username === null ? "" : form.Username}
         />
       </FormGroup>
       <FormGroup>
@@ -100,7 +102,7 @@ function AddEditForm(props) {
           name="last"
           id="last"
           onChange={onChange}
-          value={form.last === null ? "" : form.last}
+          value={form.Nom === null ? "" : form.Nom}
         />
       </FormGroup>
       <FormGroup>
@@ -110,7 +112,7 @@ function AddEditForm(props) {
           name="email"
           id="email"
           onChange={onChange}
-          value={form.email === null ? "" : form.email}
+          value={form.Prenom === null ? "" : form.Prenom}
         />
       </FormGroup>
       <FormGroup>
@@ -120,7 +122,7 @@ function AddEditForm(props) {
           name="location"
           id="location"
           onChange={onChange}
-          value={form.location === null ? "" : form.location}
+          value={form.Password === null ? "" : form.Password}
           placeholder="Password"
         />
       </FormGroup>
