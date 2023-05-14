@@ -19,10 +19,9 @@ function Login() {
             body: JSON.stringify({ Username: UserName, Password: Password })
         });
         const data = await response.json();
-        console.log(data);
-        if (data.token) {
+        if (data.token!==undefined) {
             localStorage.setItem('token', data.token);
-            navigate('/home');
+            //navigate('/home');
             console.log(getUserRole());
         }
     }
@@ -41,7 +40,7 @@ function Login() {
                     <br />
                     <form onSubmit={handleSubmit}>
                         <input
-                            type="email"
+                            type="text"
                             id="email"
                             className="client-info"
                             value={UserName}
