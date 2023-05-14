@@ -52,6 +52,7 @@ function DataTable(props){
           <th>Name</th>
           <th>Prenom</th>
             <th>Password</th>
+          <th>Actions</th>
 
         </tr>
       </thead>
