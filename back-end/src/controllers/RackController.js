@@ -6,14 +6,14 @@ class RackController {
   static async createRack(req, res, next) {
     try {
       if (!mongoose.Types.ObjectId.isValid(req.body.Pod)) {
-        res.status(400).json({ message: 'Invalid DataCenter ID' });
+        res.status(400).json({ message: 'Invalid Pod ID' });
         return;
       }
       
       const podId = req.body.Pod;
       const findpod = await Pod.findById(req.body.Pod);
       if (!findpod) {
-        res.status(404).json({ message: 'Invalid DataCenter ID' });
+        res.status(404).json({ message: 'Invalid Pod ID' });
         return;
       }
       const newRack = await RackService.createRack(req.body);
