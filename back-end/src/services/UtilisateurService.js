@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 class UtilisateurService {
   async getAllUtilisateurs() {
     try {
-      return await Utilisateur. find({ IsAdmin: false });
+      return await Utilisateur. find({ Role: "Utilisateur" });
     } catch (err) {
       throw err;
     }
