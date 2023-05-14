@@ -40,7 +40,7 @@ function ModalForm(props) {
         {label}
       </Button>
     );
-    title = "Add New Item";
+    title = "Add New Server";
   }
 
   return (
