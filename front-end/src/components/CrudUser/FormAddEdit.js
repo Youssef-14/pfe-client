@@ -18,7 +18,7 @@ function AddEditForm(props) {
     e.preventDefault();
 
     const user = {
-      Nom: form.Name, //form.Nom,
+      Nom: form.Nom, //form.Nom,
       Prenom: form.Prenom,
       Username: form.Username,
       Password: form.Password
