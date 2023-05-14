@@ -5,7 +5,7 @@ import DataTable from "../components/GetReporting/DataTable";
 import '../components/style/Crud.css'
 import axios from "axios";
 
-function CrudUser(props) {
+function Reporting(props) {
     const [items, setItems] = useState([]);
 
     const getItems = () => {
@@ -68,4 +68,4 @@ function CrudUser(props) {
     );
 }
 
-export default CrudUser;
+export default Reporting;
