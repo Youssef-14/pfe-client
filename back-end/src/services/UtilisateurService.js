@@ -39,8 +39,9 @@ class UtilisateurService {
   async verifUtilisateur(data) {
     try {
       const user = await Utilisateur.findOne({
-        "UserName": data.UserName
+        "Username": data.Username
       });
+      console.log(user);
       if (!user) {
         return null;
       }
