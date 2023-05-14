@@ -23,7 +23,6 @@ function AddEditForm(props) {
       Username: form.Username,
       Password: form.Password
     }
-    console.log(user);
 
     axios.post('http://localhost:3001/users/signup', user)
       .then(response => {
@@ -34,6 +33,8 @@ function AddEditForm(props) {
         } else {
           console.log('failure')
         }
+        //refresh the page
+        window.location.reload(false);
       })
       .catch(err => console.log(err))
   };
@@ -57,6 +58,8 @@ function AddEditForm(props) {
         } else {
           console.log("failure");
         }
+        //refresh the page
+        window.location.reload(false);
       })
       .catch((err) => console.log(err));
   };
