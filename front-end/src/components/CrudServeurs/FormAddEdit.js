@@ -42,12 +42,14 @@ function AddEditForm(props) {
       }
     })
       .then(response => {
+        const item = response.data;
         //refresh the page
         window.location.reload(false);
       })
       .catch(err => console.log(err))
 
 
+    props.addItemToState(form);
     props.toggle();
   };
 
@@ -230,3 +232,4 @@ return (
 }
 
 export default AddEditForm;
+
