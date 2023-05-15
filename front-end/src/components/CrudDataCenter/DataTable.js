@@ -1,36 +1,33 @@
-import React from 'react'
+import React from 'react';
 import { Table, Button } from 'reactstrap';
-import ModalForm from './Modal'
-import axios from 'axios'
+import ModalForm from './Modal';
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-function DataTable(props) {
+import '../style/DC_VISUALISATION.css';
+import axios from 'axios';
 
-  const deleteItem = id => {
-    let confirmDelete = window.confirm('Delete item forever?')
+function DataTable(props) {
+  const deleteItem = (id) => {
+    let confirmDelete = window.confirm('Delete item forever?');
     if (confirmDelete) {
-      axios.delete(`http://localhost:3001/users/delete/${id}`)
-        .then(response => {
+      axios.delete(`http://localhost:3001/datacenters/${id}`)
+        .then((response) => {
           props.deleteItemFromState(id);
-          //refresh the page
+          // Refresh the page
           window.location.reload(false);
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err));
     }
-  }
+  };
 
-  const items = props.items.map(item => {
+  const items = props.items.map((item) => {
     return (
       <tr key={item._id}>
         <th scope="row">{item._id}</th>
-        <td>{item.Username}</td>
-        <td>{item.Nom}</td>
-        <td>{item.Prenom}</td>
-        <td>{item.Password}</td>
-        <td>{item.Role}</td>
-
+        <td className="table-cell">{item.Rack}</td>
+        <td className="table-cell">{item.Pod}</td>
         <td>
-          <div style={{ width: "100px" }}>
+          <div className="actions-container">
             <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState} />
             {' '}
             <Button color="danger" onClick={() => deleteItem(item._id)}>
@@ -39,19 +36,15 @@ function DataTable(props) {
           </div>
         </td>
       </tr>
-    )
-  })
+    );
+  });
 
   return (
     <Table responsive hover>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>username</th>
-          <th>Name</th>
-          <th>Prenom</th>
-          <th>Password</th>
-          <th>Privillège</th>
+          <th>RACK</th>
+          <th>POD</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -59,7 +52,7 @@ function DataTable(props) {
         {items}
       </tbody>
     </Table>
-  )
+  );
 }
 
-export default DataTable
+export default DataTable;

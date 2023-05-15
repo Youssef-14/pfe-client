@@ -48,7 +48,12 @@ function CrudUser(props) {
       <Container className="App">
         <Row>
           <Col>
-            <h1 style={{ margin: "20px 0" }}>CRUD Database</h1>
+            <h2 style={{ margin: "20px 0" }}> Accounts management</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <ModalForm buttonLabel="Add User" addItemToState={addItemToState} />
           </Col>
         </Row>
         <Row>
@@ -62,11 +67,7 @@ function CrudUser(props) {
             </div>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <ModalForm buttonLabel="Add Item" addItemToState={addItemToState} />
-          </Col>
-        </Row>
+
         <style>
           {`
         td {

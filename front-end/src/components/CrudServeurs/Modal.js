@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import AddEditForm from "./FormAddEdit";
+import { faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 function ModalForm(props) {
   const [modal, setModal] = useState(false);
@@ -18,7 +21,6 @@ function ModalForm(props) {
 
   let button = "";
   let title = "";
-
   if (label === "Edit") {
     button = (
       <Button
@@ -26,6 +28,7 @@ function ModalForm(props) {
         onClick={toggle}
         style={{ float: "left", marginRight: "10px" }}
       >
+        <FontAwesomeIcon icon={faEdit} style={{ marginRight: "5px" }} />
         {label}
       </Button>
     );
@@ -37,6 +40,7 @@ function ModalForm(props) {
         onClick={toggle}
         style={{ float: "left", marginRight: "10px" }}
       >
+        <FontAwesomeIcon icon={faPlus} style={{ marginRight: "5px" }} />
         {label}
       </Button>
     );

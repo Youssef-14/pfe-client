@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
-import ModalForm from "../components/GetReporting/Modal";
 import DataTable from "../components/GetReporting/DataTable";
-import '../components/style/Crud.css'
+import "../components/style/Crud.css";
+import BackgrounAN from "./BackgrounAN";
 import axios from "axios";
 
 function Reporting(props) {
     const [items, setItems] = useState([]);
 
     const getItems = () => {
-        axios.get("http://localhost:3001/serveurs/get").then((response) => {
-            setItems(response.data);
-            console.log(response.data);
-        }
-        )
+        axios
+            .get("http://localhost:3001/serveurs/get")
+            .then((response) => {
+                setItems(response.data);
+                console.log(response.data);
+            })
             .catch((error) => {
                 console.log(error);
             });
@@ -28,7 +29,7 @@ function Reporting(props) {
         const newArray = [
             ...items.slice(0, itemIndex),
             item,
-            ...items.slice(itemIndex + 1)
+            ...items.slice(itemIndex + 1),
         ];
         setItems(newArray);
     };
@@ -51,15 +52,16 @@ function Reporting(props) {
             </Row>
             <Row>
                 <Col>
-                    <DataTable
-                        items={items}
-                        updateState={updateState}
-                        deleteItemFromState={deleteItemFromState}
-                    />
+                    <div style={{ height: "400px", overflow: "auto" }}>
+                        <DataTable
+                            items={items}
+                            updateState={updateState}
+                            deleteItemFromState={deleteItemFromState}
+                        />
+                    </div>
                 </Col>
             </Row>
-
-
+            <BackgrounAN />
         </Container>
     );
 }

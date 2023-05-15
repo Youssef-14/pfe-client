@@ -1,87 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ServiceForm from './ServiceForm';
-
-function Services() {
-    const [services, setServices] = useState([]);
-    const [selectedService, setSelectedService] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
+import '../components/style/DC_VISUALISATION.css'
+const DataCenters = () => {
+    const [dataCenters, setDataCenters] = useState([]);
+    const [selectedDataCenter, setSelectedDataCenter] = useState(null);
+    const [selectedPod, setSelectedPod] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:8000/api/services')
-            .then(response => setServices(response.data))
-            .catch(error => console.log(error));
+        fetchDataCenters();
     }, []);
 
-    const handleAddService = (service) => {
-        axios.post('http://localhost:8000/api/services', service)
-            .then(response => setServices([...services, response.data]))
-            .catch(error => console.log(error));
+    const fetchDataCenters = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/datacenters/get');
+            setDataCenters(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const handleUpdateService = (service) => {
-        axios.put(`http://localhost:8000/api/services/${selectedService.id}`, service)
-            .then(response => {
-                const updatedServices = services.map(s => s.id === response.data.id ? response.data : s);
-                setServices(updatedServices);
-                setSelectedService(null);
-                setIsEditing(false);
-            })
-            .catch(error => console.log(error));
+    const handleDataCenterClick = (dataCenterId) => {
+        const selectedDataCenter = dataCenters.find((dc) => dc._id === dataCenterId);
+        setSelectedDataCenter(selectedDataCenter);
+        setSelectedPod(null);
     };
 
-    const handleDeleteService = (id) => {
-        axios.delete(`http://localhost:8000/api/services/${id}`)
-            .then(() => setServices(services.filter(s => s.id !== id)))
-            .catch(error => console.log(error));
-    };
-
-    const handleEditService = (id) => {
-        const service = services.find(s => s.id === id);
-        setSelectedService(service);
-        setIsEditing(true);
-    };
-
-    const handleCancelEdit = () => {
-        setSelectedService(null);
-        setIsEditing(false);
+    const handlePodClick = (podId) => {
+        const selectedPod = selectedDataCenter.pods.find((pod) => pod._id === podId);
+        setSelectedPod(selectedPod);
     };
 
     return (
         <div>
-            <h1>Services</h1>
-            <ServiceForm
-                onAddService={handleAddService}
-                onUpdateService={handleUpdateService}
-                selectedService={selectedService}
-                onCancelEdit={handleCancelEdit}
-                isEditing={isEditing}
-            />
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Role</th>
-                        <th>Prix</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {services.map((service) => (
-                        <tr key={service.id}>
-                            <td>{service.id}</td>
-                            <td>{service.role}</td>
-                            <td>{service.prix} dt</td>
-                            <td>
-                                <button onClick={() => handleEditService(service.id)}>Edit</button>
-                                <button onClick={() => handleDeleteService(service.id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <h2>Data Centers</h2>
+            <div className="data-center-buttons">
+                {dataCenters.map((dataCenter) => (
+                    <button key={dataCenter._id} onClick={() => handleDataCenterClick(dataCenter._id)}>
+                        {dataCenter.Libelle}
+                    </button>
+                ))}
+            </div>
+            {selectedDataCenter && (
+                <div>
+                    <h3>Pods</h3>
+                    {selectedDataCenter.pods.length === 0 ? (
+                        <p>No pods available for this data center.</p>
+                    ) : (
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Pod Name</th>
+                                    <th>Description</th>
+                                    <th>Capacity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {selectedDataCenter.pods.map((pod) => (
+                                    <tr key={pod._id} onClick={() => handlePodClick(pod._id)}>
+                                        <td>{pod.Libelle}</td>
+                                        <td>{pod.Description}</td>
+                                        <td>{pod.Capacite}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            )}
+            {selectedPod && (
+                <div>
+                    <h3>Selected Pod: {selectedPod.Libelle}</h3>
+                    {/* Display additional pod details if needed */}
+                </div>
+            )}
         </div>
     );
-}
+};
 
-export default Services;
+export default DataCenters;

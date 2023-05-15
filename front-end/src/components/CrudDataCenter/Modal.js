@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import AddEditForm from "./FormAddEdit";
 import { faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
+
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-
 function ModalForm(props) {
   const [modal, setModal] = useState(false);
 
@@ -21,7 +21,6 @@ function ModalForm(props) {
 
   let button = "";
   let title = "";
-
   if (label === "Edit") {
     button = (
       <Button
@@ -45,7 +44,7 @@ function ModalForm(props) {
         {label}
       </Button>
     );
-    title = "Add New Item";
+    title = "Add New DataCenter";
   }
 
   return (

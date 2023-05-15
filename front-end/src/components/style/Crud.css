@@ -49,22 +49,22 @@ tr:nth-child(even) {
 
 /* Set the scrollbar track color */
 ::-webkit-scrollbar-track {
-    background-color: #f5f5f5;
+    background-color: #f5f5f500;
 }
 
 /* Set the scrollbar thumb color */
 ::-webkit-scrollbar-thumb {
-    background-color: #aaa;
+    background-color: #41cce200;
 }
 
 /* Set the scrollbar thumb size */
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #999;
+    background-color: #e59a9a;
 }
 
 /* Set the scrollbar thumb color when dragged */
 ::-webkit-scrollbar-thumb:active {
-    background-color: #666;
+    background-color: #dbaee3;
 }
 
 /* Set the scrollbar width and height */
@@ -75,7 +75,7 @@ tr:nth-child(even) {
 
 /* Set the scrollbar corner radius */
 ::-webkit-scrollbar-corner {
-    background-color: #f5f5f5;
+    background-color: #f2b0eb;
 }
 
 @media (max-width: 767px) {

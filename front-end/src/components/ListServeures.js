@@ -5,15 +5,14 @@ import DataTable from "../components/CrudServeurs/DataTable";
 import '../components/style/Crud.css'
 import axios from "axios";
 
-function CrudUser(props) {
+function ListServeures(props) {
     const [items, setItems] = useState([]);
 
     const getItems = () => {
         axios.get("http://localhost:3001/serveurs/get").then((response) => {
             setItems(response.data);
             console.log(response.data);
-        }
-        )
+        })
             .catch((error) => {
                 console.log(error);
             });
@@ -44,6 +43,7 @@ function CrudUser(props) {
 
     return (
         <Container className="App">
+
             <Row>
                 <Col>
                     <h2 style={{ margin: "20px 0" }}>liste des serveurs</h2>
@@ -51,21 +51,30 @@ function CrudUser(props) {
             </Row>
             <Row>
                 <Col>
-                    <DataTable
-                        items={items}
-                        updateState={updateState}
-                        deleteItemFromState={deleteItemFromState}
-                    />
+                    <ModalForm buttonLabel="Add Serveur" addItemToState={addItemToState} />
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <ModalForm buttonLabel="Add Serveur" addItemToState={addItemToState} />
+                    <div style={{ height: "400px", overflowY: "scroll" }}>
+                        <DataTable
+                            items={items}
+                            updateState={updateState}
+                            deleteItemFromState={deleteItemFromState}
+                        />
+                    </div>
                 </Col>
             </Row>
 
+            <style>
+                {`
+        .dataTables_scrollBody {
+          overflow-y: scroll;
+        }
+      `}
+            </style>
         </Container>
     );
 }
 
-export default CrudUser;
+export default ListServeures;

@@ -1,6 +1,9 @@
 import React from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal'
+import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import axios from 'axios'
 
 function DataTable(props) {
@@ -22,7 +25,6 @@ function DataTable(props) {
     return (
       <tr key={item._id}>
         <th scope="row">{item._id}</th>
-        <td>{item._id}</td>
         <td>{item.IP}</td>
         <td>{item.IPManagment}</td>
         <td>{item.RAM}</td>
@@ -31,14 +33,17 @@ function DataTable(props) {
         <td>{item.Pod}</td>
         <td>{item.Owner}</td>
         <td>{item.username}</td>
-        <td>{item.password}</td>
+        <td>{item.Password}</td>
 
 
         <td>
-          <div style={{ width: "110px" }}>
+
+          <div style={{ width: "100px" }}>
             <ModalForm buttonLabel="Edit" item={item} updateState={props.updateState} />
             {' '}
-            <Button color="danger" onClick={() => deleteItem(item._id)}>Del</Button>
+            <Button color="danger" onClick={() => deleteItem(item._id)}>
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </Button>
           </div>
         </td>
       </tr>
@@ -51,7 +56,7 @@ function DataTable(props) {
         <tr>
           <th>Serveur</th>
           <th>IP</th>
-          <th>	IP management</th>
+          <th>IP management</th>
           <th>RAM</th>
           <th>Modèle</th>
           <th>RACK</th>
@@ -59,6 +64,7 @@ function DataTable(props) {
           <th>Owner</th>
           <th>username</th>
           <th>password</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
