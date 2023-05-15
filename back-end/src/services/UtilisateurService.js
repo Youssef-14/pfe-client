@@ -41,7 +41,6 @@ class UtilisateurService {
       const user = await Utilisateur.findOne({
         "Username": data.Username
       });
-      console.log(user);
       if (!user) {
         return null;
       }
