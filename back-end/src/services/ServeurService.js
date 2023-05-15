@@ -7,12 +7,12 @@ class ServeurService {
     const serveurs = await Serveur.find();
     return serveurs.map((serveur, index) => {
       const findRack =  Rack.findById(serveur.Rack);
-      const Rack = findRack.Nom;
-      const Pod =  Pod.findById(findRack.Pod).Libelle;
+      const rack = findRack.Nom;
+      const pod =  Pod.findById(findRack.Pod).Libelle;
       return {
         "n": index,
-        "rack": Rack,
-        "pod": Pod,
+        "rack": rack,
+        "pod": pod,
         ...serveur.toObject()
       };
     });
