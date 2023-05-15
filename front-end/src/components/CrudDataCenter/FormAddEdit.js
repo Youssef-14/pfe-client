@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import axios from "axios";
+import { getToken } from "../../_services/account.services";
 
 function AddEditForm(props) {
   const [form, setValues] = useState({
@@ -23,7 +24,11 @@ function AddEditForm(props) {
       Capacite: form.Capacite
     }
 
-    axios.post('http://localhost:3001/datacenters/add', user)
+    axios.post('http://localhost:3001/datacenters/add', user,{
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })
       .then(response => {
         const item = response.data;
         if (Array.isArray(item)) {
@@ -48,7 +53,11 @@ function AddEditForm(props) {
     }
     console.log(user);
 
-    axios.put(`http://localhost:3001/datacenters/${form._id}`, user)
+    axios.put(`http://localhost:3001/datacenters/${form._id}`, user,{
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })
       .then((response) => {
         const item = response.data;
         if (Array.isArray(item)) {

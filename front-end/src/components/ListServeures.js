@@ -4,7 +4,7 @@ import ModalForm from "../components/CrudServeurs/Modal";
 import DataTable from "../components/CrudServeurs/DataTable";
 import '../components/style/Crud.css'
 import axios from "axios";
-import { getToken, getUserRole } from "../_services/account.services";
+import { getToken } from "../_services/account.services";
 
 function ListServeures(props) {
     const [items, setItems] = useState([]);
