@@ -288,6 +288,7 @@ function AddEditForm(props) {
         window.location.reload(false);
       })
       .catch(err => console.log(err))
+
   };
 
   const submitFormEdit = (e) => {
