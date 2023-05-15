@@ -1,14 +1,18 @@
 const { Serveur } = require('../models/serveur.js');
 const { Rack } = require('../models/rack.js');
 const { Pod } = require('../models/pod.js');
+const RackService = require('../services/RackService');
 
 class ServeurService {
   async getAllServeurs() {
     const serveurs = await Serveur.find();
-    return serveurs.map((serveur, index) => {
-      const findRack =  Rack.findById(serveur.Rack);
+     return serveurs.map( (serveur, index) => {
+      const findRack =  RackService.getRackById(serveur.Rack);
       const rack = findRack.Nom;
       const pod =  Pod.findById(findRack.Pod).Libelle;
+      console.log(findRack);
+      console.log(pod);
+      console.log(rack);
       return {
         "n": index,
         "rack": rack,
