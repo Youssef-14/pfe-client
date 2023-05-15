@@ -30,7 +30,7 @@ function DataTable(props) {
       <tr key={item._id}>
         <th scope="row">{item.n}</th>
         <td>{item.IP}</td>
-        <td>{item.IPManagment}</td>
+        <td>{item.IPManagement}</td>
         <td>{item.RAM}</td>
         <td>{item.Model}</td>
         <td>{item.rack}</td>
