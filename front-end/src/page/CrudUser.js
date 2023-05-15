@@ -3,11 +3,12 @@ import { Container, Row, Col } from "reactstrap";
 import ModalForm from "../components/CrudUser/Modal";
 import DataTable from "../components/CrudUser/DataTable";
 import '../components/style/Crud.css';
-import { getToken } from "../_services/account.services";
+import { getToken ,getUserRole } from "../_services/account.services";
 
 import axios from "axios";
 
 function CrudUser(props) {
+
   const [items, setItems] = useState([]);
 
   const getItems = () => {
@@ -48,6 +49,8 @@ function CrudUser(props) {
     getItems();
   }, []);
 
+  if (getUserRole() === "Admin") {
+    
   return (
     <div>
       <Container className="App">
@@ -81,7 +84,11 @@ function CrudUser(props) {
         </style>
       </Container>
     </div>
-  );
+  );}
+  else{
+    //Redirect to home page
+    window.location.href = "/home";
+  }
 }
 
 export default CrudUser;

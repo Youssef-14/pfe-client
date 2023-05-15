@@ -4,11 +4,10 @@ import ModalForm from "../components/CrudServeurs/Modal";
 import DataTable from "../components/CrudServeurs/DataTable";
 import '../components/style/Crud.css'
 import axios from "axios";
-import { getToken } from "../_services/account.services";
+import { getToken,getUserRole } from "../_services/account.services";
 
 function CrudUser(props) {
     const [items, setItems] = useState([]);
-
     const getItems = () => {
         axios.get("http://localhost:3001/serveurs/get",{
             headers: {
