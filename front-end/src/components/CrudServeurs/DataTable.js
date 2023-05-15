@@ -28,7 +28,7 @@ function DataTable(props) {
   const items = props.items.map(item => {
     return (
       <tr key={item._id}>
-        <th scope="row">{item._id}</th>
+        <th scope="row">{item.n}</th>
         <td>{item.IP}</td>
         <td>{item.IPManagment}</td>
         <td>{item.RAM}</td>

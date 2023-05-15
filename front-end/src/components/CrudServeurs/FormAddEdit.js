@@ -385,7 +385,7 @@ function AddEditForm(props) {
           name="Pod"
           id="Pod"
           onChange={onChange}
-          value={form.Pod === null ? "" : form.Pod}
+          value={form.pod === null ? "" : form.pod}
           placeholder="Pod"
         />
       </FormGroup>
