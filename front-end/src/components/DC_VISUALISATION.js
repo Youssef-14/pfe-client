@@ -6,7 +6,7 @@ import '../components/style/Crud.css'
 import BackgrounAN from "../page/BackgrounAN";
 import axios from "axios";
 
-function ListServeures(props) {
+function ListDataCenter(props) {
     const [items, setItems] = useState([]);
 
     const getItems = () => {
@@ -87,4 +87,4 @@ function ListServeures(props) {
     );
 }
 
-export default ListServeures;
+export default ListDataCenter;
