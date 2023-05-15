@@ -2,14 +2,18 @@ import React from 'react'
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal'
 import axios from 'axios'
+import { getToken } from "../../_services/account.services";
 
 function DataTable(props) {
 
   const deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if (confirmDelete) {
-      axios.delete(`http://localhost:3001/serveurs/delete/${id}`)
-        .then(response => {
+      axios.delete(`http://localhost:3001/serveurs/delete/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })  .then(response => {
           props.deleteItemFromState(id);
           //refresh the page
           window.location.reload(false);
@@ -22,13 +26,12 @@ function DataTable(props) {
     return (
       <tr key={item._id}>
         <th scope="row">{item._id}</th>
-        <td>{item._id}</td>
         <td>{item.IP}</td>
         <td>{item.IPManagment}</td>
         <td>{item.RAM}</td>
         <td>{item.Model}</td>
         <td>{item.Rack}</td>
-        <td>{item.Pod}</td>
+        <td>?{item.Pod}</td>
         <td>{item.Owner}</td>
         <td>{item.username}</td>
         <td>{item.password}</td>

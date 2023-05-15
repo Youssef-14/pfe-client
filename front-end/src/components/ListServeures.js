@@ -4,14 +4,18 @@ import ModalForm from "../components/CrudServeurs/Modal";
 import DataTable from "../components/CrudServeurs/DataTable";
 import '../components/style/Crud.css'
 import axios from "axios";
+import { getToken } from "../_services/account.services";
 
 function CrudUser(props) {
     const [items, setItems] = useState([]);
 
     const getItems = () => {
-        axios.get("http://localhost:3001/serveurs/get").then((response) => {
+        axios.get("http://localhost:3001/serveurs/get",{
+            headers: {
+              'Authorization': `Bearer ${getToken()}`
+            }
+          }).then((response) => {
             setItems(response.data);
-            console.log(response.data);
         }
         )
             .catch((error) => {

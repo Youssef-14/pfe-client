@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import axios from "axios";
+import { getToken } from "../../_services/account.services";
 
 function AddEditForm(props) {
   const [form, setValues] = useState({
@@ -14,8 +16,38 @@ function AddEditForm(props) {
   };
 
   const submitFormAdd = (e) => {
-    console.log(props.item);
     e.preventDefault();
+
+    const serveur = {
+      IP: form.IP,
+      IPManagment: form.IPManagment,
+      RAM: form.RAM,
+      Model: form.Model,
+      Rack: form.Rack,
+      Pod: form.Pod,
+      Owner: form.Owner,
+      username: form.username,
+      password: form.password
+    }
+
+    axios.post('http://localhost:3001/serveurs/add', serveur,{
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })
+      .then(response => {
+        const item = response.data;
+        if (Array.isArray(item)) {
+          props.addItemToState(item[0])
+          props.toggle()
+        } else {
+          console.log('failure')
+        }
+        //refresh the page
+        //window.location.reload(false);
+      })
+      .catch(err => console.log(err))
+
 
     props.addItemToState(form);
     props.toggle();
@@ -40,7 +72,7 @@ function AddEditForm(props) {
         <Label for="first">IP</Label>
         <Input
           type="text"
-          name="first"
+          name="IP"
           id="first"
           onChange={onChange}
           value={form.IP === null ? "" : form.IP}
@@ -50,7 +82,7 @@ function AddEditForm(props) {
         <Label for="last">IPManagment</Label>
         <Input
           type="text"
-          name="last"
+          name="IPMANAGEMENT"
           id="last"
           onChange={onChange}
           value={form.IPManagment === null ? "" : form.IPManagment}
@@ -60,7 +92,7 @@ function AddEditForm(props) {
         <Label for="email">RAM</Label>
         <Input
           type="email"
-          name="email"
+          name="RAM"
           id="email"
           onChange={onChange}
           value={form.RAM === null ? "" : form.RAM}
@@ -70,7 +102,7 @@ function AddEditForm(props) {
         <Label for="Model">Model</Label>
         <Input
           type="text"
-          name="location"
+          name="Model"
           id="location"
           onChange={onChange}
           value={form.Model === null ? "" : form.Model}
@@ -81,7 +113,7 @@ function AddEditForm(props) {
         <Label for="Rack">Rack</Label>
         <Input
           type="text"
-          name="location"
+          name="Rack"
           id="location"
           onChange={onChange}
           value={form.Rack === null ? "" : form.Rack}
@@ -92,7 +124,7 @@ function AddEditForm(props) {
         <Label for="Pod">Pod</Label>
         <Input
           type="text"
-          name="location"
+          name="Pod"
           id="location"
           onChange={onChange}
           value={form.Pod === null ? "" : form.Pod}
@@ -103,7 +135,7 @@ function AddEditForm(props) {
         <Label for="Owner">Owner</Label>
         <Input
           type="text"
-          name="location"
+          name="Owner"
           id="location"
           onChange={onChange}
           value={form.Owner === null ? "" : form.Owner}
@@ -114,7 +146,7 @@ function AddEditForm(props) {
         <Label for="Model">username</Label>
         <Input
           type="text"
-          name="location"
+          name="username"
           id="location"
           onChange={onChange}
           value={form.username === null ? "" : form.username}
@@ -125,7 +157,7 @@ function AddEditForm(props) {
         <Label for="Model">Password</Label>
         <Input
           type="text"
-          name="location"
+          name="password"
           id="location"
           onChange={onChange}
           value={form.password === null ? "" : form.password}
