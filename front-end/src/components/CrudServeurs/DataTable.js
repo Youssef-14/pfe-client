@@ -33,8 +33,8 @@ function DataTable(props) {
         <td>{item.IPManagment}</td>
         <td>{item.RAM}</td>
         <td>{item.Model}</td>
-        <td>{item.Rack}</td>
-        <td>?{item.Pod}</td>
+        <td>{item.rack}</td>
+        <td>{item.pod}</td>
         <td>{item.Owner}</td>
         <td>{item.Login}</td>
         <td>{item.Password}</td>

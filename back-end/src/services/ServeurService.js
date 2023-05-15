@@ -12,10 +12,7 @@ class ServeurService {
       const { Rack } = serveur;
       const pod = Rack.Pod.Libelle;
       const rack = Rack.Nom;
-      console.log(Rack);
-      console.log(pod);
-      console.log(rack);
-      const serveurObject = { n: index, rack, pod, ...serveur.toObject() };
+      const serveurObject = { n: index,  ...serveur.toObject() , rack, pod};
       return serveurObject;
     }));
   
