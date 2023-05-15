@@ -52,6 +52,13 @@ function ListServeures(props) {
             </Row>
             <Row>
                 <Col>
+                {items.map((item) => (
+                        <ModalForm
+                            key={item.id}
+                            buttonLabel={item.Libelle}
+
+                        />
+                    ))}
                     <ModalForm buttonLabel="Add datacenter" addItemToState={addItemToState} />
                 </Col>
             </Row>
