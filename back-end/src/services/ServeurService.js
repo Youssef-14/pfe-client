@@ -1,7 +1,4 @@
 const { Serveur } = require('../models/serveur.js');
-const { Rack } = require('../models/rack.js');
-const { Pod } = require('../models/pod.js');
-const RackService = require('../services/RackService');
 
 class ServeurService {
   async getAllServeurs() {
