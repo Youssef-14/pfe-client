@@ -5,7 +5,7 @@ class ServeurService {
     const serveurs = await Serveur.find();
     return serveurs.map((serveur, index) => {
       return {
-        "n°": index,
+        "n": index,
         ...serveur.toObject()
       };
     });
