@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../components/style/DC_VISUALISATION.css'
-const DataCenters = () => {
+import DataCenterButton from './DataCenterButton';
+import { getToken } from "../_services/account.services";
+import './style/create.component.css'
+const DataCenter = () => {
     const [dataCenters, setDataCenters] = useState([]);
     const [selectedDataCenter, setSelectedDataCenter] = useState(null);
-    const [selectedPod, setSelectedPod] = useState(null);
+    const [selectedPods, setSelectedPods] = useState([]);
+    const [selectedRacks, setSelectedRacks] = useState([]);
 
     useEffect(() => {
         fetchDataCenters();
@@ -12,69 +16,81 @@ const DataCenters = () => {
 
     const fetchDataCenters = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/datacenters/get');
+            const token = getToken();
+            const headers = { Authorization: `Bearer ${token}` };
+            const response = await axios.get('http://localhost:3001/datacenters/get', { headers });
             setDataCenters(response.data);
         } catch (error) {
-            console.log(error);
+            console.error('Error fetching data centers:', error);
+        }
+    };
+
+    const fetchDataCenterPodsAndRacks = async (dataCenterId) => {
+        try {
+            const token = getToken();
+            const headers = { Authorization: `Bearer ${token}` };
+            const podsResponse = await axios.get(`http://localhost:3001/pods/get?DataCenter=${dataCenterId}`, { headers });
+            const pods = podsResponse.data;
+            const racksPromises = pods.map(async (pod) => {
+                const rackResponse = await axios.get(`http://localhost:3001/racks/get?Pod=${pod._id}`, { headers });
+                return rackResponse.data;
+            });
+            const racks = await Promise.all(racksPromises);
+            setSelectedPods(pods);
+            setSelectedRacks(racks.flat());
+        } catch (error) {
+            console.error(`Error fetching pods and racks for data center ${dataCenterId}:`, error);
         }
     };
 
     const handleDataCenterClick = (dataCenterId) => {
-        const selectedDataCenter = dataCenters.find((dc) => dc._id === dataCenterId);
-        setSelectedDataCenter(selectedDataCenter);
-        setSelectedPod(null);
-    };
-
-    const handlePodClick = (podId) => {
-        const selectedPod = selectedDataCenter.pods.find((pod) => pod._id === podId);
-        setSelectedPod(selectedPod);
+        setSelectedDataCenter(dataCenterId);
+        fetchDataCenterPodsAndRacks(dataCenterId);
     };
 
     return (
         <div>
-            <h2>Data Centers</h2>
-            <div className="data-center-buttons">
-                {dataCenters.map((dataCenter) => (
-                    <button key={dataCenter._id} onClick={() => handleDataCenterClick(dataCenter._id)}>
-                        {dataCenter.Libelle}
-                    </button>
-                ))}
-            </div>
+            <h1>Data Centers</h1>
+            {dataCenters.map((dataCenter) => (
+                <DataCenterButton
+                    key={dataCenter._id}
+                    dataCenter={dataCenter}
+                    onClick={handleDataCenterClick}
+                />
+            ))}
+            <hr />
             {selectedDataCenter && (
                 <div>
-                    <h3>Pods</h3>
-                    {selectedDataCenter.pods.length === 0 ? (
-                        <p>No pods available for this data center.</p>
-                    ) : (
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Pod Name</th>
-                                    <th>Description</th>
-                                    <th>Capacity</th>
+                    <h2>Data Center: {selectedDataCenter}</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pods</th>
+                                <th>Racks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {selectedPods.map((pod) => (
+                                <tr key={pod._id}>
+                                    <td>{pod.Libelle}</td>
+                                    <td>
+                                        {selectedRacks
+                                            .filter((rack) => rack.Pod.$oid === pod._id.$oid)
+                                            .map((rack) => (
+                                                <div key={rack._id}>
+                                                    Rack: {rack.Nom}, Size: {rack.Taille}
+                                                </div>
+                                            ))}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {selectedDataCenter.pods.map((pod) => (
-                                    <tr key={pod._id} onClick={() => handlePodClick(pod._id)}>
-                                        <td>{pod.Libelle}</td>
-                                        <td>{pod.Description}</td>
-                                        <td>{pod.Capacite}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
-            )}
-            {selectedPod && (
-                <div>
-                    <h3>Selected Pod: {selectedPod.Libelle}</h3>
-                    {/* Display additional pod details if needed */}
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             )}
         </div>
     );
 };
 
-export default DataCenters;
+export default DataCenter;
+

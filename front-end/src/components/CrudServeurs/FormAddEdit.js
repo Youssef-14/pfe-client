@@ -124,14 +124,14 @@ function AddEditForm(props) {
         />
       </FormGroup>
       <FormGroup>
-        <Label for="IPManagment">IPManagment</Label>
+        <Label for="Pod">Pod</Label>
         <Input
           type="text"
-          name="location"
-          id="location"
+          name="Pod"
+          id="Pod"
           onChange={onChange}
           value={form.Pod === null ? "" : form.Pod}
-          placeholder="IPManagment"
+          placeholder="Pod"
         />
       </FormGroup>
       <FormGroup>
