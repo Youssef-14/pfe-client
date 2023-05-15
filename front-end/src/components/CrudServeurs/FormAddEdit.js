@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import axios from "axios";
+import { getToken } from "../../_services/account.services";
 
 function AddEditForm(props) {
   const [form, setValues] = useState({
@@ -14,8 +16,38 @@ function AddEditForm(props) {
   };
 
   const submitFormAdd = (e) => {
-    console.log(props.item);
     e.preventDefault();
+
+    const serveur = {
+      IP: form.IP,
+      IPManagment: form.IPManagment,
+      RAM: form.RAM,
+      Model: form.Model,
+      Rack: form.Rack,
+      Pod: form.Pod,
+      Owner: form.Owner,
+      username: form.username,
+      password: form.password
+    }
+
+    axios.post('http://localhost:3001/serveurs/add', serveur, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    })
+      .then(response => {
+        const item = response.data;
+        if (Array.isArray(item)) {
+          props.addItemToState(item[0])
+          props.toggle()
+        } else {
+          console.log('failure')
+        }
+        //refresh the page
+        //window.location.reload(false);
+      })
+      .catch(err => console.log(err))
+
 
     props.addItemToState(form);
     props.toggle();
@@ -38,10 +70,20 @@ function AddEditForm(props) {
     <Form onSubmit={props.item ? submitFormEdit : submitFormAdd}>
 
       <FormGroup>
-        <Label for="last">Login</Label>
+        <Label for="first">IP</Label>
         <Input
           type="text"
-          name="last"
+          name="first"
+          id="first"
+          onChange={onChange}
+          value={form.IP === null ? "" : form.IP}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="last">IPManagment</Label>
+        <Input
+          type="text"
+          name="IPMANAGEMENT"
           id="last"
           onChange={onChange}
           value={form.Login === null ? "" : form.Login}
@@ -51,9 +93,9 @@ function AddEditForm(props) {
       <FormGroup>
         <Label for="Password">Password</Label>
         <Input
-          type="Password"
-          name="Password"
-          id="Password"
+          type="email"
+          name="email"
+          id="email"
           onChange={onChange}
           value={form.Password === null ? "" : form.Password}
           placeholder="Password"
@@ -63,8 +105,8 @@ function AddEditForm(props) {
         <Label for="Model">Model</Label>
         <Input
           type="text"
-          name="Model"
-          id="Model"
+          name="location"
+          id="location"
           onChange={onChange}
           value={form.Model === null ? "" : form.Model}
           placeholder="Model"
@@ -74,8 +116,8 @@ function AddEditForm(props) {
         <Label for="IP">IP</Label>
         <Input
           type="text"
-          name="IP"
-          id="IP"
+          name="location"
+          id="location"
           onChange={onChange}
           value={form.IP === null ? "" : form.IP}
           placeholder="IP"
@@ -85,8 +127,8 @@ function AddEditForm(props) {
         <Label for="IPManagment">IPManagment</Label>
         <Input
           type="text"
-          name="IPManagment"
-          id="IPManagment"
+          name="location"
+          id="location"
           onChange={onChange}
           value={form.Pod === null ? "" : form.Pod}
           placeholder="IPManagment"
@@ -96,8 +138,8 @@ function AddEditForm(props) {
         <Label for="Owner">Owner</Label>
         <Input
           type="text"
-          name="Owner"
-          id="Owner"
+          name="location"
+          id="location"
           onChange={onChange}
           value={form.Owner === null ? "" : form.Owner}
           placeholder="Owner"
@@ -107,7 +149,7 @@ function AddEditForm(props) {
         <Label for="Model">username</Label>
         <Input
           type="text"
-          name="location"
+          name="username"
           id="location"
           onChange={onChange}
           value={form.username === null ? "" : form.username}
@@ -118,7 +160,7 @@ function AddEditForm(props) {
         <Label for="Model">Password</Label>
         <Input
           type="text"
-          name="location"
+          name="password"
           id="location"
           onChange={onChange}
           value={form.password === null ? "" : form.password}

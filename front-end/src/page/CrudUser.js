@@ -2,15 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import ModalForm from "../components/CrudUser/Modal";
 import DataTable from "../components/CrudUser/DataTable";
-import '../components/style/Crud.css'
+import '../components/style/Crud.css';
+import { getToken ,getUserRole } from "../_services/account.services";
 
 import axios from "axios";
 
 function CrudUser(props) {
+
   const [items, setItems] = useState([]);
 
   const getItems = () => {
-    axios.get("http://localhost:3001/users/getaccounts").then((response) => {
+    axios.get("http://localhost:3001/users/getaccounts",{
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    }).then((response) => {
       setItems(response.data);
 
     }
@@ -43,6 +49,8 @@ function CrudUser(props) {
     getItems();
   }, []);
 
+  if (getUserRole() === "Admin") {
+    
   return (
     <div>
       <Container className="App">
@@ -77,7 +85,11 @@ function CrudUser(props) {
         </style>
       </Container>
     </div>
-  );
+  );}
+  else{
+    //Redirect to home page
+    window.location.href = "/home";
+  }
 }
 
 export default CrudUser;
