@@ -5,22 +5,26 @@ const RackService = require('../services/RackService');
 
 class ServeurService {
   async getAllServeurs() {
-    const serveurs = await Serveur.find();
-     return serveurs.map( (serveur, index) => {
-      const findRack =  RackService.getRackById(serveur.Rack);
-      const rack = findRack.Nom;
-      const pod =  Pod.findById(findRack.Pod).Libelle;
-      console.log(findRack);
+    const serveurs = await Serveur.find().populate({
+      path: 'Rack',
+      populate: { path: 'Pod', select: 'Libelle' },
+      select: 'Nom'
+    });
+  
+    const serveurObjects = await Promise.all(serveurs.map(async (serveur, index) => {
+      const { Rack } = serveur;
+      const pod = Rack.Pod.Libelle;
+      const rack = Rack.Nom;
+      console.log(Rack);
       console.log(pod);
       console.log(rack);
-      return {
-        "n": index,
-        "rack": rack,
-        "pod": pod,
-        ...serveur.toObject()
-      };
-    });
+      const serveurObject = { n: index, rack, pod, ...serveur.toObject() };
+      return serveurObject;
+    }));
+  
+    return serveurObjects;
   }
+  
 
 
   async getServeurById(id) {
