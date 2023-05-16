@@ -1,7 +1,7 @@
 import React from 'react';
 import './style/Header.css';
 import logo from '../../src/img/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -9,12 +9,19 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { InputGroup, FormControl } from 'react-bootstrap';
 import { BsSearch, BsPower } from 'react-icons/bs';
-import { getUserRole } from '../_services/account.services';
+import { getUserRole , logout , isLoggedIn } from '../_services/account.services';
 
 function Header() {
     const handleLogout = () => {
         // Handle logout logic here
-    };
+        logout();
+        //redirect to login page
+        window.location.href = '/';
+    };  
+    if(!isLoggedIn()){
+        //redirect to login page
+        return <Navigate to="/" replace />;
+    }
 
     if (getUserRole() === 'Admin') {
         return (
