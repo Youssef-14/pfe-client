@@ -58,6 +58,8 @@ class UtilisateurService {
 
   async updateUtilisateur(id, data) {
     try {
+      const salt = await bcrypt.genSalt(10);
+      data.Password = await bcrypt.hash(data.Password, salt);
       return await Utilisateur.findByIdAndUpdate(id, data, { new: true });
     } catch (err) {
       throw err;
