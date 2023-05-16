@@ -25,7 +25,7 @@ function AddEditForm(props) {
       Password: form.Password
     }
 
-    axios.post('http://localhost:3001/users/signup', user,{
+    axios.post('http://localhost:3001/users/signup', user, {
       headers: {
         'Authorization': `Bearer ${getToken()}`
       }
@@ -54,7 +54,7 @@ function AddEditForm(props) {
     }
     console.log(user);
 
-    axios.put(`http://localhost:3001/users/update/${form._id}`, user,{
+    axios.put(`http://localhost:3001/users/update/${form._id}`, user, {
       headers: {
         'Authorization': `Bearer ${getToken()}`
       }
@@ -75,7 +75,7 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (props.item) {
-      const { _id, Username, Nom, Prenom, Password } = props.item;
+      const { _id, Username, Nom, Prenom, Password, } = props.item;
       setValues({ _id, Username, Nom, Prenom, Password });
     }
   }, [props.item]);
@@ -122,6 +122,17 @@ function AddEditForm(props) {
           onChange={onChange}
           value={form.Password === null ? "" : form.Password}
           placeholder="Password"
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label for="Role">Role</Label>
+        <Input
+          type="text"
+          name="Role"
+          id="Role"
+          onChange={onChange}
+          value={form.Role === null ? "" : form.Role}
+          placeholder="user/admin"
         />
       </FormGroup>
       <Button>Submit</Button>

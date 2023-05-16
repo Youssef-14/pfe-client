@@ -127,3 +127,12 @@ body {
 #submit:hover {
     background-color: #df98fa;
 }
+
+.error {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+}
