@@ -82,19 +82,7 @@ function Header() {
                                 </Link>
                             </Nav.Link>
                         </Nav>
-                        <Form className="d-flex">
-                            <InputGroup className="mb-3">
-                                <FormControl
-                                    type="search"
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                    aria-describedby="basic-addon2"
-                                />
-                                <Button variant="outline-success">
-                                    <BsSearch />
-                                </Button>
-                            </InputGroup>
-                        </Form>
+
                         <Button variant="outline-light" onClick={handleLogout}>
                             Logout <BsPower />
                         </Button>
