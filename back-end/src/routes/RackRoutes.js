@@ -6,6 +6,7 @@ const passport = require('passport');
 router.post('/add',passport.authenticate('jwt', { session: false }) , rackController.createRack);
 router.get('/get',passport.authenticate('jwt', { session: false }) , rackController.getAllRacks);
 router.get('/:id',passport.authenticate('jwt', { session: false }) , rackController.getRackById);
+router.get('/get/pod/:id',passport.authenticate('jwt', { session: false }) , rackController.getRackByPodId);
 router.put('/:id',passport.authenticate('jwt', { session: false }) , rackController.updateRack);
 router.delete('/:id',passport.authenticate('jwt', { session: false }) , rackController.deleteRack);
 

@@ -14,6 +14,10 @@ class RackService {
     return await Rack.find();
   }
 
+  static async getRackByPodId(id) {
+    return await Rack.find({ Pod: id });
+  }
+
   static async updateRack(id, rack) {
     return await Rack.findByIdAndUpdate(id, rack, { new: true });
   }

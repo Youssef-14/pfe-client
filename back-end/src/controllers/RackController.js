@@ -49,6 +49,14 @@ class RackController {
       next(error);
     }
   }
+  static async getRackByPodId(req, res, next) {
+    try {
+      const racks = await RackService.getRackByPodId(req.params.id);
+      res.json(racks);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async updateRack(req, res, next) {
     try {

@@ -21,7 +21,7 @@ class PodService {
   }
 
   static async getPodsByDatacenterId(datacenterId) {
-    const pods = await Pod.find({ datacenterId });
+    const pods = await Pod.find({ DataCenter : datacenterId });
     return pods;
   }
 

@@ -1,90 +1,171 @@
-import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "reactstrap";
-import ModalForm from "./CrudDataCenter/Modal";
-import DataTable from "./CrudDataCenter/DataTable";
-import '../components/style/Crud.css'
-import BackgrounAN from "../page/BackgrounAN";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { getToken } from "../_services/account.services";
 
-function ListDataCenter(props) {
-    const [items, setItems] = useState([]);
+const DataCenterComponent = () => {
+  const [dataCenters, setDataCenters] = useState([]);
+  const [selectedDataCenter, setSelectedDataCenter] = useState('');
+  const [pods, setPods] = useState([]);
+  const [selectedPod, setSelectedPod] = useState('');
+  const [racks, setRacks] = useState([]);
 
-    const getItems = () => {
-        axios.get("http://localhost:3001/datacenters/get").then((response) => {
-            setItems(response.data);
-            console.log(response.data);
-        })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
+  useEffect(() => {
+    fetchDataCenters();
+  }, []);
 
-    const addItemToState = (item) => {
-        setItems([...items, item]);
-    };
+  const fetchDataCenters = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:3001/datacenters/get');
+      setDataCenters(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const updateState = (item) => {
-        const itemIndex = items.findIndex((data) => data.id === item.id);
-        const newArray = [
-            ...items.slice(0, itemIndex),
-            item,
-            ...items.slice(itemIndex + 1)
-        ];
-        setItems(newArray);
-    };
+  const fetchPods = async (dataCenterId) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:3001/pods/get/datacenter/${dataCenterId}`, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        } 
+    });
+      setPods(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    const deleteItemFromState = (id) => {
-        const updatedItems = items.filter((item) => item.id !== id);
-        setItems(updatedItems);
-    };
+  const fetchRacks = async (podId) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:3001/racks/get/pod/${podId}`,{
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        } 
+    });
+      setRacks(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    useEffect(() => {
-        getItems();
-    }, []);
+  const handleDataCenterChange = (event) => {
+    const selectedDataCenterId = event.target.value;
+    setSelectedDataCenter(selectedDataCenterId);
+    setSelectedPod('');
+    setRacks([]);
 
-    return (
-        <Container className="App">
+    if (selectedDataCenterId) {
+      fetchPods(selectedDataCenterId);
+    }
+  };
 
-            <Row>
-                <Col>
-                    <h2 style={{ margin: "20px 0" }}>liste des datacenters</h2>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    {items.map((item) => (
-                        <ModalForm
-                            key={item.id}
-                            buttonLabel={item.Libelle}
+  const handlePodChange = (event) => {
+    const selectedPodId = event.target.value;
+    setSelectedPod(selectedPodId);
+    setRacks([]);
 
-                        />
-                    ))}
-                    <ModalForm buttonLabel="Add datacenter" addItemToState={addItemToState} />
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <div style={{ height: "400px", overflowY: "scroll" }}>
-                        <DataTable
-                            items={items}
-                            updateState={updateState}
-                            deleteItemFromState={deleteItemFromState}
-                        />
-                    </div>
-                </Col>
-            </Row>
+    if (selectedPodId) {
+      fetchRacks(selectedPodId);
+    }
+  };
 
-            <style>
-                {`
-        .dataTables_scrollBody {
-          overflow-y: scroll;
+  const handleAddDataCenter = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:3001/datacenters/add', {
+        Libelle: 'Nouveau DataCenter',
+        Description: 'Description du nouveau DataCenter',
+        Capacite: 100
+      },{
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
         }
-      `}
-            </style>
-            <BackgrounAN />
-        </Container>
+    });
 
-    );
-}
+      setDataCenters([...dataCenters, response.data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-export default ListDataCenter;
+  const handleAddPod = async () => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
+        Libelle: 'Nouveau Pod',
+        DataCenter: selectedDataCenter
+      });
+
+      setPods([...pods, response.data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddRack = async () => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:3001/racks/add`, {
+        Nom: 'Nouveau Rack',
+        Taille: 10,
+        Pod: selectedPod
+      });
+
+      setRacks([...racks, response.data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteRack = async (rackId) => {
+    try {
+      await axios.delete(`/api/racks/${rackId}`);
+      setRacks(racks.filter((rack) => rack._id !== rackId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div>
+      <h2>Data Centers</h2>
+      <select value={selectedDataCenter} onChange={handleDataCenterChange}>
+        <option value="">Sélectionner un Data Center</option>
+        {dataCenters.map((dataCenter) => (
+          <option key={dataCenter._id} value={dataCenter._id}>
+            {dataCenter.Libelle}
+          </option>
+        ))}
+      </select>
+
+      {selectedDataCenter && (
+        <div>
+          <h3>Pods</h3>
+          <select value={selectedPod} onChange={handlePodChange}>
+            <option value="">Sélectionner un Pod</option>
+            {pods.map((pod) => (
+              <option key={pod._id} value={pod._id}>
+                {pod.Libelle}
+              </option>
+            ))}
+          </select>
+
+          {selectedPod && (
+            <div>
+              <h4>Racks</h4>
+              <button onClick={handleAddRack}>Ajouter un Rack</button>
+              {racks.map((rack) => (
+                <div key={rack._id}>
+                  <span>{rack.Nom}</span>
+                  <button onClick={() => handleDeleteRack(rack._id)}>Supprimer</button>
+                </div>
+              ))}
+            </div>
+          )}
+          <button onClick={handleAddPod}>Ajouter un Pod</button>
+        </div>
+      )}
+
+      <button onClick={handleAddDataCenter}>Ajouter un Data Center</button>
+    </div>
+  );
+};
+
+export default DataCenterComponent;
