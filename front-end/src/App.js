@@ -8,7 +8,7 @@ import Login from './page/Login';
 import Reporting from './page/Reporting';
 import Header from './components/Header';
 import CrudUser from './page/CrudUser';
-import DataCenters from './components/service';
+import DataCenters from './components/ListDatacenters';
 function App() {
 
   return (
@@ -21,7 +21,6 @@ function App() {
         <Route path="/AccountsManagement" element={<React.Fragment><Header /><CrudUser /></React.Fragment>} />
         <Route path="/Reporting" element={<React.Fragment><Header /><Reporting /></React.Fragment>} />
         <Route path="/test" element={<React.Fragment><Header /><DataCenters /></React.Fragment>} />
-
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
