@@ -92,7 +92,11 @@ const DataCenterComponent = () => {
       const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
         Libelle: 'Nouveau Pod',
         DataCenter: selectedDataCenter
-      });
+      }, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        } 
+    });
 
       setPods([...pods, response.data]);
     } catch (error) {
@@ -106,7 +110,11 @@ const DataCenterComponent = () => {
         Nom: 'Nouveau Rack',
         Taille: 10,
         Pod: selectedPod
-      });
+      }, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        } 
+    });
 
       setRacks([...racks, response.data]);
     } catch (error) {
@@ -114,9 +122,42 @@ const DataCenterComponent = () => {
     }
   };
 
+  const handleDeleteDataCenter = async (dataCenterId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:3001/datacenters/delete/${dataCenterId}`, {
+        headers: {
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
+      setDataCenters(dataCenters.filter((dataCenter) => dataCenter._id !== dataCenterId));
+      setPods([]);
+      setRacks([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  const handleDeletePod = async (podId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:3001/pods/delete/${podId}`, {
+        headers: {
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
+      setPods(pods.filter((pod) => pod._id !== podId));
+      setRacks([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   const handleDeleteRack = async (rackId) => {
     try {
-      await axios.delete(`/api/racks/${rackId}`);
+      await axios.delete(`http://127.0.0.1:3001/racks/delete/${rackId}`, {
+        headers: {
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
       setRacks(racks.filter((rack) => rack._id !== rackId));
     } catch (error) {
       console.error(error);
