@@ -195,6 +195,7 @@ const DataCenterComponent = () => {
               {racks.map((rack) => (
                 <div key={rack._id}>
                   <span>{rack.Nom}</span>
+                  <span>{rack.Taille}</span>
                   <button onClick={() => handleDeleteRack(rack._id)}>Supprimer</button>
                 </div>
               ))}
