@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './style/Header.css';
 import logo from '../../src/img/logo.png';
 import { Link, Navigate } from 'react-router-dom';
@@ -8,24 +8,34 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { InputGroup, FormControl } from 'react-bootstrap';
-import { BsSearch, BsPower } from 'react-icons/bs';
-import { getUserRole , logout , isLoggedIn } from '../_services/account.services';
+import { BsSearch, BsPower, BsSun } from 'react-icons/bs';
+import { getUserRole, logout, isLoggedIn } from '../_services/account.services';
 
 function Header() {
+    const [themeMode, setThemeMode] = useState('dark');
+    const [menuTextColor, setMenuTextColor] = useState(themeMode === 'dark' ? 'white' : 'black');
+
+    const toggleThemeMode = () => {
+        const newThemeMode = themeMode === 'dark' ? 'light' : 'dark';
+        setThemeMode(newThemeMode);
+        setMenuTextColor(newThemeMode === 'dark' ? 'white' : 'black');
+    };
+
     const handleLogout = () => {
         // Handle logout logic here
         logout();
-        //redirect to login page
+        // Redirect to login page
         window.location.href = '/';
-    };  
-    if(!isLoggedIn()){
-        //redirect to login page
+    };
+
+    if (!isLoggedIn()) {
+        // Redirect to login page
         return <Navigate to="/" replace />;
     }
 
     if (getUserRole() === 'Admin') {
         return (
-            <Navbar bg="black" expand="lg">
+            <Navbar bg={themeMode === 'dark' ? 'black' : 'light'} expand="lg">
                 <Container fluid>
                     <Link to="/Home">
                         <img src={logo} className="logo" alt="not found" />
@@ -35,26 +45,31 @@ function Header() {
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
                             <Nav.Link>
-                                <Link to="/Home" id="h">
+                                <Link to="/Home" id="h" style={{ color: menuTextColor }}>
                                     Home
                                 </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/DC_VISUALISATION" id="h">
+                                <Link to="/DC_VISUALISATION" id="h" style={{ color: menuTextColor }}>
                                     DCvisualization
                                 </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/Reporting" id="h">
+                                <Link to="/Reporting" id="h" style={{ color: menuTextColor }}>
                                     Reporting
                                 </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/AccountsManagement" id="h">
+                                <Link to="/AccountsManagement" id="h" style={{ color: menuTextColor }}>
                                     Users management
                                 </Link>
                             </Nav.Link>
                         </Nav>
+
+
+                        <Button variant="outline-light" onClick={toggleThemeMode}>
+                            <BsSun />
+                        </Button>
                         <Button variant="outline-light" onClick={handleLogout}>
                             Logout <BsPower />
                         </Button>
@@ -64,7 +79,7 @@ function Header() {
         );
     } else {
         return (
-            <Navbar bg="black" expand="lg">
+            <Navbar bg={themeMode === 'dark' ? 'black' : 'light'} expand="lg">
                 <Container fluid>
                     <Link to="/Home">
                         <img src={logo} className="logo" alt="not found" />
@@ -74,36 +89,28 @@ function Header() {
                     <Navbar.Collapse id="navbarScroll">
                         <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
                             <Nav.Link>
-                                <Link to="/Home" id="h">
+                                <Link to="/Home" id="h"
+                                    style={{ color: menuTextColor }}
+                                >
                                     Home
                                 </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/DC_VISUALISATION" id="h">
+                                <Link to="/DC_VISUALISATION" id="h" style={{ color: menuTextColor }}>
                                     DCvisualization
                                 </Link>
                             </Nav.Link>
                             <Nav.Link>
-                                <Link to="/Reporting" id="h">
+                                <Link to="/Reporting" id="h" style={{ color: menuTextColor }}>
                                     Reporting
                                 </Link>
                             </Nav.Link>
                         </Nav>
-                        <Form className="d-flex">
-                            <InputGroup className="mb-3">
-                                <FormControl
-                                    type="search"
-                                    placeholder="Search"
-                                    aria-label="Search"
-                                    aria-describedby="basic-addon2"
-                                />
-                                <Button variant="outline-success">
-                                    <BsSearch />
-                                </Button>
-                            </InputGroup>
-                        </Form>
                         <Button variant="outline-light" onClick={handleLogout}>
                             Logout <BsPower />
+                        </Button>
+                        <Button variant="outline-light" onClick={toggleThemeMode}>
+                            <BsSun />
                         </Button>
                     </Navbar.Collapse>
                 </Container>
@@ -113,3 +120,4 @@ function Header() {
 }
 
 export default Header;
+
