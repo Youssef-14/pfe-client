@@ -7,6 +7,12 @@ function AddEditForm(props) {
   const [form, setValues] = useState({
 
   });
+  const [dataCenters, setDataCenters] = useState([]);
+  const [selectedDataCenter, setSelectedDataCenter] = useState('');
+  const [pods, setPods] = useState([]);
+  const [selectedPod, setSelectedPod] = useState('');
+  const [racks, setRacks] = useState([]);
+
 
   const onChange = (e) => {
     setValues({
@@ -17,6 +23,8 @@ function AddEditForm(props) {
 
   const submitFormAdd = (e) => {
     e.preventDefault();
+
+    console.log(form);
 
     const serveur = {
       IPManagement: form.IPManagement,
@@ -51,6 +59,66 @@ function AddEditForm(props) {
 
     props.addItemToState(form);
     props.toggle();
+  };
+
+  const fetchDataCenters = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:3001/datacenters/get',{
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+      });
+      setDataCenters(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDataCenterChange = (event) => {
+    const selectedDataCenterId = event.target.value;
+    setSelectedDataCenter(selectedDataCenterId);
+    setSelectedPod('');
+    setRacks([]);
+
+    if (selectedDataCenterId) {
+      fetchPods(selectedDataCenterId);
+    }
+  };
+
+  const handlePodChange = (event) => {
+    const selectedPodId = event.target.value;
+    setSelectedPod(selectedPodId);
+    setRacks([]);
+
+    if (selectedPodId) {
+      fetchRacks(selectedPodId);
+    }
+  };
+
+  const fetchPods = async (dataCenterId) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:3001/pods/get/datacenter/${dataCenterId}`, {
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        } 
+    });
+      setPods(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchRacks = async (podId) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:3001/racks/get/pod/${podId}`,{
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        } 
+    });
+      setRacks(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const submitFormEdit = (e) => {
@@ -90,6 +158,7 @@ function AddEditForm(props) {
 
 
   useEffect(() => {
+    fetchDataCenters();
     if (props.item) {
   const { _id, Login, Password, Model, IP, IPManagement, RAM, CPU, ConsommationRAM, ConsommationCPU, Uptime, Owner, Role, Rack } = props.item;
   setValues({ _id, Login, Password, Model, IP, IPManagement, RAM, CPU, ConsommationRAM, ConsommationCPU, Uptime, Owner, Role, Rack });
@@ -275,17 +344,6 @@ function AddEditForm(props) {
             />
           </FormGroup>
           <FormGroup>
-            <Label for="Pod">Pod</Label>
-            <Input
-              type="text"
-              name="Pod"
-              id="Pod"
-              onChange={onChange}
-              value={form.Pod === null ? "" : form.Pod}
-              placeholder="Pod"
-            />
-          </FormGroup>
-          <FormGroup>
             <Label for="CPU">CPU</Label>
             <Input
               type="text"
@@ -374,15 +432,40 @@ function AddEditForm(props) {
             />
           </FormGroup>
           <FormGroup>
+            <Label for="DataCenter">DataCenter</Label>
+            <br/>
+            <select value={selectedDataCenter} onChange={handleDataCenterChange}>
+              <option value="">Sélectionner un Data Center</option>
+              {dataCenters.map((dataCenter) => (
+                <option key={dataCenter._id} value={dataCenter._id}>
+                  {dataCenter.Libelle}
+                </option>
+              ))}
+            </select>
+          </FormGroup>
+          <FormGroup>
+            <Label for="Pod">Pod</Label>
+              <br/>
+              <select value={selectedPod} onChange={handlePodChange}>
+              <option value="">Sélectionner un Pod</option>
+              {pods.map((pod) => (
+                <option key={pod._id} value={pod._id}>
+                  {pod.Libelle}
+                </option>
+              ))}
+            </select>
+          </FormGroup>
+          <FormGroup>
             <Label for="Rack">Rack</Label>
-            <Input
-              type="text"
-              name="Rack"
-              id="Rack"
-              onChange={onChange}
-              value={form.Rack === null ? "" : form.Rack}
-              placeholder="Rack"
-            />
+            <br/>
+              <select name="Rack" id="Rack" onChange={onChange} required>
+              <option value="">Sélectionner un Rack</option>
+              {racks.map((rack) => (
+                <option key={rack._id} value={rack._id}>
+                  {rack.Nom}
+                </option>
+              ))}
+            </select>
           </FormGroup>
           <FormGroup>
             <Label for="RAM">RAM</Label>

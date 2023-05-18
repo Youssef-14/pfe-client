@@ -4,8 +4,8 @@ const dataCenterController = require('../controllers/DataCenterController');
 const passport = require('passport');
 const { inRole , Roles } = require('../security/Rolemiddleware');
 
-router.get('/get',dataCenterController.getAllDataCenters);
-router.get('/:id', dataCenterController.getDataCenterById);
+router.get('/get',passport.authenticate('jwt', { session: false }) ,dataCenterController.getAllDataCenters);
+router.get('/:id',passport.authenticate('jwt', { session: false }) , dataCenterController.getDataCenterById);
 router.post('/add',passport.authenticate('jwt', { session: false }) ,inRole(Roles.Admin), dataCenterController.createDataCenter);
 router.put('/:id',passport.authenticate('jwt', { session: false }) ,inRole(Roles.Admin), dataCenterController.updateDataCenter);
 router.delete('/:id',passport.authenticate('jwt', { session: false }) ,inRole(Roles.Admin), dataCenterController.deleteDataCenter);

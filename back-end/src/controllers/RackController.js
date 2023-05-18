@@ -76,7 +76,6 @@ class RackController {
         { $pull: { Racks: req.params.id } },
         { new: true }
       );
-      console.log(ch);
       await RackService.deleteRack(req.params.id);
       res.json({ message: 'Rack deleted successfully' });
     } catch (error) {

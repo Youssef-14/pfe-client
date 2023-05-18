@@ -15,7 +15,11 @@ const DataCenterComponent = () => {
 
   const fetchDataCenters = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:3001/datacenters/get');
+      const response = await axios.get('http://127.0.0.1:3001/datacenters/get',{
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+      });
       setDataCenters(response.data);
     } catch (error) {
       console.error(error);
