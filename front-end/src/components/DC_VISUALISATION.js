@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { getToken } from "../_services/account.services";
-
+import { faTrashAlt, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import './style/DC_VISUALISATION.css'
 const DataCenterComponent = () => {
   const [dataCenters, setDataCenters] = useState([]);
   const [selectedDataCenter, setSelectedDataCenter] = useState('');
@@ -15,9 +17,9 @@ const DataCenterComponent = () => {
 
   const fetchDataCenters = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:3001/datacenters/get',{
+      const response = await axios.get('http://127.0.0.1:3001/datacenters/get', {
         headers: {
-            'Authorization': `Bearer ${getToken()}`
+          'Authorization': `Bearer ${getToken()}`
         }
       });
       setDataCenters(response.data);
@@ -30,9 +32,9 @@ const DataCenterComponent = () => {
     try {
       const response = await axios.get(`http://127.0.0.1:3001/pods/get/datacenter/${dataCenterId}`, {
         headers: {
-            'Authorization': `Bearer ${getToken()}`
-        } 
-    });
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
       setPods(response.data);
     } catch (error) {
       console.error(error);
@@ -41,11 +43,11 @@ const DataCenterComponent = () => {
 
   const fetchRacks = async (podId) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:3001/racks/get/pod/${podId}`,{
+      const response = await axios.get(`http://127.0.0.1:3001/racks/get/pod/${podId}`, {
         headers: {
-            'Authorization': `Bearer ${getToken()}`
-        } 
-    });
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
       setRacks(response.data);
     } catch (error) {
       console.error(error);
@@ -79,11 +81,11 @@ const DataCenterComponent = () => {
         Libelle: 'Nouveau DataCenter',
         Description: 'Description du nouveau DataCenter',
         Capacite: 100
-      },{
+      }, {
         headers: {
-            'Authorization': `Bearer ${getToken()}`
+          'Authorization': `Bearer ${getToken()}`
         }
-    });
+      });
 
       setDataCenters([...dataCenters, response.data]);
     } catch (error) {
@@ -98,9 +100,9 @@ const DataCenterComponent = () => {
         DataCenter: selectedDataCenter
       }, {
         headers: {
-            'Authorization': `Bearer ${getToken()}`
-        } 
-    });
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
 
       setPods([...pods, response.data]);
     } catch (error) {
@@ -116,9 +118,9 @@ const DataCenterComponent = () => {
         Pod: selectedPod
       }, {
         headers: {
-            'Authorization': `Bearer ${getToken()}`
-        } 
-    });
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
 
       setRacks([...racks, response.data]);
     } catch (error) {
@@ -140,7 +142,7 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
-  
+
   const handleDeletePod = async (podId) => {
     try {
       await axios.delete(`http://127.0.0.1:3001/pods/delete/${podId}`, {
@@ -154,7 +156,7 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
-  
+
   const handleDeleteRack = async (rackId) => {
     try {
       await axios.delete(`http://127.0.0.1:3001/racks/delete/${rackId}`, {
@@ -171,47 +173,83 @@ const DataCenterComponent = () => {
   return (
     <div>
       <h2>Data Centers</h2>
-      <select value={selectedDataCenter} onChange={handleDataCenterChange}>
-        <option value="">Sélectionner un Data Center</option>
-        {dataCenters.map((dataCenter) => (
-          <option key={dataCenter._id} value={dataCenter._id}>
-            {dataCenter.Libelle}
-          </option>
-        ))}
-      </select>
+      <div class="button-container">
+        <select value={selectedDataCenter} onChange={handleDataCenterChange}>
+          <option value="">Sélectionner un Data Center</option>
+          {dataCenters.map((dataCenter) => (
+            <option key={dataCenter._id} value={dataCenter._id}>
+              {dataCenter.Libelle}
+            </option>
+          ))}
+        </select>
 
-      {selectedDataCenter && (
-        <div>
-          <h3>Pods</h3>
-          <select value={selectedPod} onChange={handlePodChange}>
-            <option value="">Sélectionner un Pod</option>
-            {pods.map((pod) => (
-              <option key={pod._id} value={pod._id}>
-                {pod.Libelle}
-              </option>
-            ))}
-          </select>
-
-          {selectedPod && (
-            <div>
-              <h4>Racks</h4>
-              <button onClick={handleAddRack}>Ajouter un Rack</button>
-              {racks.map((rack) => (
-                <div key={rack._id}>
-                  <span>{rack.Nom}</span>
-                  <span>{rack.Taille}</span>
-                  <button onClick={() => handleDeleteRack(rack._id)}>Supprimer</button>
-                </div>
-              ))}
+        {selectedDataCenter && (
+          <div>
+            {/* <h3>Pods</h3> */}
+            <div class="button-container">
+              <select value={selectedPod} onChange={handlePodChange}>
+                <option value="">Sélectionner un Pod</option>
+                {pods.map((pod) => (
+                  <option key={pod._id} value={pod._id}>
+                    {pod.Libelle}
+                  </option>
+                ))}
+              </select>
             </div>
-          )}
-          <button onClick={handleAddPod}>Ajouter un Pod</button>
+          </div>
+        )}
+      </div>
+
+      {selectedPod && (
+        <div>
+          {/* <h4>Racks</h4> */}
+          <div>
+            <button onClick={handleAddRack}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Rack
+            </button>
+            <button onClick={handleAddPod}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Pod
+            </button>
+            <button onClick={handleAddDataCenter}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Data Center
+            </button>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Racks</th>
+                <th>Pods</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {racks.map((rack) => (
+                <tr key={rack._id}>
+                  <td>{rack.Nom}</td>
+                  <td>{rack.Pod}</td>
+                  <td>
+                    <button onClick={() => handleDeleteRack(rack._id)}>
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                      Supprimer
+                    </button>
+                    <button onClick={() => handleDeleteRack(rack._id)}>
+                      <FontAwesomeIcon icon={faEdit} />
+                      Edit
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
-
-      <button onClick={handleAddDataCenter}>Ajouter un Data Center</button>
     </div>
   );
+
 };
 
 export default DataCenterComponent;

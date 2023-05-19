@@ -41,3 +41,11 @@
     /* Adjust the value to set the desired spacing */
     margin-left: 100px;
 }
+
+.button-container {
+    display: flex;
+}
+
+.button-container>* {
+    margin-right: 10px;
+}
