@@ -22,7 +22,7 @@ class RackController {
           { $push: { Racks: newRack._id } },
           { new: true }
         );
-      res.status(201).send({ message:"rack created successfully"});
+      res.status(201).send({ message:"rack created successfully", rack: newRack});
     } catch (error) {
       next(error);
     }

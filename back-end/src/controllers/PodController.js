@@ -24,7 +24,7 @@ class PodController {
           { $push: { pods: pod._id } },
           { new: true }
         );
-      res.status(201).send({ message:"pod created successfully"});
+      res.status(201).send({ message:"pod created successfully", Pod: pod});
     } catch (error) {
       console.log(error);
       res.status(400).send(error);

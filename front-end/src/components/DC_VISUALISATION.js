@@ -87,7 +87,7 @@ const DataCenterComponent = () => {
         }
       });
 
-      setDataCenters([...dataCenters, response.data]);
+      setDataCenters([...dataCenters, response.data.DataCenter]);
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +104,7 @@ const DataCenterComponent = () => {
         }
       });
 
-      setPods([...pods, response.data]);
+      setPods([...pods, response.data.Pod]);
     } catch (error) {
       console.error(error);
     }
@@ -122,7 +122,7 @@ const DataCenterComponent = () => {
         }
       });
 
-      setRacks([...racks, response.data]);
+      setRacks([...racks, response.data.rack]);
     } catch (error) {
       console.error(error);
     }
@@ -224,7 +224,7 @@ const DataCenterComponent = () => {
             <thead>
               <tr>
                 <th>Racks</th>
-                <th>Pods</th>
+                <th>Taille</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -234,7 +234,7 @@ const DataCenterComponent = () => {
 
                   <td className='td'>{rack.Nom}</td>
 
-                  <td className='td'>{rack.Pod}</td>
+                  <td className='td'>{rack.Taille}</td>
                   <td>
                     <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
                       <FontAwesomeIcon icon={faTrashAlt} />
