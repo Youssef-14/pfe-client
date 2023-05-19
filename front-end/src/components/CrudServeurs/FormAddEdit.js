@@ -50,7 +50,7 @@ function AddEditForm(props) {
       }
     })
       .then(response => {
-        const item = response.data;
+        console.log(response.data);
         //refresh the page
         window.location.reload(false);
       })

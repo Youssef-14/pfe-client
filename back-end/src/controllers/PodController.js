@@ -68,9 +68,9 @@ class PodController {
     try {
       const pod = await podService.updatePodById(req.params.id, req.body);
       if (!pod) {
-        return res.status(404).send();
+        return res.status(404).send({ message: 'pod not found' });
       }
-      res.send(pod);
+      res.send(200).send({ message: 'pod updated successfully' });
     } catch (error) {
       res.status(400).send(error);
     }
@@ -90,7 +90,7 @@ class PodController {
       if (!pod) {
         return res.status(404).send();
       }
-      res.send("pod deleted successfully");
+      res.status(204).send("pod deleted successfully");
     } catch (error) {
       res.status(500).send(error);
     }

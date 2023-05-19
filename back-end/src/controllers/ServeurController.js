@@ -55,8 +55,8 @@ class ServeurController {
 
   async updateServeur(req, res, next) {
     try {
-      const serveur = await serveurService.updateServeur(req.params.id, req.body);
-      res.json(serveur);
+       await serveurService.updateServeur(req.params.id, req.body);
+      res.json(200).send({message:"serveur updated successfully"})
     } catch (err) {
       next(err);
     }
@@ -71,7 +71,7 @@ class ServeurController {
         { new: true }
       );
       await serveurService.deleteServeur(req.params.id);
-      res.sendStatus(204);
+      res.send(204).send({message:"serveur deleted successfully"})
     } catch (err) {
       next(err);
     }

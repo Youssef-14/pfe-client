@@ -60,8 +60,8 @@ class RackController {
 
   static async updateRack(req, res, next) {
     try {
-      const updatedRack = await RackService.updateRack(req.params.id, req.body);
-      res.json(updatedRack);
+      await RackService.updateRack(req.params.id, req.body);
+      res.status(200).send({ message:"rack updated successfully"});
     } catch (error) {
       next(error);
     }
@@ -77,7 +77,7 @@ class RackController {
         { new: true }
       );
       await RackService.deleteRack(req.params.id);
-      res.json({ message: 'Rack deleted successfully' });
+      res.status(204).json({ message: 'Rack deleted successfully' });
     } catch (error) {
       next(error);
     }
