@@ -223,7 +223,7 @@ const DataCenterComponent = () => {
           <table>
             <thead>
               <tr>
-                <th>Racks</th>
+                <th>Rack</th>
                 <th>Taille</th>
                 <th>Actions</th>
               </tr>
