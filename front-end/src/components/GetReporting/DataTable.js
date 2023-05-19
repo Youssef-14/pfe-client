@@ -5,19 +5,6 @@ import axios from 'axios'
 
 function DataTable(props) {
 
-  const deleteItem = id => {
-    let confirmDelete = window.confirm('Delete item forever?')
-    if (confirmDelete) {
-      axios.delete(`http://localhost:3001/serveurs/delete/${id}`)
-        .then(response => {
-          props.deleteItemFromState(id);
-          //refresh the page
-          window.location.reload(false);
-        })
-        .catch(err => console.log(err))
-    }
-  }
-
   const items = props.items.map(item => {
     return (
       <tr key={item._id}>
