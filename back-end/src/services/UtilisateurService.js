@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 class UtilisateurService {
   async getAllUtilisateurs() {
     try {
-      return await Utilisateur. find({ Role: "Utilisateur" });
+      return await Utilisateur. find();
     } catch (err) {
       throw err;
     }
@@ -27,7 +27,6 @@ class UtilisateurService {
         return -1;
       }
       const utilisateur = new Utilisateur(data);
-      utilisateur.Role="Utilisateur";
       const salt = await bcrypt.genSalt(10);
       utilisateur.Password = await bcrypt.hash(utilisateur.Password, salt);
       return await utilisateur.save();

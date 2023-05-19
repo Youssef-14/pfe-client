@@ -22,7 +22,8 @@ function AddEditForm(props) {
       Nom: form.Nom, //form.Nom,
       Prenom: form.Prenom,
       Username: form.Username,
-      Password: form.Password
+      Password: form.Password,
+      Role: form.Role
     }
 
     axios.post('http://localhost:3001/users/signup', user, {
@@ -50,7 +51,8 @@ function AddEditForm(props) {
       Nom: form.Nom,
       Prenom: form.Prenom,
       Username: form.Username,
-      Password: form.Password
+      Password: form.Password,
+      Role: form.Role
     }
     console.log(user);
 
@@ -120,12 +122,20 @@ function AddEditForm(props) {
           name="Password"
           id="password"
           onChange={onChange}
-          value={form.Password === null ? "" : form.Password}
           placeholder="Password"
         />
       </FormGroup>
       <FormGroup>
         <Label for="Role">Role</Label>
+        <br />
+        <select name="Role" id="Role" onChange={onChange} value={form.Role === null ? "null" : form.Role}>
+          <option value="null" >--Select--</option>
+          <option value="Admin" >admin</option>
+          <option value="Utilisateur">user</option>
+        </select>
+        {/* <Input
+       
+
         <Input
           type="text"
           name="Role"
@@ -134,6 +144,7 @@ function AddEditForm(props) {
           value={form.Role === null ? "" : form.Role}
           placeholder="user/admin"
         />
+      </FormGroup> */}
       </FormGroup>
       <Button>Submit</Button>
     </Form>
