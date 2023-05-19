@@ -4,6 +4,7 @@ import { getToken } from "../_services/account.services";
 import { faTrashAlt, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './style/DC_VISUALISATION.css'
+
 const DataCenterComponent = () => {
   const [dataCenters, setDataCenters] = useState([]);
   const [selectedDataCenter, setSelectedDataCenter] = useState('');
