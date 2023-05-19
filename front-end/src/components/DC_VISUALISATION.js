@@ -171,7 +171,7 @@ const DataCenterComponent = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: "550px", overflowY: "scroll" }}>
       <h2>Data Centers</h2>
       <div class="button-container">
         <select value={selectedDataCenter} onChange={handleDataCenterChange}>

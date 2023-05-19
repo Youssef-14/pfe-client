@@ -38,7 +38,7 @@
 }
 
 .table-cell+.table-cell {
-    /* Adjust the value to set the desired spacing */
+
     margin-left: 100px;
 }
 
@@ -50,7 +50,7 @@
     margin-right: 10px;
 }
 
-/* DC_VISUALISATION.css */
+
 
 .button-container {
     margin-bottom: 10px;
@@ -127,5 +127,5 @@
 }
 
 .td {
-    padding: 1%;
+    padding: 20px;
 }
