@@ -171,7 +171,7 @@ const DataCenterComponent = () => {
   };
 
   return (
-    <div>
+    <div style={{ height: "550px", overflowY: "scroll" }}>
       <h2>Data Centers</h2>
       <div class="button-container">
         <select value={selectedDataCenter} onChange={handleDataCenterChange}>
@@ -186,7 +186,7 @@ const DataCenterComponent = () => {
         {selectedDataCenter && (
           <div>
             {/* <h3>Pods</h3> */}
-            <div class="button-container">
+            <div class="table-container">
               <select value={selectedPod} onChange={handlePodChange}>
                 <option value="">Sélectionner un Pod</option>
                 {pods.map((pod) => (
@@ -204,18 +204,20 @@ const DataCenterComponent = () => {
         <div>
           {/* <h4>Racks</h4> */}
           <div>
-            <button onClick={handleAddRack}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Rack
-            </button>
-            <button onClick={handleAddPod}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Pod
-            </button>
-            <button onClick={handleAddDataCenter}>
+            <button className="action-button" onClick={handleAddDataCenter}>
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Data Center
             </button>
+            <button className="action-button" onClick={handleAddPod}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Pod
+            </button>
+            <button className="action-button" onClick={handleAddRack}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Rack
+            </button>
+
+
           </div>
 
           <table>
@@ -229,14 +231,16 @@ const DataCenterComponent = () => {
             <tbody>
               {racks.map((rack) => (
                 <tr key={rack._id}>
-                  <td>{rack.Nom}</td>
-                  <td>{rack.Pod}</td>
+
+                  <td className='td'>{rack.Nom}</td>
+
+                  <td className='td'>{rack.Pod}</td>
                   <td>
-                    <button onClick={() => handleDeleteRack(rack._id)}>
+                    <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
                       <FontAwesomeIcon icon={faTrashAlt} />
-                      Supprimer
+
                     </button>
-                    <button onClick={() => handleDeleteRack(rack._id)}>
+                    <button className='edit-button' onClick={() => handleDeleteRack(rack._id)}>
                       <FontAwesomeIcon icon={faEdit} />
                       Edit
                     </button>
@@ -253,3 +257,5 @@ const DataCenterComponent = () => {
 };
 
 export default DataCenterComponent;
+
+
