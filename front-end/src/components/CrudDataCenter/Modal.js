@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import AddEditForm from "./FormAddEdit";
 import { faEdit, faPlus } from "@fortawesome/free-solid-svg-icons";
-
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 function ModalForm(props) {
   const [modal, setModal] = useState(false);
 
