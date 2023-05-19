@@ -35,9 +35,3 @@
     visibility: visible;
     opacity: 1;
 }
-
-/* Header.css */
-
-.navbar-toggler collapsed {
-    color: white;
-}

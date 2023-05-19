@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
 import ModalForm from './Modal';
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import '../style/DC_VISUALISATION.css';
 import axios from 'axios';
@@ -11,7 +11,7 @@ function DataTable(props) {
   const deleteItem = (id) => {
     let confirmDelete = window.confirm('Delete item forever?');
     if (confirmDelete) {
-      axios.delete(`http://localhost:3001/datacenters/${id}`,{
+      axios.delete(`http://localhost:3001/datacenters/${id}`, {
         headers: {
           'Authorization': `Bearer ${getToken()}`
         }
