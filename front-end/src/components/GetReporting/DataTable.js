@@ -22,14 +22,14 @@ function DataTable(props) {
     return (
       <tr key={item._id}>
         <th scope="row">{item._id}</th>
-        <td>{item._id}</td>
+        <td>{item.IP}</td>
         <td>{item.ConsommationRAM}</td>
         <td>{item.ConsommationCPU}</td>
         <td>{item.Uptime}</td>
 
 
 
-        <td>
+        <td></td>
           <div >
             <br /><br /><br />
           </div>
@@ -44,8 +44,8 @@ function DataTable(props) {
         <tr>
           <th>Serveur ID</th>
           <th>IP</th>
-          <th>	consom ram</th>
-          <th>onsom CPU</th>
+          <th>Consommation RAM</th>
+          <th>Consommation CPU</th>
           <th>Uptime</th>
         </tr>
       </thead>
