@@ -58,6 +58,8 @@ const DataCenterComponent = () => {
   const handleDataCenterChange = (event) => {
     const selectedDataCenterId = event.target.value;
     setSelectedDataCenter(selectedDataCenterId);
+    document.getElementById("addpod").style.display = "block";
+
     setSelectedPod('');
     setRacks([]);
 
@@ -68,6 +70,8 @@ const DataCenterComponent = () => {
 
   const handlePodChange = (event) => {
     const selectedPodId = event.target.value;
+    document.getElementById("addrack").style.display = "block";
+
     setSelectedPod(selectedPodId);
     setRacks([]);
 
@@ -201,7 +205,7 @@ const DataCenterComponent = () => {
         )}
       </div>
 
-      {selectedPod && (
+      
         <div>
           {/* <h4>Racks</h4> */}
           <div>
@@ -209,18 +213,16 @@ const DataCenterComponent = () => {
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Data Center
             </button>
-            <button className="action-button" onClick={handleAddPod}>
+            <button className="action-button" id='addpod' onClick={handleAddPod} style={{ display: 'none' }}>
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Pod
             </button>
-            <button className="action-button" onClick={handleAddRack}>
+            <button className="action-button" id='addrack' onClick={handleAddRack} style={{ display: 'none' }}>
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Rack
             </button>
-
-
           </div>
-
+          {selectedPod && (
           <table>
             <thead>
               <tr>
@@ -250,8 +252,9 @@ const DataCenterComponent = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        
       )}
+      </div>
     </div>
   );
 
