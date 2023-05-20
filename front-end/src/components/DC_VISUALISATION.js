@@ -174,11 +174,28 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
-
+  const handleEditRack = async (rackId) => {
+    try {
+      await axios.put(`http://127.0.0.1:3001/racks/update/${rackId}`, handleEditRack, {
+        headers: {
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
+      const updatedRacks = racks.map((rack) => {
+        if (rack._id === rackId) {
+          return { ...rack, ...handleEditRack };
+        }
+        return rack;
+      });
+      setRacks(updatedRacks);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <div style={{ height: "550px", overflowY: "scroll" }}>
       <h2>Data Centers</h2>
-      <div class="button-container">
+      <div className="button-container">
         <select value={selectedDataCenter} onChange={handleDataCenterChange}>
           <option value="">Sélectionner un Data Center</option>
           {dataCenters.map((dataCenter) => (
@@ -190,8 +207,7 @@ const DataCenterComponent = () => {
 
         {selectedDataCenter && (
           <div>
-            {/* <h3>Pods</h3> */}
-            <div class="table-container">
+            <div className="table-container">
               <select value={selectedPod} onChange={handlePodChange}>
                 <option value="">Sélectionner un Pod</option>
                 {pods.map((pod) => (
@@ -205,45 +221,40 @@ const DataCenterComponent = () => {
         )}
       </div>
 
-      
+      <div>
         <div>
-          {/* <h4>Racks</h4> */}
-          <div>
-            <button className="action-button" onClick={handleAddDataCenter}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Data Center
-            </button>
-            <button className="action-button" id='addpod' onClick={handleAddPod} style={{ display: 'none' }}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Pod
-            </button>
-            <button className="action-button" id='addrack' onClick={handleAddRack} style={{ display: 'none' }}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Rack
-            </button>
-          </div>
-          {selectedPod && (
+          <button className="action-button" onClick={handleAddDataCenter}>
+            <FontAwesomeIcon icon={faPlus} />
+            Ajouter un Data Center
+          </button>
+          <button className="action-button" id='addpod' onClick={handleAddPod} style={{ display: 'none' }}>
+            <FontAwesomeIcon icon={faPlus} />
+            Ajouter un Pod
+          </button>
+          <button className="action-button" id='addrack' onClick={handleAddRack} style={{ display: 'none' }}>
+            <FontAwesomeIcon icon={faPlus} />
+            Ajouter un Rack
+          </button>
+        </div>
+        {selectedPod && (
           <table>
             <thead>
               <tr>
                 <th>Rack</th>
-                <th>Taille</th>
+                <th>Pod</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {racks.map((rack) => (
                 <tr key={rack._id}>
-
                   <td className='td'>{rack.Nom}</td>
-
-                  <td className='td'>{rack.Taille}</td>
+                  <td className='td'>{rack.Pod}</td>
                   <td>
                     <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
                       <FontAwesomeIcon icon={faTrashAlt} />
-
                     </button>
-                    <button className='edit-button' onClick={() => handleDeleteRack(rack._id)}>
+                    <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
                       <FontAwesomeIcon icon={faEdit} />
                       Edit
                     </button>
@@ -252,8 +263,7 @@ const DataCenterComponent = () => {
               ))}
             </tbody>
           </table>
-        
-      )}
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import React from 'react'
-import { Table, Button } from 'reactstrap';
-import ModalForm from './Modal'
-import axios from 'axios'
+import { Table } from 'reactstrap';
+
 
 function DataTable(props) {
 
