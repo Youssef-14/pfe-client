@@ -3,18 +3,21 @@ import axios from 'axios';
 import { getToken } from "../_services/account.services";
 import { faTrashAlt, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import './style/DC_VISUALISATION.css'
+import DataCenterPopup from './CrudDataCenters/DataCenterPopup';
+import RackPopup from './CrudDataCenters/DataCenterPopup';
 
+import './style/DC_VISUALISATION.css'
 const DataCenterComponent = () => {
   const [dataCenters, setDataCenters] = useState([]);
   const [selectedDataCenter, setSelectedDataCenter] = useState('');
   const [pods, setPods] = useState([]);
   const [selectedPod, setSelectedPod] = useState('');
   const [racks, setRacks] = useState([]);
-
+  const [showAddDataCenterPopup, setShowAddDataCenterPopup] = useState(false);
   useEffect(() => {
     fetchDataCenters();
   }, []);
+
 
   const fetchDataCenters = async () => {
     try {
@@ -80,23 +83,38 @@ const DataCenterComponent = () => {
     }
   };
 
-  const handleAddDataCenter = async () => {
+  const toggleAddDataCenterPopup = () => {
+    setShowAddDataCenterPopup(!showAddDataCenterPopup);
+  };
+  const [showAddRackPopup, setShowAddRackPopup] = useState(false);
+
+  const toggleAddRackPopup = () => {
+    setShowAddRackPopup(!showAddRackPopup);
+  };
+
+  const handleAddDataCenter = async (data) => {
     try {
-      const response = await axios.post('http://127.0.0.1:3001/datacenters/add', {
-        Libelle: 'Nouveau DataCenter',
-        Description: 'Description du nouveau DataCenter',
-        Capacite: 100
-      }, {
-        headers: {
-          'Authorization': `Bearer ${getToken()}`
+      const response = await axios.post(
+        'http://127.0.0.1:3001/datacenters/add',
+        {
+          Libelle: data.libelle,
+          Description: data.description,
+          Capacite: data.capacite,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${getToken()}`
+          }
         }
-      });
+      );
 
       setDataCenters([...dataCenters, response.data.DataCenter]);
+      toggleAddDataCenterPopup();
     } catch (error) {
       console.error(error);
     }
   };
+
 
   const handleAddPod = async () => {
     try {
@@ -114,24 +132,29 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
-
-  const handleAddRack = async () => {
+  const handleAddRack = async (rackData) => {
     try {
-      const response = await axios.post(`http://127.0.0.1:3001/racks/add`, {
-        Nom: 'Nouveau Rack',
-        Taille: 10,
-        Pod: selectedPod
-      }, {
-        headers: {
-          'Authorization': `Bearer ${getToken()}`
+      const response = await axios.post(
+        'http://127.0.0.1:3001/racks/add',
+        {
+          Nom: rackData.nom,
+          Taille: rackData.taille,
+          Pod: selectedPod
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${getToken()}`
+          }
         }
-      });
+      );
 
       setRacks([...racks, response.data.rack]);
+      toggleAddRackPopup(); // Add this line to close the add rack popup
     } catch (error) {
       console.error(error);
     }
   };
+
 
   const handleDeleteDataCenter = async (dataCenterId) => {
     try {
@@ -223,10 +246,17 @@ const DataCenterComponent = () => {
 
       <div>
         <div>
-          <button className="action-button" onClick={handleAddDataCenter}>
-            <FontAwesomeIcon icon={faPlus} />
-            Ajouter un Data Center
-          </button>
+          <div>
+            <button className="action-button" onClick={toggleAddDataCenterPopup}>
+
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Data Center
+            </button>
+            {showAddDataCenterPopup && (
+              <DataCenterPopup onSubmit={handleAddDataCenter} /*onClose={handleClose}*/ />
+
+            )}
+          </div>
           <button className="action-button" id='addpod' onClick={handleAddPod} style={{ display: 'none' }}>
             <FontAwesomeIcon icon={faPlus} />
             Ajouter un Pod
@@ -265,7 +295,7 @@ const DataCenterComponent = () => {
           </table>
         )}
       </div>
-    </div>
+    </div >
   );
 
 };

@@ -1,9 +1,6 @@
-import { Container, Row, Col } from "reactstrap";
-import ModalForm from "../components/CrudServeurs/Modal";
-import DataTable from "../components/CrudServeurs/DataTable";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import DataCenterButton from './DataCenterButton';
+import DataCenterButton from './CrudDataCenters/DataCenterButton';
 import { getToken } from "../_services/account.services";
 import './style/create.component.css';
 
