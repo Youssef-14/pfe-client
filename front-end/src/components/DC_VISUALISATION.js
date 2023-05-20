@@ -58,7 +58,7 @@ const DataCenterComponent = () => {
   const handleDataCenterChange = (event) => {
     const selectedDataCenterId = event.target.value;
     setSelectedDataCenter(selectedDataCenterId);
-    document.getElementById("addpod").style.display = "block";
+    document.getElementById("addpod").style.display = "inline";
 
     setSelectedPod('');
     setRacks([]);
@@ -70,7 +70,7 @@ const DataCenterComponent = () => {
 
   const handlePodChange = (event) => {
     const selectedPodId = event.target.value;
-    document.getElementById("addrack").style.display = "block";
+    document.getElementById("addrack").style.display = "inline";
 
     setSelectedPod(selectedPodId);
     setRacks([]);
