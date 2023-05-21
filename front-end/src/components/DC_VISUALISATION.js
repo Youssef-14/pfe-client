@@ -21,6 +21,16 @@ const DataCenterComponent = () => {
     fetchDataCenters();
   }, []);
 
+  const handleClosePopup = () => {
+    setShowAddPodPopup(false);
+  };
+
+  const handleCloseRackPopup = () => {
+    setShowAddRackPopup(false);
+  };
+  const handleCloseDataCenterPopup = () => {
+    setShowAddDataCenterPopup(false);
+  };
 
   const fetchDataCenters = async () => {
     try {
@@ -34,6 +44,8 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
+
+
 
   const fetchPods = async (dataCenterId) => {
     try {
@@ -269,17 +281,26 @@ const DataCenterComponent = () => {
               Ajouter un Data Center
             </button>
             {showAddDataCenterPopup && (
-              <DataCenterPopup onSubmit={handleAddDataCenter} /*onClose={handleClose}*/ />
+              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
             )}
           </div>
 
           <div>
-            <button className="action-button" id='addpod' onClick={toggleAddPodPopup} style={{ display: 'none' }}>
+            <button
+              className="action-button"
+              id="addpod"
+              onClick={toggleAddPodPopup}
+              style={{ display: 'none' }}
+            >
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Pod
             </button>
             {showAddPodPopup && (
-              <PodPopup onSubmit={handleAddPod} /*onClose={handleClose}*/ />
+              <PodPopup
+                id={selectedDataCenter}
+                onSubmit={handleAddPod}
+                onClose={handleClosePopup}
+              />
             )}
           </div>
 
@@ -288,7 +309,7 @@ const DataCenterComponent = () => {
             Ajouter un Rack
           </button>
           {showAddRackPopup && (
-            <RackPopup onSubmit={handleAddRack} /*onClose={handleClose}*/ />
+            <RackPopup onSubmit={handleAddRack} onClose={handleCloseRackPopup} />
           )}
         </div>
         {selectedPod && (
