@@ -99,6 +99,7 @@ const DataCenterComponent = () => {
 
   const handleAddDataCenter = async (data) => {
     try {
+      console.log(data);
       const response = await axios.post(
         'http://127.0.0.1:3001/datacenters/add',
         {
@@ -122,8 +123,11 @@ const DataCenterComponent = () => {
 
 
   const handleAddPod = async (data) => {
+
     try {
+
       const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
+
         Libelle: data.libelle,
         DataCenter: selectedDataCenter
       }, {
@@ -132,10 +136,12 @@ const DataCenterComponent = () => {
         }
       });
 
+
       setPods([...pods, response.data.Pod]);
       toggleAddPodPopup();
     } catch (error) {
       console.error(error);
+      console.log(data)
     }
   };
 
@@ -256,7 +262,7 @@ const DataCenterComponent = () => {
       </div>
 
       <div>
-        <div>
+        <div className='button-container'>
           <div>
             <button className="action-button" onClick={toggleAddDataCenterPopup}>
               <FontAwesomeIcon icon={faPlus} />
