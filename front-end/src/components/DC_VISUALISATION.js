@@ -14,6 +14,9 @@ const DataCenterComponent = () => {
   const [selectedPod, setSelectedPod] = useState('');
   const [racks, setRacks] = useState([]);
   const [showAddDataCenterPopup, setShowAddDataCenterPopup] = useState(false);
+  const [showAddRackPopup, setShowAddRackPopup] = useState(false);
+  const [showAddPodPopup, setShowAddPodPopup] = useState(false);
+
   useEffect(() => {
     fetchDataCenters();
   }, []);
@@ -86,7 +89,6 @@ const DataCenterComponent = () => {
   const toggleAddDataCenterPopup = () => {
     setShowAddDataCenterPopup(!showAddDataCenterPopup);
   };
-  const [showAddRackPopup, setShowAddRackPopup] = useState(false);
 
   const toggleAddRackPopup = () => {
     setShowAddRackPopup(!showAddRackPopup);
@@ -134,6 +136,7 @@ const DataCenterComponent = () => {
   };
   const handleAddRack = async (rackData) => {
     try {
+      console.log(rackData);
       const response = await axios.post(
         'http://127.0.0.1:3001/racks/add',
         {
@@ -254,17 +257,19 @@ const DataCenterComponent = () => {
             </button>
             {showAddDataCenterPopup && (
               <DataCenterPopup onSubmit={handleAddDataCenter} /*onClose={handleClose}*/ />
-
             )}
           </div>
           <button className="action-button" id='addpod' onClick={handleAddPod} style={{ display: 'none' }}>
             <FontAwesomeIcon icon={faPlus} />
             Ajouter un Pod
           </button>
-          <button className="action-button" id='addrack' onClick={handleAddRack} style={{ display: 'none' }}>
+          <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
             <FontAwesomeIcon icon={faPlus} />
             Ajouter un Rack
           </button>
+          {showAddRackPopup && (
+              <RackPopup onSubmit={handleAddRack} /*onClose={handleClose}*/ />
+            )}
         </div>
         {selectedPod && (
           <table>
