@@ -4,7 +4,7 @@ import { getToken } from "../_services/account.services";
 import { faTrashAlt, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DataCenterPopup from './CrudDataCenters/DataCenterPopup';
-import RackPopup from './CrudDataCenters/DataCenterPopup';
+import RackPopup from './CrudDataCenters/RackPopup';
 import PodPopup from './CrudDataCenters/podPopup';
 import './style/DC_VISUALISATION.css'
 const DataCenterComponent = () => {
@@ -142,14 +142,14 @@ const DataCenterComponent = () => {
 
 
 
-  const handleAddRack = async (rackData) => {
+  const handleAddRack = async (data) => {
     try {
-      console.log(rackData);
+      console.log(data);
       const response = await axios.post(
         'http://127.0.0.1:3001/racks/add',
         {
-          Nom: rackData.nom,
-          Taille: rackData.taille,
+          Nom: data.Nom,
+          Taille: data.Taille,
           Pod: selectedPod
         },
         {
@@ -160,7 +160,7 @@ const DataCenterComponent = () => {
       );
 
       setRacks([...racks, response.data.rack]);
-      toggleAddRackPopup(); // Add this line to close the add rack popup
+      toggleAddRackPopup();
     } catch (error) {
       console.error(error);
     }

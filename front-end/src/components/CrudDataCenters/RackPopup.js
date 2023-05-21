@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { getToken } from "../_services/account.services";
+import { getToken } from "../../_services/account.services";
 
 const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
     const [Nom, setNom] = useState('');
@@ -36,10 +36,10 @@ const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
     };
 
     return (
-        <div className="rack-popup">
-            <div className="rack-popup-content">
+        <div className="data-center-popup">
+            <div className="data-center-popup-content">
                 <span className="close" onClick={handleClose}>&times;</span>
-                <form className="rack-popup-form" onSubmit={handleSubmit}>
+                <form className="data-center-popup-form" onSubmit={handleSubmit}>
                     <h2>Add Rack</h2>
                     <div className="form-group">
                         <label htmlFor="Nom">Rack Name:</label>
