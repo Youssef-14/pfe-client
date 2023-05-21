@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { getToken } from "../_services/account.services";
+import { getToken } from "../../_services/account.services";
+import '../style/DataCenterPopup.css';
+const PodPopup = ({ selectedDatacenter, onPodAdded, onClose }) => {
+    const [Libelle, setLibelle] = useState('');
 
-const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
-    const [Nom, setNom] = useState('');
-    const [Taille, setTaille] = useState(0);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const response = await axios.post(
-                'http://127.0.0.1:3001/racks/add',
+                'http://127.0.0.1:3001/pods/add',
                 {
-                    Nom: Nom,
-                    Taille: Taille,
-                    Pod: selectedPod
+                    Nom: Libelle,
+
+                    Pod: selectedDatacenter
                 },
                 {
                     headers: {
@@ -24,7 +24,7 @@ const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
                 }
             );
 
-            onRackAdded(response.data.rack);
+            onPodAdded(response.data.Pod);
             onClose();
         } catch (error) {
             console.error(error);
@@ -36,31 +36,31 @@ const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
     };
 
     return (
-        <div className="rack-popup">
-            <div className="rack-popup-content">
+        <div className="data-center-popup">
+            <div className="data-center-popup-content">
                 <span className="close" onClick={handleClose}>&times;</span>
-                <form className="rack-popup-form" onSubmit={handleSubmit}>
-                    <h2>Add Rack</h2>
+                <form className="data-center-popup-form" onSubmit={handleSubmit}>
+                    <h2>Add Pod</h2>
                     <div className="form-group">
-                        <label htmlFor="Nom">Rack Name:</label>
+                        <label htmlFor="Libelle">Pod Name:</label>
                         <input
                             type="text"
-                            id="Nom"
+                            id="Libelle"
                             className="form-control"
-                            value={Nom}
-                            onChange={(e) => setNom(e.target.value)}
+                            value={Libelle}
+                            onChange={(e) => setLibelle(e.target.value)}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="Taille">Rack Size:</label>
+                    {/* <div className="form-group">
+                        <label htmlFor="_id">Pod id:</label>
                         <input
                             type="number"
-                            id="Taille"
+                            id="_id"
                             className="form-control"
-                            value={Taille}
-                            onChange={(e) => setTaille(e.target.value)}
+                            value={_id}
+                            onChange={(e) => set_id(e.target.value)}
                         />
-                    </div>
+                    </div> */}
                     <button type="submit" className="btn-submit">Add</button>
                 </form>
             </div>
@@ -68,4 +68,4 @@ const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
     );
 };
 
-export default RackPopup;
+export default PodPopup;

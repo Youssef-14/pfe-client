@@ -5,7 +5,7 @@ import { faTrashAlt, faPlus, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DataCenterPopup from './CrudDataCenters/DataCenterPopup';
 import RackPopup from './CrudDataCenters/DataCenterPopup';
-
+import PodPopup from './CrudDataCenters/podPopup';
 import './style/DC_VISUALISATION.css'
 const DataCenterComponent = () => {
   const [dataCenters, setDataCenters] = useState([]);
@@ -89,6 +89,9 @@ const DataCenterComponent = () => {
   const toggleAddDataCenterPopup = () => {
     setShowAddDataCenterPopup(!showAddDataCenterPopup);
   };
+  const toggleAddPodPopup = () => {
+    setShowAddPodPopup(!showAddPodPopup);
+  };
 
   const toggleAddRackPopup = () => {
     setShowAddRackPopup(!showAddRackPopup);
@@ -118,10 +121,10 @@ const DataCenterComponent = () => {
   };
 
 
-  const handleAddPod = async () => {
+  const handleAddPod = async (data) => {
     try {
       const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
-        Libelle: 'Nouveau Pod',
+        Libelle: data.libelle,
         DataCenter: selectedDataCenter
       }, {
         headers: {
@@ -130,10 +133,15 @@ const DataCenterComponent = () => {
       });
 
       setPods([...pods, response.data.Pod]);
+      toggleAddPodPopup();
     } catch (error) {
       console.error(error);
     }
   };
+
+
+
+
   const handleAddRack = async (rackData) => {
     try {
       console.log(rackData);
@@ -251,7 +259,6 @@ const DataCenterComponent = () => {
         <div>
           <div>
             <button className="action-button" onClick={toggleAddDataCenterPopup}>
-
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Data Center
             </button>
@@ -259,17 +266,24 @@ const DataCenterComponent = () => {
               <DataCenterPopup onSubmit={handleAddDataCenter} /*onClose={handleClose}*/ />
             )}
           </div>
-          <button className="action-button" id='addpod' onClick={handleAddPod} style={{ display: 'none' }}>
-            <FontAwesomeIcon icon={faPlus} />
-            Ajouter un Pod
-          </button>
+
+          <div>
+            <button className="action-button" id='addpod' onClick={toggleAddPodPopup} style={{ display: 'none' }}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Pod
+            </button>
+            {showAddPodPopup && (
+              <PodPopup onSubmit={handleAddPod} /*onClose={handleClose}*/ />
+            )}
+          </div>
+
           <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
             <FontAwesomeIcon icon={faPlus} />
             Ajouter un Rack
           </button>
           {showAddRackPopup && (
-              <RackPopup onSubmit={handleAddRack} /*onClose={handleClose}*/ />
-            )}
+            <RackPopup onSubmit={handleAddRack} /*onClose={handleClose}*/ />
+          )}
         </div>
         {selectedPod && (
           <table>
