@@ -9,7 +9,8 @@ const Pod = mongoose.model('Pod', {
     },
     DataCenter: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'DataCenter'
+        ref: 'DataCenter',
+        required : true
     },
     Racks: [{
         type: mongoose.Schema.Types.ObjectId,
