@@ -9,6 +9,8 @@ const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        console.log(selectedPod);
+
         try {
             const response = await axios.post(
                 'http://127.0.0.1:3001/racks/add',
