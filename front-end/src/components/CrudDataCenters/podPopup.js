@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import '../style/DataCenterPopup.css';
-const PodPopup = ({ selectedDatacenter, onSubmit, onClose }) => {
-    const [Libelle, setLibelle] = useState('');
 
+const PodPopup = ({ id, onSubmit, onClose }) => {
+    const [Libelle, setLibelle] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        onSubmit({ Libelle });
+        onSubmit({ id, Libelle });
     };
 
     const handleClose = () => {
+
         onClose();
+
     };
 
     return (

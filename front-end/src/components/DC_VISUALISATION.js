@@ -21,6 +21,16 @@ const DataCenterComponent = () => {
     fetchDataCenters();
   }, []);
 
+  const handleClosePopup = () => {
+    setShowAddPodPopup(false);
+  };
+
+  const handleCloseRackPopup = () => {
+    setShowAddRackPopup(false);
+  };
+  const handleCloseDataCenterPopup = () => {
+    setShowAddDataCenterPopup(false);
+  };
 
   const fetchDataCenters = async () => {
     try {
@@ -34,6 +44,8 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
+
+
 
   const fetchPods = async (dataCenterId) => {
     try {
@@ -128,15 +140,15 @@ const DataCenterComponent = () => {
 
       const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
 
-        Libelle: data.libelle,
+        Libelle: data.Libelle,
         DataCenter: selectedDataCenter
-      }, {
-        headers: {
-          'Authorization': `Bearer ${getToken()}`
+      },
+        {
+          headers: {
+            'Authorization': `Bearer ${getToken()}`
+          }
         }
-      });
-
-
+      );
       setPods([...pods, response.data.Pod]);
       toggleAddPodPopup();
     } catch (error) {
@@ -165,7 +177,6 @@ const DataCenterComponent = () => {
           }
         }
       );
-
       setRacks([...racks, response.data.rack]);
       toggleAddRackPopup();
     } catch (error) {
@@ -270,27 +281,40 @@ const DataCenterComponent = () => {
               Ajouter un Data Center
             </button>
             {showAddDataCenterPopup && (
-              <DataCenterPopup onSubmit={handleAddDataCenter} /*onClose={handleClose}*/ />
+              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
             )}
           </div>
 
           <div>
-            <button className="action-button" id='addpod' onClick={toggleAddPodPopup} style={{ display: 'none' }}>
+            <button
+              className="action-button"
+              id="addpod"
+              onClick={toggleAddPodPopup}
+              style={{ display: 'none' }}
+            >
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Pod
             </button>
             {showAddPodPopup && (
-              <PodPopup onSubmit={handleAddPod} /*onClose={handleClose}*/ />
+              <PodPopup
+                id={selectedDataCenter}
+                onSubmit={handleAddPod}
+                onClose={handleClosePopup}
+              />
             )}
           </div>
-
-          <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
-            <FontAwesomeIcon icon={faPlus} />
-            Ajouter un Rack
-          </button>
-          {showAddRackPopup && (
-            <RackPopup onSubmit={handleAddRack} /*onClose={handleClose}*/ />
-          )}
+          <div>
+            <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Rack
+            </button>
+            {showAddRackPopup && (
+              <RackPopup
+                id={selectedPod}
+                onSubmit={handleAddRack}
+                onClose={handleCloseRackPopup}
+              />)}
+          </div>
         </div>
         {selectedPod && (
           <table>
