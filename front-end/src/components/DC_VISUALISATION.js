@@ -163,6 +163,7 @@ const DataCenterComponent = () => {
   const handleAddRack = async (data) => {
     try {
       console.log(data);
+      console.log(selectedPod);
       const response = await axios.post(
         'http://127.0.0.1:3001/racks/add',
         {

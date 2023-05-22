@@ -15,7 +15,8 @@ const Rack = mongoose.model('Rack', {
     },
     serveurs: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Serveur'
+        ref: 'Serveur',
+        required : true
     }],
     Pod: {
         type: mongoose.Schema.Types.ObjectId,
