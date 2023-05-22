@@ -140,15 +140,15 @@ const DataCenterComponent = () => {
 
       const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
 
-        Libelle: data.libelle,
+        Libelle: data.Libelle,
         DataCenter: selectedDataCenter
-      }, {
-        headers: {
-          'Authorization': `Bearer ${getToken()}`
+      },
+        {
+          headers: {
+            'Authorization': `Bearer ${getToken()}`
+          }
         }
-      });
-
-
+      );
       setPods([...pods, response.data.Pod]);
       toggleAddPodPopup();
     } catch (error) {
@@ -176,7 +176,6 @@ const DataCenterComponent = () => {
           }
         }
       );
-
       setRacks([...racks, response.data.rack]);
       toggleAddRackPopup();
     } catch (error) {
@@ -303,14 +302,18 @@ const DataCenterComponent = () => {
               />
             )}
           </div>
-
-          <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
-            <FontAwesomeIcon icon={faPlus} />
-            Ajouter un Rack
-          </button>
-          {showAddRackPopup && (
-            <RackPopup onSubmit={handleAddRack} onClose={handleCloseRackPopup} />
-          )}
+          <div>
+            <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Rack
+            </button>
+            {showAddRackPopup && (
+              <RackPopup
+                id={selectedPod}
+                onSubmit={handleAddRack}
+                onClose={handleCloseRackPopup}
+              />)}
+          </div>
         </div>
         {selectedPod && (
           <table>

@@ -1,38 +1,19 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { getToken } from "../../_services/account.services";
+import '../style/DataCenterPopup.css';
 
-const RackPopup = ({ selectedPod, onRackAdded, onClose }) => {
+const RackPopup = ({ id, onSubmit, onClose }) => {
     const [Nom, setNom] = useState('');
     const [Taille, setTaille] = useState(0);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try {
-            const response = await axios.post(
-                'http://127.0.0.1:3001/racks/add',
-                {
-                    Nom: Nom,
-                    Taille: Taille,
-                    Pod: selectedPod
-                },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${getToken()}`
-                    }
-                }
-            );
-
-            onRackAdded(response.data.rack);
-            onClose();
-        } catch (error) {
-            console.error(error);
-        }
+        onSubmit({ id, Nom, Taille });
     };
 
     const handleClose = () => {
+
         onClose();
+
     };
 
     return (
