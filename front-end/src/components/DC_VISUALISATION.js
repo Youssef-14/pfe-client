@@ -245,156 +245,151 @@ const DataCenterComponent = () => {
     }
   };
   return (
-        <div style={{ height: "550px", overflowY: "scroll" }}>
-          <h2 style={{paddingLeft:"10px"}}>Data Centers</h2>
-          <div className="button-container" style={{paddingLeft:"10px"}}>
-          <div style={{ display: 'flex', flexDirection: 'scroll' }}>
+    <div style={{ height: "550px", overflowY: "scroll" }}>
+      <h2 style={{ paddingLeft: "10px" }}>Data Centers</h2>
+      <div className="button-container" style={{ paddingLeft: "10px" }}>
+        <div style={{ display: 'flex', flexDirection: 'scroll' }}>
           {dataCenters.map((dataCenter) => (
-      <div key={dataCenter._id} style={{ marginRight: '10px' }}>
-        <input
-          type="radio"
-          id={dataCenter._id}
-          name="dataCenter"
-          value={dataCenter._id}
-          checked={selectedDataCenter === dataCenter._id}
-          onChange={handleDataCenterChange}
-          style={{ display: 'none' }}
-        />
-        <label
-          htmlFor={dataCenter._id}
-          style={{
-            display: 'inline-block',
-            padding: '8px 16px',
-            backgroundColor: '#f1f1f1',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            color: selectedDataCenter === dataCenter._id ? '#ffffff' : '#000000',
-            background: selectedDataCenter === dataCenter._id ? '#3853D8' : 'none',
-          }}
-        >
-          {dataCenter.Libelle}
-        </label>
-      </div>
-    ))}
+            <div key={dataCenter._id} style={{ marginRight: '10px' }}>
+              <input
+                type="radio"
+                id={dataCenter._id}
+                name="dataCenter"
+                value={dataCenter._id}
+                checked={selectedDataCenter === dataCenter._id}
+                onChange={handleDataCenterChange}
+                style={{ display: 'none' }}
+              />
+              <label
+                htmlFor={dataCenter._id}
+                style={{
+                  display: 'inline-block',
+                  padding: '8px 16px',
+                  backgroundColor: '#f1f1f1',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  color: selectedDataCenter === dataCenter._id ? '#ffffff' : '#000000',
+                  background: selectedDataCenter === dataCenter._id ? '#3853D8' : 'none',
+                }}
+              >
+                {dataCenter.Libelle}
+              </label>
+            </div>
+          ))}
 
-    </div>
-
-
-    <div className='button-container'>
-        <div>
-          <button className="action-button" onClick={toggleAddDataCenterPopup}>
-            <FontAwesomeIcon icon={faPlus} />
-            Ajouter un Data Center
-          </button>
-          {showAddDataCenterPopup && (
-            <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
-          )}
         </div>
 
-        <div>
-          <button
-            className="action-button"
-            id="addpod"
-            onClick={toggleAddPodPopup}
-            style={{ display: 'none' }}
-          >
-            <FontAwesomeIcon icon={faPlus} />
-            Ajouter un Pod
-          </button>
-          {showAddPodPopup && (
-            <PodPopup
-              id={selectedDataCenter}
-              onSubmit={handleAddPod}
-              onClose={handleClosePopup}
-            />
-          )}
-        </div>
-        <div>
-          <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
-            <FontAwesomeIcon icon={faPlus} />
-            Ajouter un Rack
-          </button>
-          {showAddRackPopup && (
-            <RackPopup
-              id={selectedPod}
-              onSubmit={handleAddRack}
-              onClose={handleCloseRackPopup}
-            />
-          )}
-        </div>
-      </div>
 
-        
+        <div className='button-container'>
+          <div>
+            <button className="action-button" onClick={toggleAddDataCenterPopup}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Data Center
+            </button>
+            {showAddDataCenterPopup && (
+              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
+            )}
+          </div>
+
+          <div>
+            <button
+              className="action-button"
+              id="addpod"
+              onClick={toggleAddPodPopup}
+              style={{ display: 'none' }}
+            >
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Pod
+            </button>
+            {showAddPodPopup && (
+              <PodPopup
+                id={selectedDataCenter}
+                onSubmit={handleAddPod}
+                onClose={handleClosePopup}
+              />
+            )}
+          </div>
+          <div>
+            <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
+              <FontAwesomeIcon icon={faPlus} />
+              Ajouter un Rack
+            </button>
+            {showAddRackPopup && (
+              <RackPopup
+                id={selectedPod}
+                onSubmit={handleAddRack}
+                onClose={handleCloseRackPopup}
+              />
+            )}
+          </div>
+        </div>
+
+
       </div>
       <div className="table-container">
-      {selectedDataCenter && (          
-            <table style={{flex:1}}>
-              <thead>
-                <tr>
-                  <th>Sélectionner un Pod</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pods.map((pod) => (
-                  <tr key={pod._id}>
-                    <td>
-                      <input
-                        type="radio"
-                        id={pod._id}
-                        name="pod"
-                        value={pod._id}
-                        checked={selectedPod === pod._id}
-                        onChange={handlePodChange}
-                        style={{ display: 'none' }}
-                      />
-                      <label
-                        htmlFor={pod._id}
-                        className={`radio-button-label ${
-                          selectedPod === pod._id ? 'selected' : ''
-                        }`}
-                      >
-                        {pod.Libelle}
-                      </label>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>     
-        
-        )}
-
-      {selectedPod && (
-        <table style={{flex:1}}>
-          <thead>
-            <tr>
-              <th>Rack</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {racks.map((rack) => (
-              <tr key={rack._id}>
-                <td className='td'>{rack.Nom}</td>
-
-                <td>
-                  <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </button>
-                  <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
-                    <FontAwesomeIcon icon={faEdit} />
-                    Edit
-                  </button>
-                </td>
+        {selectedDataCenter && (
+          <table style={{ flex: 1 }}>
+            <thead>
+              <tr>
+                <th>Sélectionner un Pod</th>
+                <th>Rack</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {pods.map((pod) => (
+                <tr key={pod._id}>
+                  <td>
+                    <input
+                      type="radio"
+                      id={pod._id}
+                      name="pod"
+                      value={pod._id}
+                      checked={selectedPod === pod._id}
+                      onChange={handlePodChange}
+                      style={{ display: 'none' }}
+                    />
+                    <label
+                      htmlFor={pod._id}
+                      className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
+                        }`}
+                    >
+                      {pod.Libelle}
+                    </label>
+                  </td>
+                  {selectedPod === pod._id && (
+                    <td colSpan={2}>
+                      <table>
+                        <tbody>
+                          {racks.map((rack) => (
+                            <tr key={rack._id}>
+                              <td className='td'>{rack.Nom}</td>
+                              <td>
+                                <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
+                                  <FontAwesomeIcon icon={faTrashAlt} />
+                                </button>
+                                <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
+                                  <FontAwesomeIcon icon={faEdit} />
+                                  Edit
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
     </div>
-  </div>
-    
+
   );
-  
+
 }
 export default DataCenterComponent;
