@@ -108,16 +108,6 @@ const DataCenterComponent = () => {
   const toggleAddRackPopup = () => {
     setShowAddRackPopup(!showAddRackPopup);
   };
-  const [showOptions, setShowOptions] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
-
-  const handleToggleOptions = () => {
-    setShowOptions(!showOptions);
-  };
-
-  const handleOptionSelection = (option) => {
-    setSelectedOption(option);
-  };
 
   const handleAddDataCenter = async (data) => {
     try {
@@ -337,14 +327,12 @@ const DataCenterComponent = () => {
 
 
       </div>
-      <div className="table-container" style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className="table-container">
         {selectedDataCenter && (
           <table style={{ flex: 1 }}>
             <thead>
               <tr>
                 <th>Sélectionner un Pod</th>
-                <th>Rack</th>
-
               </tr>
             </thead>
             <tbody>
@@ -368,35 +356,41 @@ const DataCenterComponent = () => {
                       {pod.Libelle}
                     </label>
                   </td>
-                  {selectedPod === pod._id && (
-                    <td colSpan={2}>
-                      <table>
-                        <tbody>
-                          {racks.map((rack) => (
-                            <tr key={rack._id}>
-                              <td className='td'>{rack.Nom}</td>
-                              {/* <td>
-                                <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
-                                  <FontAwesomeIcon icon={faTrashAlt} />
-                                </button>
-                                <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
-                                  <FontAwesomeIcon icon={faEdit} />
-                                  Edit
-                                </button>
-                              </td> */}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </td>
-                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+        )}
+
+        {selectedPod && (
+          <table style={{ flex: 1 }}>
+            <thead>
+              <tr>
+                <th>Rack</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {racks.map((rack) => (
+                <tr key={rack._id}>
+                  <td className='td'>{rack.Nom}</td>
+
+                  <td>
+                    <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                    </button>
+                    <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
+                      <FontAwesomeIcon icon={faEdit} />
+                      Edit
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         )}
       </div>
-
     </div>
 
   );
