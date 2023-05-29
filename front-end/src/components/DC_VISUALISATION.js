@@ -378,6 +378,33 @@ const DataCenterComponent = () => {
               </div>
             )}
           </div>
+          <div className="parentDiv">
+            <button className="action-button">
+              {/* onClick={handleToggleDeleteOptions} */}
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </button>
+            {(
+              // showDeleteOptions && 
+              <div className="delete-options-container">
+                <button className="delete-option-button" onClick={() => { handleDeleteDataCenter(); }}>
+                  {/* setShowDeleteOptions(false); */}
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                  Supprimer le Data Center
+                </button>
+                <button className="delete-option-button" onClick={() => { handleDeletePod(); }}>
+                  {/* setShowDeleteOptions(false); */}
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                  Supprimer le Pod
+                </button>
+                <button className="delete-option-button" onClick={() => { handleDeleteRack(); }}>
+                  {/* setShowDeleteOptions(false);  */}
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                  Supprimer le Rack
+                </button>
+              </div>
+            )}
+          </div>
+
 
         </div>
       </div>
