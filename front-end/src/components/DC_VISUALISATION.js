@@ -339,7 +339,7 @@ const DataCenterComponent = () => {
         <div className="parentDiv">
           <button className="action-button" onClick={handleToggleOptions}>
             <FontAwesomeIcon icon={faPlus} />
-            Choisir un ajout
+
           </button>
           {showOptions && (
             <div className="options-container">
