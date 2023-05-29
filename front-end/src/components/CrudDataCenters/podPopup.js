@@ -10,9 +10,7 @@ const PodPopup = ({ id, onSubmit, onClose }) => {
     };
 
     const handleClose = () => {
-
         onClose();
-
     };
 
     return (
