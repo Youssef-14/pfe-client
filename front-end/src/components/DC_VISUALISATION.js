@@ -273,83 +273,87 @@ const DataCenterComponent = () => {
         )}
       </div>
 
-      <div>
-        <div className='button-container'>
-          <div>
-            <button className="action-button" onClick={toggleAddDataCenterPopup}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Data Center
-            </button>
-            {showAddDataCenterPopup && (
-              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
-            )}
-          </div>
-
-          <div>
-            <button
-              className="action-button"
-              id="addpod"
-              onClick={toggleAddPodPopup}
-              style={{ display: 'none' }}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Pod
-            </button>
-            {showAddPodPopup && (
-              <PodPopup
-                id={selectedDataCenter}
-                onSubmit={handleAddPod}
-                onClose={handleClosePopup}
-              />
-            )}
-          </div>
-          <div>
-            <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Rack
-            </button>
-            {showAddRackPopup && (
-              <RackPopup
-                id={selectedPod}
-                onSubmit={handleAddRack}
-                onClose={handleCloseRackPopup}
-              />)}
-          </div>
+      <div className='button-container'>
+        <div>
+          <button className="action-button" onClick={toggleAddDataCenterPopup}>
+            <FontAwesomeIcon icon={faPlus} />
+            Ajouter un Data Center
+          </button>
+          {showAddDataCenterPopup && (
+            <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
+          )}
         </div>
-        {selectedPod && (
-          <table>
-            <thead>
-              <tr>
-                <th>Rack</th>
-                <th>Pod</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {racks.map((rack) => (
-                <tr key={rack._id}>
-                  <td className='td'>{rack.Nom}</td>
-                  <td className='td'>{rack.Pod}</td>
-                  <td>
-                    <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
-                      <FontAwesomeIcon icon={faTrashAlt} />
-                    </button>
-                    <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
-                      <FontAwesomeIcon icon={faEdit} />
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+
+        <div>
+          <button
+            className="action-button"
+            id="addpod"
+            onClick={toggleAddPodPopup}
+            style={{ display: 'none' }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+            Ajouter un Pod
+          </button>
+          {showAddPodPopup && (
+            <PodPopup
+              id={selectedDataCenter}
+              onSubmit={handleAddPod}
+              onClose={handleClosePopup}
+            />
+          )}
+        </div>
+        <div>
+          <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
+            <FontAwesomeIcon icon={faPlus} />
+            Ajouter un Rack
+          </button>
+          {showAddRackPopup && (
+            <RackPopup
+              id={selectedPod}
+              onSubmit={handleAddRack}
+              onClose={handleCloseRackPopup}
+            />
+          )}
+        </div>
       </div>
-    </div >
+
+      {selectedPod && (
+        <table>
+          <thead>
+            <tr>
+              <th>Rack</th>
+              <th>Pod</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {racks.map((rack) => (
+              <tr key={rack._id}>
+                <td className='td'>{rack.Nom}</td>
+                <td className='td'>
+                  <div className="table-container">
+                    {pods.map((pod) => (
+                      <tr key={pod._id} value={pod._id}>
+                        <td className='td'>{pod.Libelle}</td>
+                      </tr>
+                    ))}
+                  </div>
+                </td>
+                <td>
+                  <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </button>
+                  <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
+                    <FontAwesomeIcon icon={faEdit} />
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
-
-};
-
+}
 export default DataCenterComponent;
-
-
