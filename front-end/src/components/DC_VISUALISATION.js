@@ -108,6 +108,19 @@ const DataCenterComponent = () => {
   const toggleAddRackPopup = () => {
     setShowAddRackPopup(!showAddRackPopup);
   };
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleToggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const handleOptionSelection = (option) => {
+    setSelectedOption(option);
+  };
+
+
+
 
   const handleAddDataCenter = async (data) => {
     try {
@@ -277,9 +290,7 @@ const DataCenterComponent = () => {
               </label>
             </div>
           ))}
-
         </div>
-
 
         <div className='button-container'>
           <div>
@@ -311,7 +322,7 @@ const DataCenterComponent = () => {
             )}
           </div>
           <div>
-            <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
+            <button className="action-button" id='addrack' onClick={toggleAddRackPopup}>
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Rack
             </button>
@@ -325,16 +336,38 @@ const DataCenterComponent = () => {
           </div>
         </div>
 
+        <div className="parentDiv">
+          <button className="action-button" onClick={handleToggleOptions}>
+            <FontAwesomeIcon icon={faPlus} />
+            Choisir un ajout
+          </button>
+          {showOptions && (
+            <div className="options-container">
+              <button className="option-button" onClick={() => { toggleAddDataCenterPopup(); setShowOptions(false); }}>
+                <FontAwesomeIcon icon={faPlus} />
+                Ajouter un Data Center
+              </button>
+              <button className="option-button" onClick={() => { toggleAddPodPopup(); setShowOptions(false); }}>
+                <FontAwesomeIcon icon={faPlus} />
+                Ajouter un Pod
+              </button>
+              <button className="option-button" onClick={() => { toggleAddRackPopup(); setShowOptions(false); }}>
+                <FontAwesomeIcon icon={faPlus} />
+                Ajouter un Rack
+              </button>
+            </div>
+          )}
+        </div>
 
       </div>
-      <div className="table-container">
+
+      <div className="table-container" style={{ display: 'flex', justifyContent: 'center' }}>
         {selectedDataCenter && (
           <table style={{ flex: 1 }}>
             <thead>
               <tr>
                 <th>Sélectionner un Pod</th>
                 <th>Rack</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -352,8 +385,7 @@ const DataCenterComponent = () => {
                     />
                     <label
                       htmlFor={pod._id}
-                      className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
-                        }`}
+                      className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''}`}
                     >
                       {pod.Libelle}
                     </label>
@@ -365,7 +397,7 @@ const DataCenterComponent = () => {
                           {racks.map((rack) => (
                             <tr key={rack._id}>
                               <td className='td'>{rack.Nom}</td>
-                              <td>
+                              {/* <td>
                                 <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
                                   <FontAwesomeIcon icon={faTrashAlt} />
                                 </button>
@@ -373,7 +405,7 @@ const DataCenterComponent = () => {
                                   <FontAwesomeIcon icon={faEdit} />
                                   Edit
                                 </button>
-                              </td>
+                              </td> */}
                             </tr>
                           ))}
                         </tbody>
@@ -386,10 +418,7 @@ const DataCenterComponent = () => {
           </table>
         )}
       </div>
-
     </div>
-
   );
-
 }
 export default DataCenterComponent;
