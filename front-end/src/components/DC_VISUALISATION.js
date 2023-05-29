@@ -109,6 +109,16 @@ const DataCenterComponent = () => {
     setShowAddRackPopup(!showAddRackPopup);
   };
 
+  const [showOptions, setShowOptions] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleToggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const handleOptionSelection = (option) => {
+    setSelectedOption(option);
+  };
   const handleAddDataCenter = async (data) => {
     try {
       console.log(data);
@@ -319,6 +329,56 @@ const DataCenterComponent = () => {
               />
             )}
           </div>
+          <div className="parentDiv">
+            <button className="action-button" onClick={handleToggleOptions}>
+              <FontAwesomeIcon icon={faPlus} />
+
+            </button>
+            {showOptions && (
+              <div className="options-container">
+                <button className="option-button" onClick={() => { toggleAddDataCenterPopup(); setShowOptions(false); }}>
+                  <FontAwesomeIcon icon={faPlus} />
+                  Ajouter un Data Center
+                </button>
+                <button className="option-button" onClick={() => { toggleAddPodPopup(); setShowOptions(false); }}>
+                  <FontAwesomeIcon icon={faPlus} />
+                  Ajouter un Pod
+                </button>
+                <button className="option-button" onClick={() => { toggleAddRackPopup(); setShowOptions(false); }}>
+                  <FontAwesomeIcon icon={faPlus} />
+                  Ajouter un Rack
+                </button>
+              </div>
+
+            )}
+          </div>
+          <div className="parentDiv">
+            <button className="action-button" >
+              {/* onClick={handleToggleEditOptions} */}
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+            {/* showEditOptions &&  */}
+            {(
+              <div className="edit-options-container">
+                <button className="edit-option-button" >
+                  {/* onClick={() => { handleEditDataCenter(); setShowEditOptions(false); }} */}
+                  <FontAwesomeIcon icon={faEdit} />
+                  Modifier le Data Center
+                </button>
+                <button className="edit-option-button">
+                  {/* onClick={() => { handleEditPod(); setShowEditOptions(false); }} */}
+                  <FontAwesomeIcon icon={faEdit} />
+                  Modifier le Pod
+                </button>
+                <button className="edit-option-button">
+                  {/* onClick={() => { handleEditRack(); setShowEditOptions(false); }} */}
+                  <FontAwesomeIcon icon={faEdit} />
+                  Modifier le Rack
+                </button>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
       <div className="table-container">
@@ -364,22 +424,14 @@ const DataCenterComponent = () => {
                 <thead>
                   <tr>
                     <th>Rack</th>
-                    {/* <th>Actions</th> */}
+
                   </tr>
                 </thead>
                 <tbody>
                   {racks.map((rack) => (
                     <tr key={rack._id}>
                       <td className='td'>{rack.Nom}</td>
-                      {/* <td>
-                        <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
-                          <FontAwesomeIcon icon={faTrashAlt} />
-                        </button>
-                        <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
-                          <FontAwesomeIcon icon={faEdit} />
-                          Edit
-                        </button>
-                      </td> */}
+
                     </tr>
                   ))}
                 </tbody>
