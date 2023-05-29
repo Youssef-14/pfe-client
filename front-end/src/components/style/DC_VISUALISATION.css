@@ -107,26 +107,31 @@
 }
 
 .table-container {
-    margin-top: 10px;
-}
-
-.table-container table {
-    width: 100%;
+    margin: 10px;
+  }
+  
+  .tables-container {
+    display: flex;
+  }
+  
+  .table-container table {
+    width: 50%;
     border-collapse: collapse;
-}
-
-.table-container th,
-.table-container td {
+  }
+  
+  .table-container th,
+  .table-container td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-}
-
-.table-container th {
+  }
+  
+  .table-container th {
     background-color: #4CAF50;
     color: white;
-}
-
-.td {
+  }
+  
+  .td {
     padding: 20px;
-}
+  }
+  

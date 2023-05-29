@@ -245,35 +245,43 @@ const DataCenterComponent = () => {
     }
   };
   return (
-    <div style={{ height: "550px", overflowY: "scroll" }}>
-      <h2>Data Centers</h2>
-      <div className="button-container">
-        <select value={selectedDataCenter} onChange={handleDataCenterChange}>
-          <option value="">Sélectionner un Data Center</option>
+        <div style={{ height: "550px", overflowY: "scroll" }}>
+          <h2 style={{paddingLeft:"10px"}}>Data Centers</h2>
+          <div className="button-container" style={{paddingLeft:"10px"}}>
+          <div style={{ display: 'flex', flexDirection: 'scroll' }}>
           {dataCenters.map((dataCenter) => (
-            <option key={dataCenter._id} value={dataCenter._id}>
-              {dataCenter.Libelle}
-            </option>
-          ))}
-        </select>
-
-        {selectedDataCenter && (
-          <div>
-            <div className="table-container">
-              <select value={selectedPod} onChange={handlePodChange}>
-                <option value="">Sélectionner un Pod</option>
-                {pods.map((pod) => (
-                  <option key={pod._id} value={pod._id}>
-                    {pod.Libelle}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        )}
+      <div key={dataCenter._id} style={{ marginRight: '10px' }}>
+        <input
+          type="radio"
+          id={dataCenter._id}
+          name="dataCenter"
+          value={dataCenter._id}
+          checked={selectedDataCenter === dataCenter._id}
+          onChange={handleDataCenterChange}
+          style={{ display: 'none' }}
+        />
+        <label
+          htmlFor={dataCenter._id}
+          style={{
+            display: 'inline-block',
+            padding: '8px 16px',
+            backgroundColor: '#f1f1f1',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            color: selectedDataCenter === dataCenter._id ? '#ffffff' : '#000000',
+            background: selectedDataCenter === dataCenter._id ? '#3853D8' : 'none',
+          }}
+        >
+          {dataCenter.Libelle}
+        </label>
       </div>
+    ))}
 
-      <div className='button-container'>
+    </div>
+
+
+    <div className='button-container'>
         <div>
           <button className="action-button" onClick={toggleAddDataCenterPopup}>
             <FontAwesomeIcon icon={faPlus} />
@@ -317,12 +325,50 @@ const DataCenterComponent = () => {
         </div>
       </div>
 
+        
+      </div>
+      <div className="table-container">
+      {selectedDataCenter && (          
+            <table style={{flex:1}}>
+              <thead>
+                <tr>
+                  <th>Sélectionner un Pod</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pods.map((pod) => (
+                  <tr key={pod._id}>
+                    <td>
+                      <input
+                        type="radio"
+                        id={pod._id}
+                        name="pod"
+                        value={pod._id}
+                        checked={selectedPod === pod._id}
+                        onChange={handlePodChange}
+                        style={{ display: 'none' }}
+                      />
+                      <label
+                        htmlFor={pod._id}
+                        className={`radio-button-label ${
+                          selectedPod === pod._id ? 'selected' : ''
+                        }`}
+                      >
+                        {pod.Libelle}
+                      </label>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>     
+        
+        )}
+
       {selectedPod && (
-        <table>
+        <table style={{flex:1}}>
           <thead>
             <tr>
               <th>Rack</th>
-              <th>Pod</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -330,15 +376,7 @@ const DataCenterComponent = () => {
             {racks.map((rack) => (
               <tr key={rack._id}>
                 <td className='td'>{rack.Nom}</td>
-                <td className='td'>
-                  <div className="table-container">
-                    {pods.map((pod) => (
-                      <tr key={pod._id} value={pod._id}>
-                        <td className='td'>{pod.Libelle}</td>
-                      </tr>
-                    ))}
-                  </div>
-                </td>
+
                 <td>
                   <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
                     <FontAwesomeIcon icon={faTrashAlt} />
@@ -354,6 +392,9 @@ const DataCenterComponent = () => {
         </table>
       )}
     </div>
+  </div>
+    
   );
+  
 }
 export default DataCenterComponent;
