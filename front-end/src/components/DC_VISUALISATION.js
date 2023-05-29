@@ -119,9 +119,6 @@ const DataCenterComponent = () => {
     setSelectedOption(option);
   };
 
-
-
-
   const handleAddDataCenter = async (data) => {
     try {
       console.log(data);
@@ -290,7 +287,9 @@ const DataCenterComponent = () => {
               </label>
             </div>
           ))}
+
         </div>
+
 
         <div className='button-container'>
           <div>
@@ -322,7 +321,7 @@ const DataCenterComponent = () => {
             )}
           </div>
           <div>
-            <button className="action-button" id='addrack' onClick={toggleAddRackPopup}>
+            <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
               <FontAwesomeIcon icon={faPlus} />
               Ajouter un Rack
             </button>
@@ -336,31 +335,8 @@ const DataCenterComponent = () => {
           </div>
         </div>
 
-        <div className="parentDiv">
-          <button className="action-button" onClick={handleToggleOptions}>
-            <FontAwesomeIcon icon={faPlus} />
-
-          </button>
-          {showOptions && (
-            <div className="options-container">
-              <button className="option-button" onClick={() => { toggleAddDataCenterPopup(); setShowOptions(false); }}>
-                <FontAwesomeIcon icon={faPlus} />
-                Ajouter un Data Center
-              </button>
-              <button className="option-button" onClick={() => { toggleAddPodPopup(); setShowOptions(false); }}>
-                <FontAwesomeIcon icon={faPlus} />
-                Ajouter un Pod
-              </button>
-              <button className="option-button" onClick={() => { toggleAddRackPopup(); setShowOptions(false); }}>
-                <FontAwesomeIcon icon={faPlus} />
-                Ajouter un Rack
-              </button>
-            </div>
-          )}
-        </div>
 
       </div>
-
       <div className="table-container" style={{ display: 'flex', justifyContent: 'center' }}>
         {selectedDataCenter && (
           <table style={{ flex: 1 }}>
@@ -368,6 +344,7 @@ const DataCenterComponent = () => {
               <tr>
                 <th>Sélectionner un Pod</th>
                 <th>Rack</th>
+
               </tr>
             </thead>
             <tbody>
@@ -385,7 +362,8 @@ const DataCenterComponent = () => {
                     />
                     <label
                       htmlFor={pod._id}
-                      className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''}`}
+                      className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
+                        }`}
                     >
                       {pod.Libelle}
                     </label>
@@ -418,7 +396,10 @@ const DataCenterComponent = () => {
           </table>
         )}
       </div>
+
     </div>
+
   );
+
 }
 export default DataCenterComponent;
