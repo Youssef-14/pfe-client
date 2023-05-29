@@ -108,30 +108,38 @@
 
 .table-container {
     margin: 10px;
-  }
-  
-  .tables-container {
+}
+
+.tables-container {
     display: flex;
-  }
-  
-  .table-container table {
-    width: 50%;
+}
+
+.table-container table {
+    width: 100%;
     border-collapse: collapse;
-  }
-  
-  .table-container th,
-  .table-container td {
+}
+
+.table-container th,
+.table-container td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-  }
-  
-  .table-container th {
-    background-color: #4CAF50;
+}
+
+.table-container th {
+    background-color: #4e4caf;
     color: white;
-  }
-  
-  .td {
+}
+
+.td {
     padding: 20px;
-  }
-  
+}
+
+.div-container {
+    display: flex;
+}
+
+.div1,
+.div2 {
+    flex: 1;
+}

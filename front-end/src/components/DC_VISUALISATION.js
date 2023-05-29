@@ -277,10 +277,7 @@ const DataCenterComponent = () => {
               </label>
             </div>
           ))}
-
         </div>
-
-
         <div className='button-container'>
           <div>
             <button className="action-button" onClick={toggleAddDataCenterPopup}>
@@ -291,7 +288,6 @@ const DataCenterComponent = () => {
               <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
             )}
           </div>
-
           <div>
             <button
               className="action-button"
@@ -324,76 +320,78 @@ const DataCenterComponent = () => {
             )}
           </div>
         </div>
-
-
       </div>
       <div className="table-container">
-        {selectedDataCenter && (
-          <table style={{ flex: 1 }}>
-            <thead>
-              <tr>
-                <th>Sélectionner un Pod</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pods.map((pod) => (
-                <tr key={pod._id}>
-                  <td>
-                    <input
-                      type="radio"
-                      id={pod._id}
-                      name="pod"
-                      value={pod._id}
-                      checked={selectedPod === pod._id}
-                      onChange={handlePodChange}
-                      style={{ display: 'none' }}
-                    />
-                    <label
-                      htmlFor={pod._id}
-                      className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
-                        }`}
-                    >
-                      {pod.Libelle}
-                    </label>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className='div-container'>
+          <div className="div1">
+            {selectedDataCenter && (
+              <table className='table1'>
+                <thead>
+                  <tr>
+                    <th>Sélectionner un Pod</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pods.map((pod) => (
+                    <tr key={pod._id}>
+                      <td>
+                        <input
+                          type="radio"
+                          id={pod._id}
+                          name="pod"
+                          value={pod._id}
+                          checked={selectedPod === pod._id}
+                          onChange={handlePodChange}
+                          style={{ display: 'none' }}
+                        />
+                        <label
+                          htmlFor={pod._id}
+                          className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
+                            }`}
+                        >
+                          {pod.Libelle}
+                        </label>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+          <div className="div2">
+            {selectedPod && (
+              <table className='table2'>
+                <thead>
+                  <tr>
+                    <th>Rack</th>
+                    {/* <th>Actions</th> */}
+                  </tr>
+                </thead>
+                <tbody>
+                  {racks.map((rack) => (
+                    <tr key={rack._id}>
+                      <td className='td'>{rack.Nom}</td>
+                      {/* <td>
+                        <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
+                          <FontAwesomeIcon icon={faTrashAlt} />
+                        </button>
+                        <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
+                          <FontAwesomeIcon icon={faEdit} />
+                          Edit
+                        </button>
+                      </td> */}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-        )}
-
-        {selectedPod && (
-          <table style={{ flex: 1 }}>
-            <thead>
-              <tr>
-                <th>Rack</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {racks.map((rack) => (
-                <tr key={rack._id}>
-                  <td className='td'>{rack.Nom}</td>
-
-                  <td>
-                    <button className="action-button delete-button" onClick={() => handleDeleteRack(rack._id)}>
-                      <FontAwesomeIcon icon={faTrashAlt} />
-                    </button>
-                    <button className='edit-button' onClick={() => handleEditRack(rack._id)}>
-                      <FontAwesomeIcon icon={faEdit} />
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+            )}
+          </div>
+        </div>
       </div>
     </div>
-
   );
+
 
 }
 export default DataCenterComponent;
