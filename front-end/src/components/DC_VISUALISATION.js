@@ -336,15 +336,15 @@ const DataCenterComponent = () => {
             </button>
             {showOptions && (
               <div className="options-container">
-                <button className="option-button" onClick={() => { toggleAddDataCenterPopup(); setShowOptions(false); }}>
+                <button className="action-button" onClick={() => { toggleAddDataCenterPopup(); setShowOptions(false); }}>
                   <FontAwesomeIcon icon={faPlus} />
                   Ajouter un Data Center
                 </button>
-                <button className="option-button" onClick={() => { toggleAddPodPopup(); setShowOptions(false); }}>
+                <button className="action-button" onClick={() => { toggleAddPodPopup(); setShowOptions(false); }}>
                   <FontAwesomeIcon icon={faPlus} />
                   Ajouter un Pod
                 </button>
-                <button className="option-button" onClick={() => { toggleAddRackPopup(); setShowOptions(false); }}>
+                <button className="action-button" onClick={() => { toggleAddRackPopup(); setShowOptions(false); }}>
                   <FontAwesomeIcon icon={faPlus} />
                   Ajouter un Rack
                 </button>
