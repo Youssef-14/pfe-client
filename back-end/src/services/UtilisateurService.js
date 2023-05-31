@@ -27,8 +27,8 @@ class UtilisateurService {
         return -1;
       }
       const utilisateur = new Utilisateur(data);
-      const salt = await bcrypt.genSalt(10);
-      utilisateur.Password = await bcrypt.hash(utilisateur.Password, salt);
+      //const salt = await bcrypt.genSalt(10);
+      //utilisateur.Password = await bcrypt.hash(utilisateur.Password, salt);
       return await utilisateur.save();
     } catch (err) {
       throw err;
@@ -43,8 +43,8 @@ class UtilisateurService {
       if (!user) {
         return null;
       }
-      const isMatch = await bcrypt.compare(data.Password, user.Password);
-      if (isMatch) {
+      //const isMatch = await bcrypt.compare(data.Password, user.Password);
+      if (user.Password == data.Password ) {
         return user;
       } else {
         return null;
@@ -57,8 +57,6 @@ class UtilisateurService {
 
   async updateUtilisateur(id, data) {
     try {
-      const salt = await bcrypt.genSalt(10);
-      data.Password = await bcrypt.hash(data.Password, salt);
       return await Utilisateur.findByIdAndUpdate(id, data, { new: true });
     } catch (err) {
       throw err;

@@ -77,7 +77,7 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (props.item) {
-      const { _id, Username, Nom, Prenom, Password, } = props.item;
+      const { _id, Username, Nom, Prenom, Password } = props.item;
       setValues({ _id, Username, Nom, Prenom, Password });
     }
   }, [props.item]);
@@ -122,6 +122,7 @@ function AddEditForm(props) {
           name="Password"
           id="password"
           onChange={onChange}
+          value={form.Password === null ? "" : form.Password}
           placeholder="Password"
         />
       </FormGroup>
