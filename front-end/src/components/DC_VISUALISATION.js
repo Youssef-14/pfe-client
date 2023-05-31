@@ -234,7 +234,7 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
-  
+
   const handleEditRack = async (rackId) => {
     try {
       await axios.put(`http://127.0.0.1:3001/racks/update/${rackId}`, handleEditRack, {
@@ -352,24 +352,24 @@ const DataCenterComponent = () => {
             )}
           </div>
           <div className="parentDiv">
-            <button className="action-button" >
+            <button className="edit-button"  >
               {/* onClick={handleToggleEditOptions} */}
               <FontAwesomeIcon icon={faEdit} />
             </button>
             {/* showEditOptions &&  */}
             {(
               <div className="edit-options-container">
-                <button className="edit-option-button" >
+                <button className="edit-button" >
                   {/* onClick={() => { handleEditDataCenter(); setShowEditOptions(false); }} */}
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Data Center
                 </button>
-                <button className="edit-option-button">
+                <button className="edit-button" >
                   {/* onClick={() => { handleEditPod(); setShowEditOptions(false); }} */}
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Pod
                 </button>
-                <button className="edit-option-button">
+                <button className="edit-button" >
                   {/* onClick={() => { handleEditRack(); setShowEditOptions(false); }} */}
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Rack
@@ -378,24 +378,24 @@ const DataCenterComponent = () => {
             )}
           </div>
           <div className="parentDiv">
-            <button className="action-button">
+            <button className="delete-button " >
               {/* onClick={handleToggleDeleteOptions} */}
               <FontAwesomeIcon icon={faTrashAlt} />
             </button>
             {(
               // showDeleteOptions && 
-              <div className="delete-options-container">
-                <button className="delete-option-button" onClick={() => { handleDeleteDataCenter(); }}>
+              <div className="delete-button ">
+                <button className="delete-button " onClick={() => { handleDeleteDataCenter(); }}>
                   {/* setShowDeleteOptions(false); */}
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Supprimer le Data Center
                 </button>
-                <button className="delete-option-button" onClick={() => { handleDeletePod(); }}>
+                <button className="delete-button " onClick={() => { handleDeletePod(); }}>
                   {/* setShowDeleteOptions(false); */}
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Supprimer le Pod
                 </button>
-                <button className="delete-option-button" onClick={() => { handleDeleteRack(); }}>
+                <button className="delete-button " onClick={() => { handleDeleteRack(); }}>
                   {/* setShowDeleteOptions(false);  */}
                   <FontAwesomeIcon icon={faTrashAlt} />
                   Supprimer le Rack
