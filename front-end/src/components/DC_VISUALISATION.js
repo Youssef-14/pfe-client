@@ -145,9 +145,7 @@ const DataCenterComponent = () => {
 
 
   const handleAddPod = async (data) => {
-
     try {
-
       const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
 
         Libelle: data.Libelle,
@@ -236,6 +234,7 @@ const DataCenterComponent = () => {
       console.error(error);
     }
   };
+  
   const handleEditRack = async (rackId) => {
     try {
       await axios.put(`http://127.0.0.1:3001/racks/update/${rackId}`, handleEditRack, {
