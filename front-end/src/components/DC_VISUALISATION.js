@@ -109,10 +109,12 @@ const DataCenterComponent = () => {
 
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
-
   const handleToggleOptions = () => {
     setShowOptions(!showOptions);
   };
+
+
+
 
   const handleOptionSelection = (option) => {
     setSelectedOption(option);
@@ -335,25 +337,24 @@ const DataCenterComponent = () => {
             )}
           </div>
           <div className="parentDiv">
-            <button className="edit-button"  >
-              {/* onClick={handleToggleEditOptions} */}
+            <button className="edit-button" onClick={handleToggleOptions}>
               <FontAwesomeIcon icon={faEdit} />
             </button>
-            {/* showEditOptions &&  */}
-            {(
+
+            {showOptions && (
               <div className="edit-options-container">
                 <button className="edit-button" >
-                  {/* onClick={() => { handleEditDataCenter(); setShowEditOptions(false); }} */}
+
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Data Center
                 </button>
                 <button className="edit-button" >
-                  {/* onClick={() => { handleEditPod(); setShowEditOptions(false); }} */}
+
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Pod
                 </button>
                 <button className="edit-button" >
-                  {/* onClick={() => { handleEditRack(); setShowEditOptions(false); }} */}
+
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Rack
                 </button>
@@ -361,13 +362,11 @@ const DataCenterComponent = () => {
             )}
           </div>
           <div className="parentDiv">
-            <button className="delete-button " >
-              {/* onClick={handleToggleDeleteOptions} */}
+            <button className="delete-button " onClick={handleToggleOptions}>
               <FontAwesomeIcon icon={faTrashAlt} />
             </button>
-            {(
-              // showDeleteOptions && 
-              <div className="delete-button ">
+            {(showOptions &&
+              <div className="delete-button-options-container ">
                 <button className="delete-button " onClick={() => { handleDeleteDataCenter(); }}>
                   {/* setShowDeleteOptions(false); */}
                   <FontAwesomeIcon icon={faTrashAlt} />
