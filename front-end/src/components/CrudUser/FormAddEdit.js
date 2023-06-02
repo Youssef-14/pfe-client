@@ -54,7 +54,6 @@ function AddEditForm(props) {
       Password: form.Password,
       Role: form.Role
     }
-    console.log(user);
 
     axios.put(`http://localhost:3001/users/update/${form._id}`, user, {
       headers: {
@@ -129,8 +128,7 @@ function AddEditForm(props) {
       <FormGroup>
         <Label for="Role">Role</Label>
         <br />
-        <select name="Role" id="Role" onChange={onChange} value={form.Role === null ? "null" : form.Role}>
-          <option value="null" >--Select--</option>
+        <select name="Role" id="Role" onChange={onChange} value={form.Role}>
           <option value="Admin" >admin</option>
           <option value="Utilisateur">user</option>
         </select>
