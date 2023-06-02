@@ -76,7 +76,6 @@ const DataCenterComponent = () => {
   const handleDataCenterChange = (event) => {
     const selectedDataCenterId = event.target.value;
     setSelectedDataCenter(selectedDataCenterId);
-    document.getElementById("addpod").style.display = "inline";
 
     setSelectedPod('');
     setRacks([]);
@@ -88,7 +87,6 @@ const DataCenterComponent = () => {
 
   const handlePodChange = (event) => {
     const selectedPodId = event.target.value;
-    document.getElementById("addrack").style.display = "inline";
 
     setSelectedPod(selectedPodId);
     setRacks([]);
@@ -289,24 +287,13 @@ const DataCenterComponent = () => {
         </div>
         <div className='button-container'>
           <div>
-            <button className="action-button" onClick={toggleAddDataCenterPopup}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Data Center
-            </button>
+
             {showAddDataCenterPopup && (
               <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
             )}
           </div>
           <div>
-            <button
-              className="action-button"
-              id="addpod"
-              onClick={toggleAddPodPopup}
-              style={{ display: 'none' }}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Pod
-            </button>
+
             {showAddPodPopup && (
               <PodPopup
                 id={selectedDataCenter}
@@ -316,10 +303,6 @@ const DataCenterComponent = () => {
             )}
           </div>
           <div>
-            <button className="action-button" id='addrack' onClick={toggleAddRackPopup} style={{ display: 'none' }}>
-              <FontAwesomeIcon icon={faPlus} />
-              Ajouter un Rack
-            </button>
             {showAddRackPopup && (
               <RackPopup
                 id={selectedPod}
