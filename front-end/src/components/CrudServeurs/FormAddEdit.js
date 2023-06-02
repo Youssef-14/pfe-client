@@ -434,7 +434,7 @@ function AddEditForm(props) {
           <FormGroup>
             <Label for="DataCenter">DataCenter</Label>
             <br/>
-            <select value={selectedDataCenter} onChange={handleDataCenterChange}>
+            <select value={selectedDataCenter} onChange={handleDataCenterChange} required>
               <option value="">Sélectionner un Data Center</option>
               {dataCenters.map((dataCenter) => (
                 <option key={dataCenter._id} value={dataCenter._id}>
@@ -446,7 +446,7 @@ function AddEditForm(props) {
           <FormGroup>
             <Label for="Pod">Pod</Label>
               <br/>
-              <select value={selectedPod} onChange={handlePodChange}>
+              <select value={selectedPod} onChange={handlePodChange} required>
               <option value="">Sélectionner un Pod</option>
               {pods.map((pod) => (
                 <option key={pod._id} value={pod._id}>
