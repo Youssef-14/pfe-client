@@ -10,12 +10,16 @@ import './style/DC_VISUALISATION.css'
 const DataCenterComponent = () => {
   const [dataCenters, setDataCenters] = useState([]);
   const [selectedDataCenter, setSelectedDataCenter] = useState('');
+  const [selectedRack, setSelectedRack] = useState('');
   const [pods, setPods] = useState([]);
   const [selectedPod, setSelectedPod] = useState('');
   const [racks, setRacks] = useState([]);
   const [showAddDataCenterPopup, setShowAddDataCenterPopup] = useState(false);
   const [showAddRackPopup, setShowAddRackPopup] = useState(false);
   const [showAddPodPopup, setShowAddPodPopup] = useState(false);
+  const [showEditDataCenterPopup, setShowEditDataCenterPopup] = useState(false);
+  const [showEditRackPopup, setShowEditRackPopup] = useState(false);
+  const [showEditPodPopup, setShowEditPodPopup] = useState(false);
 
   useEffect(() => {
     fetchDataCenters();
@@ -23,13 +27,16 @@ const DataCenterComponent = () => {
 
   const handleClosePopup = () => {
     setShowAddPodPopup(false);
+    setShowEditPodPopup(false);
   };
 
   const handleCloseRackPopup = () => {
     setShowAddRackPopup(false);
+    setShowEditRackPopup(false);
   };
   const handleCloseDataCenterPopup = () => {
     setShowAddDataCenterPopup(false);
+    setShowEditDataCenterPopup(false);
   };
 
   const fetchDataCenters = async () => {
@@ -96,7 +103,13 @@ const DataCenterComponent = () => {
     }
   };
 
+  const handleRackChange = (event) => {
+    const selectedRackId = event.target.value;
+    setSelectedRack(selectedRackId);
+  };
+
   const toggleAddDataCenterPopup = () => {
+    
     setShowAddDataCenterPopup(!showAddDataCenterPopup);
   };
   const toggleAddPodPopup = () => {
@@ -105,6 +118,27 @@ const DataCenterComponent = () => {
 
   const toggleAddRackPopup = () => {
     setShowAddRackPopup(!showAddRackPopup);
+  };
+  const toggleEditDataCenterPopup = () => {
+    if (!selectedDataCenter) {
+      alert('Please unselect data center first');
+      return;
+    }
+    setShowEditDataCenterPopup(!showEditDataCenterPopup);
+  };
+  const toggleEditPodPopup = () => {
+    if (!selectedPod) {
+      alert('Please unselect pod first');
+      return;
+    }
+    setShowEditPodPopup(!showEditPodPopup);
+  };
+  const toggleEditRackPopup = () => {
+    if (!selectedRack) {
+      alert('Please unselect rack first');
+      return;
+    }
+    setShowEditRackPopup(!showEditRackPopup);
   };
 
   const [showOptions, setShowOptions] = useState(false);
@@ -165,9 +199,6 @@ const DataCenterComponent = () => {
     }
   };
 
-
-
-
   const handleAddRack = async (data) => {
     try {
       console.log(data);
@@ -193,14 +224,18 @@ const DataCenterComponent = () => {
   };
 
 
-  const handleDeleteDataCenter = async (dataCenterId) => {
+  const handleDeleteDataCenter = async () => {
+    if (!selectedDataCenter ) {
+      alert('Please select data center first');
+      return;
+    }
     try {
-      await axios.delete(`http://127.0.0.1:3001/datacenters/delete/${dataCenterId}`, {
+      await axios.delete(`http://127.0.0.1:3001/datacenters/${selectedDataCenter}`, {
         headers: {
           'Authorization': `Bearer ${getToken()}`
         }
       });
-      setDataCenters(dataCenters.filter((dataCenter) => dataCenter._id !== dataCenterId));
+      setDataCenters(dataCenters.filter((dataCenter) => dataCenter._id !== selectedDataCenter));
       setPods([]);
       setRacks([]);
     } catch (error) {
@@ -208,47 +243,111 @@ const DataCenterComponent = () => {
     }
   };
 
-  const handleDeletePod = async (podId) => {
+  const handleDeletePod = async () => {
+    if (!selectedPod) {
+      alert('Please select pod first');
+      return;
+    }
     try {
-      await axios.delete(`http://127.0.0.1:3001/pods/delete/${podId}`, {
+      await axios.delete(`http://127.0.0.1:3001/pods/${selectedPod}`, {
         headers: {
           'Authorization': `Bearer ${getToken()}`
         }
       });
-      setPods(pods.filter((pod) => pod._id !== podId));
+      setPods(pods.filter((pod) => pod._id !== selectedPod));
       setRacks([]);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleDeleteRack = async (rackId) => {
+  const handleDeleteRack = async () => {
+    if (!selectedRack) {
+      alert('Please select rack first');
+      return;
+    }
     try {
-      await axios.delete(`http://127.0.0.1:3001/racks/delete/${rackId}`, {
+      await axios.delete(`http://127.0.0.1:3001/racks/${selectedRack}`, {
         headers: {
           'Authorization': `Bearer ${getToken()}`
         }
       });
-      setRacks(racks.filter((rack) => rack._id !== rackId));
+      setRacks(racks.filter((rack) => rack._id !== selectedRack));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleEditRack = async (rackId) => {
+  const handleEditDataCenter = async (data) => {
     try {
-      await axios.put(`http://127.0.0.1:3001/racks/update/${rackId}`, handleEditRack, {
+      await axios.put(`http://127.0.0.1:3001/datacenters/${selectedDataCenter}`,{
+        Libelle: data.libelle,
+        Description: data.description,
+        Capacite: data.capacite,
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${getToken()}`
+        }
+      });
+      const updatedDataCenters = dataCenters.map((dataCenter) => {
+        if (dataCenter._id === selectedDataCenter) {
+          return { ...dataCenter, ...data };
+        }
+        return dataCenter;
+      });
+      setDataCenters(updatedDataCenters);
+      toggleEditDataCenterPopup();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleEditPod = async (data) => {
+    try {
+      await axios.put(`http://127.0.0.1:3001/pods/${selectedPod}`, {
+        Libelle: data.libelle,
+        DataCenter: selectedDataCenter
+      },
+        {
+          headers: {
+            'Authorization': `Bearer ${getToken()}`
+          }
+        }
+      );
+      const updatedPods = pods.map((pod) => {
+        if (pod._id === selectedPod) {
+          return { ...pod, ...data };
+        }
+        return pod;
+      });
+      setPods(updatedPods);
+      toggleEditPodPopup();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  
+
+  const handleEditRack = async (data) => {
+    try {
+      console.log(data);
+      await axios.put(`http://127.0.0.1:3001/racks/${selectedRack}`, {
+        Nom: data.nom,
+        Taille: data.taille,
+      }, {
         headers: {
           'Authorization': `Bearer ${getToken()}`
         }
       });
       const updatedRacks = racks.map((rack) => {
-        if (rack._id === rackId) {
+        if (rack._id === selectedRack) {
           return { ...rack, ...handleEditRack };
         }
         return rack;
       });
       setRacks(updatedRacks);
+      toggleEditRackPopup();
     } catch (error) {
       console.error(error);
     }
@@ -291,25 +390,42 @@ const DataCenterComponent = () => {
           <div>
 
             {showAddDataCenterPopup && (
-              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} addEdit={dataCenters.find(f=>f._id==selectedDataCenter)} />
+              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} addEdit={null} />
+            )}
+            {showEditDataCenterPopup && (
+              <DataCenterPopup onSubmit={handleEditDataCenter} onClose={handleCloseDataCenterPopup} addEdit={dataCenters.find(f=>f._id==selectedDataCenter)} />
             )}
           </div>
           <div>
 
             {showAddPodPopup && (
               <PodPopup
-                id={selectedDataCenter}
                 onSubmit={handleAddPod}
                 onClose={handleClosePopup}
+                addEdit={null}
+              />
+            )}
+            {showEditPodPopup && (
+              <PodPopup
+                onSubmit={handleEditPod}
+                onClose={handleClosePopup}
+                addEdit={pods.find(f=>f._id==selectedPod)}
               />
             )}
           </div>
           <div>
             {showAddRackPopup && (
               <RackPopup
-                id={selectedPod}
                 onSubmit={handleAddRack}
                 onClose={handleCloseRackPopup}
+                addEdit={null}
+              />
+            )}
+            {showEditRackPopup && (
+              <RackPopup
+                onSubmit={handleEditRack}
+                onClose={handleCloseRackPopup}
+                addEdit={racks.find(f=>f._id==selectedRack)}
               />
             )}
           </div>
@@ -343,17 +459,17 @@ const DataCenterComponent = () => {
 
             {showOptions && (
               <div className="edit-options-container">
-                <button className="edit-button" >
+                <button className="edit-button" onClick={() => { toggleEditDataCenterPopup(); setShowOptions(false); }}>
 
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Data Center
                 </button>
-                <button className="edit-button" >
+                <button className="edit-button" onClick={() => { toggleEditPodPopup(); setShowOptions(false); }}>
 
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Pod
                 </button>
-                <button className="edit-button" >
+                <button className="edit-button" onClick={() => { toggleEditRackPopup(); setShowOptions(false); }}>
 
                   <FontAwesomeIcon icon={faEdit} />
                   Modifier le Rack
@@ -438,9 +554,27 @@ const DataCenterComponent = () => {
                 <tbody>
                   {racks.map((rack) => (
                     <tr key={rack._id}>
-                      <td className='td'>{rack.Nom}</td>
+                      <td className='td' on>
+                      <input
+                          type="radio"
+                          id={rack._id}
+                          name="rack"
+                          value={rack._id}
+                          checked={selectedRack === rack._id}
+                          onChange={handleRackChange}
+                          style={{ display: 'none' }}
+                        />
+                        <label
+                          htmlFor={rack._id}
+                          className={`radio-button-label ${selectedRack === rack._id ? 'selected' : ''
+                            }`}
+                        >
+                          {rack.Nom}
+                        </label>
+                      </td>                    
 
                     </tr>
+                    
                   ))}
                 </tbody>
               </table>

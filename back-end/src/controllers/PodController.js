@@ -66,11 +66,12 @@ class PodController {
 
   static async updatePodById(req, res) {
     try {
+      console.log(req.body);
       const pod = await podService.updatePodById(req.params.id, req.body);
       if (!pod) {
         return res.status(404).send({ message: 'pod not found' });
       }
-      res.send(200).send({ message: 'pod updated successfully' });
+      res.status(200).send({ message: 'pod updated successfully' });
     } catch (error) {
       res.status(400).send(error);
     }
