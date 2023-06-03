@@ -291,7 +291,7 @@ const DataCenterComponent = () => {
           <div>
 
             {showAddDataCenterPopup && (
-              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} />
+              <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} addEdit={dataCenters.find(f=>f._id==selectedDataCenter)} />
             )}
           </div>
           <div>
