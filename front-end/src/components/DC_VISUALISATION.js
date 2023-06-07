@@ -109,7 +109,7 @@ const DataCenterComponent = () => {
   };
 
   const toggleAddDataCenterPopup = () => {
-    
+
     setShowAddDataCenterPopup(!showAddDataCenterPopup);
   };
   const toggleAddPodPopup = () => {
@@ -225,7 +225,7 @@ const DataCenterComponent = () => {
 
 
   const handleDeleteDataCenter = async () => {
-    if (!selectedDataCenter ) {
+    if (!selectedDataCenter) {
       alert('Please select data center first');
       return;
     }
@@ -280,16 +280,16 @@ const DataCenterComponent = () => {
 
   const handleEditDataCenter = async (data) => {
     try {
-      await axios.put(`http://127.0.0.1:3001/datacenters/${selectedDataCenter}`,{
+      await axios.put(`http://127.0.0.1:3001/datacenters/${selectedDataCenter}`, {
         Libelle: data.libelle,
         Description: data.description,
         Capacite: data.capacite,
       },
-      {
-        headers: {
-          'Authorization': `Bearer ${getToken()}`
-        }
-      });
+        {
+          headers: {
+            'Authorization': `Bearer ${getToken()}`
+          }
+        });
       const updatedDataCenters = dataCenters.map((dataCenter) => {
         if (dataCenter._id === selectedDataCenter) {
           return { ...dataCenter, ...data };
@@ -327,7 +327,7 @@ const DataCenterComponent = () => {
     }
   };
 
-  
+
 
   const handleEditRack = async (data) => {
     try {
@@ -393,7 +393,7 @@ const DataCenterComponent = () => {
               <DataCenterPopup onSubmit={handleAddDataCenter} onClose={handleCloseDataCenterPopup} addEdit={null} />
             )}
             {showEditDataCenterPopup && (
-              <DataCenterPopup onSubmit={handleEditDataCenter} onClose={handleCloseDataCenterPopup} addEdit={dataCenters.find(f=>f._id==selectedDataCenter)} />
+              <DataCenterPopup onSubmit={handleEditDataCenter} onClose={handleCloseDataCenterPopup} addEdit={dataCenters.find(f => f._id == selectedDataCenter)} />
             )}
           </div>
           <div>
@@ -409,7 +409,7 @@ const DataCenterComponent = () => {
               <PodPopup
                 onSubmit={handleEditPod}
                 onClose={handleClosePopup}
-                addEdit={pods.find(f=>f._id==selectedPod)}
+                addEdit={pods.find(f => f._id == selectedPod)}
               />
             )}
           </div>
@@ -425,7 +425,7 @@ const DataCenterComponent = () => {
               <RackPopup
                 onSubmit={handleEditRack}
                 onClose={handleCloseRackPopup}
-                addEdit={racks.find(f=>f._id==selectedRack)}
+                addEdit={racks.find(f => f._id == selectedRack)}
               />
             )}
           </div>
@@ -555,7 +555,7 @@ const DataCenterComponent = () => {
                   {racks.map((rack) => (
                     <tr key={rack._id}>
                       <td className='td' on>
-                      <input
+                        <input
                           type="radio"
                           id={rack._id}
                           name="rack"
@@ -564,17 +564,17 @@ const DataCenterComponent = () => {
                           onChange={handleRackChange}
                           style={{ display: 'none' }}
                         />
-                        <label
+                        <label id='l'
                           htmlFor={rack._id}
                           className={`radio-button-label ${selectedRack === rack._id ? 'selected' : ''
                             }`}
                         >
                           {rack.Nom}
                         </label>
-                      </td>                    
+                      </td>
 
                     </tr>
-                    
+
                   ))}
                 </tbody>
               </table>
