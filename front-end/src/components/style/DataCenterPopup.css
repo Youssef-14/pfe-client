@@ -58,3 +58,27 @@ label {
     display: flex;
     flex-direction: column;
 }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black overlay */
+    z-index: 9999;
+    /* Ensure the overlay is on top of other elements */
+}
+
+.data-center-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    /* Popup background color */
+    padding: 20px;
+    z-index: 10000;
+    /* Ensure the popup is on top of the overlay */
+}

@@ -27,39 +27,42 @@ const RackPopup = ({ onSubmit, onClose, addEdit }) => {
   };
 
   return (
-    <div className="data-center-popup">
-      <div className="data-center-popup-content">
-        <span className="close" onClick={handleClose}>
-          &times;
-        </span>
-        <form className="data-center-popup-form" onSubmit={handleSubmit}>
-          <h2>{addEdit ? 'Edit Rack' : 'Add Rack'}</h2>
-          <div className="form-group">
-            <label htmlFor="nom">Rack Name:</label>
-            <input
-              type="text"
-              id="nom"
-              className="form-control"
-              value={nom}
-              onChange={(e) => setNom(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="taille">Rack Size:</label>
-            <input
-              type="number"
-              id="taille"
-              className="form-control"
-              value={taille}
-              onChange={(e) => setTaille(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn-submit">
-            {addEdit ? 'Update' : 'Add'}
-          </button>
-        </form>
+    <>
+      <div className="overlay" onClick={handleClose}></div>
+      <div className="data-center-popup">
+        <div className="data-center-popup-content">
+          <span className="close" onClick={handleClose}>
+            &times;
+          </span>
+          <form className="data-center-popup-form" onSubmit={handleSubmit}>
+            <h2>{addEdit ? 'Edit Rack' : 'Add Rack'}</h2>
+            <div className="form-group">
+              <label htmlFor="nom">Rack Name:</label>
+              <input
+                type="text"
+                id="nom"
+                className="form-control"
+                value={nom}
+                onChange={(e) => setNom(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="taille">Rack Size:</label>
+              <input
+                type="number"
+                id="taille"
+                className="form-control"
+                value={taille}
+                onChange={(e) => setTaille(e.target.value)}
+              />
+            </div>
+            <button type="submit" className="btn-submit">
+              {addEdit ? 'Update' : 'Add'}
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
