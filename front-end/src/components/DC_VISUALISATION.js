@@ -429,7 +429,12 @@ const DataCenterComponent = () => {
               />
             )}
           </div>
-          <div className="parentDiv">
+          
+
+
+        </div>
+      </div>
+      <div className="parentDiv">
             <button className="action-button" onClick={handleToggleOptions}>
               <FontAwesomeIcon icon={faPlus} />
 
@@ -449,7 +454,6 @@ const DataCenterComponent = () => {
                   Ajouter un Rack
                 </button>
               </div>
-
             )}
           </div>
           <div className="parentDiv">
@@ -501,14 +505,10 @@ const DataCenterComponent = () => {
               </div>
             )}
           </div>
-
-
-        </div>
-      </div>
       <div className="table-container">
         <div className='div-container'>
           <div className="div1">
-            {selectedDataCenter && (
+            
               <table className='table1'>
                 <thead>
                   <tr>
@@ -540,11 +540,10 @@ const DataCenterComponent = () => {
                   ))}
                 </tbody>
               </table>
-            )}
+            
           </div>
           <div className="div2">
-            {selectedPod && (
-              <table className='table2'>
+              <table className='table2' >
                 <thead>
                   <tr>
                     <th>Rack</th>
@@ -572,14 +571,10 @@ const DataCenterComponent = () => {
                           {rack.Nom}
                         </label>
                       </td>
-
                     </tr>
-
                   ))}
                 </tbody>
               </table>
-
-            )}
           </div>
         </div>
       </div>
