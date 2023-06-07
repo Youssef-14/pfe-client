@@ -128,9 +128,10 @@ function AddEditForm(props) {
       <FormGroup>
         <Label for="Role">Role</Label>
         <br />
-        <select name="Role" id="Role" onChange={onChange} value={form.Role}>
-          <option value="Admin" >admin</option>
-          <option value="Utilisateur">user</option>
+        <select name="Role" id="Role" onChange={onChange} value={form.Role} required  >
+          <option value="null" disabled selected >--Select--</option>
+          <option value="Admin" >Admin</option>
+          <option value="Utilisateur">User</option>
         </select>
         {/* <Input
        
