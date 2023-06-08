@@ -512,78 +512,73 @@ const DataCenterComponent = () => {
       <div className="table-container">
         <div className='div-container'>
           <div className="div1">
-            {selectedDataCenter && (
-              <table className='table1'>
-                <thead>
-                  <tr>
-                    <th>Sélectionner un Pod</th>
+
+            <table className='table1'>
+              <thead>
+                <tr>
+                  <th>Sélectionner un Pod</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pods.map((pod) => (
+                  <tr key={pod._id}>
+                    <td>
+                      <input
+                        type="radio"
+                        id={pod._id}
+                        name="pod"
+                        value={pod._id}
+                        checked={selectedPod === pod._id}
+                        onChange={handlePodChange}
+                        style={{ display: 'none' }}
+                      />
+                      <label
+                        htmlFor={pod._id}
+                        className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
+                          }`}
+                      >
+                        {pod.Libelle}
+                      </label>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {pods.map((pod) => (
-                    <tr key={pod._id}>
-                      <td>
-                        <input
-                          type="radio"
-                          id={pod._id}
-                          name="pod"
-                          value={pod._id}
-                          checked={selectedPod === pod._id}
-                          onChange={handlePodChange}
-                          style={{ display: 'none' }}
-                        />
-                        <label
-                          htmlFor={pod._id}
-                          className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
-                            }`}
-                        >
-                          {pod.Libelle}
-                        </label>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+                ))}
+              </tbody>
+            </table>
+
           </div>
           <div className="div2">
-            {selectedPod && (
-              <table className='table2'>
-                <thead>
-                  <tr>
-                    <th>Rack</th>
+            <table className='table2' >
+              <thead>
+                <tr>
+                  <th>Rack</th>
 
+                </tr>
+              </thead>
+              <tbody>
+                {racks.map((rack) => (
+                  <tr key={rack._id}>
+                    <td className='td' on>
+                      <input
+                        type="radio"
+                        id={rack._id}
+                        name="rack"
+                        value={rack._id}
+                        checked={selectedRack === rack._id}
+                        onChange={handleRackChange}
+                        style={{ display: 'none' }}
+                      />
+                      <label id='l'
+                        htmlFor={rack._id}
+                        className={`radio-button-label ${selectedRack === rack._id ? 'selected' : ''
+                          }`}
+                      >
+                        {rack.Nom}
+                      </label>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {racks.map((rack) => (
-                    <tr key={rack._id}>
-                      <td className='td' on>
-                        <input
-                          type="radio"
-                          id={rack._id}
-                          name="rack"
-                          value={rack._id}
-                          checked={selectedRack === rack._id}
-                          onChange={handleRackChange}
-                          style={{ display: 'none' }}
-                        />
-                        <label id='l'
-                          htmlFor={rack._id}
-                          className={`radio-button-label ${selectedRack === rack._id ? 'selected' : ''
-                            }`}
-                        >
-                          {rack.Nom}
-                        </label>
-                      </td>
-
-                    </tr>
-
-                  ))}
-                </tbody>
-              </table>
-
-            )}
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
