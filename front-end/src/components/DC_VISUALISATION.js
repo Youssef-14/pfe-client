@@ -83,7 +83,6 @@ const DataCenterComponent = () => {
   const handleDataCenterChange = (event) => {
     const selectedDataCenterId = event.target.value;
     setSelectedDataCenter(selectedDataCenterId);
-
     setSelectedPod('');
     setRacks([]);
 
@@ -96,6 +95,7 @@ const DataCenterComponent = () => {
     const selectedPodId = event.target.value;
 
     setSelectedPod(selectedPodId);
+    setSelectedRack('');
     setRacks([]);
 
     if (selectedPodId) {
@@ -544,6 +544,14 @@ const DataCenterComponent = () => {
                       />
                       <label
                         htmlFor={pod._id}
+                        style={{ display: 'inline-block',
+                        padding: '8px 16px',
+                        backgroundColor: '#f1f1f1',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        color: selectedPod === pod._id ? '#ffffff' : '#000000',
+                        background: selectedPod === pod._id ? '#4e4caf' : 'none',}}
                         className={`radio-button-label ${selectedPod === pod._id ? 'selected' : ''
                           }`}
                       >
@@ -579,6 +587,14 @@ const DataCenterComponent = () => {
                       />
                       <label id='l'
                         htmlFor={rack._id}
+                        style={{ display: 'inline-block',
+                        padding: '8px 16px',
+                        backgroundColor: '#f1f1f1',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        color: selectedRack === rack._id ? '#ffffff' : '#000000',
+                        background: selectedRack === rack._id ? '#4e4caf' : 'none',}}
                         className={`radio-button-label ${selectedRack === rack._id ? 'selected' : ''
                           }`}
                       >
