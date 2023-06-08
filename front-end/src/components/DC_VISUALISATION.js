@@ -354,8 +354,8 @@ const DataCenterComponent = () => {
   };
   return (
     <div style={{ height: "550px", overflowY: "scroll" }}>
-      <h2 style={{ paddingLeft: "10px" }}>Data Centers</h2>
-      <div className="button-container" style={{ paddingLeft: "10px" }}>
+      <h2 style={{ margin: "20px" }}>Data Centers</h2>
+      <div className="button-container" >
         <div style={{ display: 'flex', flexDirection: 'scroll' }}>
           {dataCenters.map((dataCenter) => (
             <div key={dataCenter._id} style={{ marginRight: '10px' }}>
@@ -429,80 +429,84 @@ const DataCenterComponent = () => {
               />
             )}
           </div>
-          <div className="parentDiv">
-            <button className="action-button" onClick={handleToggleOptions}>
-              <FontAwesomeIcon icon={faPlus} />
-
-            </button>
-            {showOptions && (
-              <div className="options-container">
-                <button className="action-button" onClick={() => { toggleAddDataCenterPopup(); setShowOptions(false); }}>
-                  <FontAwesomeIcon icon={faPlus} />
-                  Ajouter un Data Center
-                </button>
-                <button className="action-button" onClick={() => { toggleAddPodPopup(); setShowOptions(false); }}>
-                  <FontAwesomeIcon icon={faPlus} />
-                  Ajouter un Pod
-                </button>
-                <button className="action-button" onClick={() => { toggleAddRackPopup(); setShowOptions(false); }}>
-                  <FontAwesomeIcon icon={faPlus} />
-                  Ajouter un Rack
-                </button>
-              </div>
-
-            )}
-          </div>
-          <div className="parentDiv">
-            <button className="edit-button" onClick={handleToggleOptions}>
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-
-            {showOptions && (
-              <div className="edit-options-container">
-                <button className="edit-button" onClick={() => { toggleEditDataCenterPopup(); setShowOptions(false); }}>
-
-                  <FontAwesomeIcon icon={faEdit} />
-                  Modifier le Data Center
-                </button>
-                <button className="edit-button" onClick={() => { toggleEditPodPopup(); setShowOptions(false); }}>
-
-                  <FontAwesomeIcon icon={faEdit} />
-                  Modifier le Pod
-                </button>
-                <button className="edit-button" onClick={() => { toggleEditRackPopup(); setShowOptions(false); }}>
-
-                  <FontAwesomeIcon icon={faEdit} />
-                  Modifier le Rack
-                </button>
-              </div>
-            )}
-          </div>
-          <div className="parentDiv">
-            <button className="delete-button " onClick={handleToggleOptions}>
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </button>
-            {(showOptions &&
-              <div className="delete-button-options-container ">
-                <button className="delete-button " onClick={() => { handleDeleteDataCenter(); }}>
-                  {/* setShowDeleteOptions(false); */}
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                  Supprimer le Data Center
-                </button>
-                <button className="delete-button " onClick={() => { handleDeletePod(); }}>
-                  {/* setShowDeleteOptions(false); */}
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                  Supprimer le Pod
-                </button>
-                <button className="delete-button " onClick={() => { handleDeleteRack(); }}>
-                  {/* setShowDeleteOptions(false);  */}
-                  <FontAwesomeIcon icon={faTrashAlt} />
-                  Supprimer le Rack
-                </button>
-              </div>
-            )}
-          </div>
 
 
+
+        </div>
+      </div>
+      <div className='allbtn'>
+        <div className="parentDiv" id="div1" >
+          <button className="action-button" onClick={handleToggleOptions}>
+            <FontAwesomeIcon icon={faPlus} />
+
+          </button>
+          {showOptions && (
+            <div className="options-container">
+              <button className="action-button" onClick={() => { toggleAddDataCenterPopup(); setShowOptions(false); }}>
+                <FontAwesomeIcon icon={faPlus} />
+                Ajouter un Data Center
+              </button>
+              <button className="action-button" onClick={() => { toggleAddPodPopup(); setShowOptions(false); }}>
+                <FontAwesomeIcon icon={faPlus} />
+                Ajouter un Pod
+              </button>
+              <button className="action-button" onClick={() => { toggleAddRackPopup(); setShowOptions(false); }}>
+                <FontAwesomeIcon icon={faPlus} />
+                Ajouter un Rack
+              </button>
+            </div>
+
+          )}
+        </div>
+        <div className="parentDiv" id="div2">
+          <button className="edit-button" onClick={handleToggleOptions}>
+            <FontAwesomeIcon icon={faEdit} />
+          </button>
+
+          {showOptions && (
+            <div className="edit-options-container">
+              <button className="edit-button" onClick={() => { toggleEditDataCenterPopup(); setShowOptions(false); }}>
+
+                <FontAwesomeIcon icon={faEdit} />
+                Modifier le Data Center
+              </button>
+              <button className="edit-button" onClick={() => { toggleEditPodPopup(); setShowOptions(false); }}>
+
+                <FontAwesomeIcon icon={faEdit} />
+                Modifier le Pod
+              </button>
+              <button className="edit-button" onClick={() => { toggleEditRackPopup(); setShowOptions(false); }}>
+
+                <FontAwesomeIcon icon={faEdit} />
+                Modifier le Rack
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="parentDiv" id="div3">
+          <button className="delete-button " onClick={handleToggleOptions}>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </button>
+          {(showOptions &&
+            <div className="delete-button-options-container ">
+              <button className="delete-button " onClick={() => { handleDeleteDataCenter(); }}>
+                {/* setShowDeleteOptions(false); */}
+                <FontAwesomeIcon icon={faTrashAlt} />
+                Supprimer le Data Center
+              </button>
+              <button className="delete-button " onClick={() => { handleDeletePod(); }}>
+                {/* setShowDeleteOptions(false); */}
+                <FontAwesomeIcon icon={faTrashAlt} />
+                Supprimer le Pod
+              </button>
+              <button className="delete-button " onClick={() => { handleDeleteRack(); }}>
+                {/* setShowDeleteOptions(false);  */}
+                <FontAwesomeIcon icon={faTrashAlt} />
+                Supprimer le Rack
+              </button>
+            </div>
+
+          )}
         </div>
       </div>
       <div className="table-container">
