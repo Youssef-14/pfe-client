@@ -80,13 +80,13 @@ function AddEditForm(props) {
     
     for (const validation of validations) {
       if (form[validation.field].length < validation.minLength) {
-        alert(validation.message);
+        setValidationErrors(validation.message);
         return;
       }
     }
 
     if (!["admin", "user"].includes(form.Role.toLowerCase())) {
-      alert("Role doit être admin ou user");
+      setValidationErrors("Role doit être admin ou user");
       return;
     }
     
