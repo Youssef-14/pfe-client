@@ -30,6 +30,11 @@ class UtilisateurController {
 
   async createUtilisateur(req, res) {
     try {
+      if (req.body.Password.length < 5){
+        return res.status(409).send({ error: 'Mot de passe trop court' });
+      }
+
+
       var response = await this.utilisateurService.createUtilisateur(req.body);
       if (response == -1){
         return res.status(409).send({ error: 'Utilisateur existe deja' });
