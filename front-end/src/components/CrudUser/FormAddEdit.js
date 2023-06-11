@@ -4,6 +4,7 @@ import axios from "axios";
 import { getToken } from "../../_services/account.services";
 
 function AddEditForm(props) {
+  const [validationErrors, setValidationErrors] = useState(null);
   const [form, setValues] = useState({
 
   });
@@ -27,13 +28,13 @@ function AddEditForm(props) {
     
     for (const validation of validations) {
       if (form[validation.field].length < validation.minLength) {
-        alert(validation.message);
+        setValidationErrors(validation.message);
         return;
       }
     }
 
     if (!["admin", "user"].includes(form.Role.toLowerCase())) {
-      alert("Role doit être admin ou user");
+      setValidationErrors("Role doit être admin ou user");
       return;
     }
     
@@ -126,7 +127,11 @@ function AddEditForm(props) {
 
   return (
     <Form onSubmit={props.item ? submitFormEdit : submitFormAdd}>
-      
+      {validationErrors != null && (
+        <div className="alert alert-danger" role="alert">
+          {validationErrors}
+        </div>
+      )}
       <FormGroup>
         <Label for="username">Username</Label>
         <Input
