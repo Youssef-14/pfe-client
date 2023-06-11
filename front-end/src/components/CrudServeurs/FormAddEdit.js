@@ -167,8 +167,7 @@ function AddEditForm(props) {
 
   if(props.item){
     return (
-      <Form onSubmit={ submitFormEdit }>
-    
+      <Form onSubmit={ submitFormEdit }>    
         <FormGroup>
           <Label for="IPManagement">IPManagment</Label>
           <Input
@@ -178,6 +177,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.IPManagement === null ? "" : form.IPManagement}
             placeholder="IPManagement"
+            required
           />
         </FormGroup>
     
@@ -190,6 +190,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.Model === null ? "" : form.Model}
             placeholder="Model"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -201,6 +202,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.IP === null ? "" : form.IP}
             placeholder="IP"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -212,6 +214,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.CPU === null ? "" : form.CPU}
             placeholder="CPU"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -223,6 +226,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.Owner === null ? "" : form.Owner}
             placeholder="Owner"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -234,6 +238,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.Login === null ? "" : form.Login}
             placeholder="serveurname"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -245,6 +250,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.Password === null ? "" : form.Password}
             placeholder="password"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -256,28 +262,31 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.Uptime === null ? "" : form.Uptime}
             placeholder="Uptime"
+            required
           />
         </FormGroup>
         <FormGroup>
           <Label for="ConsommationCPU">ConsommationCPU</Label>
           <Input
-            type="text"
+            type="number"
             name="ConsommationCPU"
             id="ConsommationCPU"
             onChange={onChange}
             value={form.ConsommationCPU === null ? "" : form.ConsommationCPU}
             placeholder="ConsommationCPU"
+            required
           />
         </FormGroup>
         <FormGroup>
           <Label for="Model">ConsommationRAM</Label>
           <Input
-            type="text"
+            type="number"
             name="ConsommationRAM"
             id="ConsommationRAM"
             onChange={onChange}
             value={form.ConsommationRAM === null ? "" : form.ConsommationRAM}
             placeholder="ConsommationRAM"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -289,6 +298,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.Role === null ? "" : form.Role}
             placeholder="Role"
+            required
           />
         </FormGroup>
         <FormGroup>
@@ -300,6 +310,7 @@ function AddEditForm(props) {
             onChange={onChange}
             value={form.RAM === null ? "" : form.RAM}
             placeholder="RAM"
+            required
           />
         </FormGroup>
         <Button>Submit</Button>
@@ -316,8 +327,8 @@ function AddEditForm(props) {
               name="IPManagement"
               id="IPManagment"
               onChange={onChange}
-              value={form.IPManagment === null ? "" : form.IPManagement}
               placeholder="5645154"
+              required
             />
           </FormGroup>
       
@@ -328,8 +339,8 @@ function AddEditForm(props) {
               name="Model"
               id="Model"
               onChange={onChange}
-              value={form.Model === null ? "" : form.Model}
               placeholder="Model"
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -339,8 +350,8 @@ function AddEditForm(props) {
               name="IP"
               id="IP"
               onChange={onChange}
-              value={form.IP === null ? "" : form.IP}
               placeholder="IP"
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -350,8 +361,8 @@ function AddEditForm(props) {
               name="CPU"
               id="Pod"
               onChange={onChange}
-              value={form.CPU === null ? "" : form.CPU}
               placeholder="CPU"
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -361,8 +372,8 @@ function AddEditForm(props) {
               name="Owner"
               id="Owner"
               onChange={onChange}
-              value={form.Owner === null ? "" : form.Owner}
               placeholder="Owner"
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -372,8 +383,8 @@ function AddEditForm(props) {
               name="Login"
               id="serveurname"
               onChange={onChange}
-              value={form.Login === null ? "" : form.Login}
               placeholder="serveurname"
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -383,8 +394,8 @@ function AddEditForm(props) {
               name="Password"
               id="Password"
               onChange={onChange}
-              value={form.Password === null ? "" : form.Password}
               placeholder="password"
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -394,30 +405,30 @@ function AddEditForm(props) {
               name="Uptime"
               id="Uptime"
               onChange={onChange}
-              value={form.Uptime === null ? "" : form.Uptime}
               placeholder="Uptime"
+              required
             />
           </FormGroup>
           <FormGroup>
             <Label for="ConsommationCPU">ConsommationCPU</Label>
             <Input
-              type="text"
+              type="number"
               name="ConsommationCPU"
               id="ConsommationCPU"
               onChange={onChange}
-              value={form.ConsommationCPU === null ? "" : form.ConsommationCPU}
               placeholder="ConsommationCPU"
+              required
             />
           </FormGroup>
           <FormGroup>
             <Label for="Model">ConsommationRAM</Label>
             <Input
-              type="text"
+              type="number"
               name="ConsommationRAM"
               id="ConsommationRAM"
               onChange={onChange}
-              value={form.ConsommationRAM === null ? "" : form.ConsommationRAM}
               placeholder="ConsommationRAM"
+              required 
             />
           </FormGroup>
           <FormGroup>
@@ -427,8 +438,8 @@ function AddEditForm(props) {
               name="Role"
               id="Role"
               onChange={onChange}
-              value={form.Role === null ? "" : form.Role}
               placeholder="Role"
+              required
             />
           </FormGroup>
           <FormGroup>
@@ -474,8 +485,8 @@ function AddEditForm(props) {
               name="RAM"
               id="RAM"
               onChange={onChange}
-              value={form.RAM === null ? "" : form.RAM}
               placeholder="RAM"
+              required
             />
           </FormGroup>
           <Button>Submit</Button>
