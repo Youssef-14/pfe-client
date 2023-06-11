@@ -16,7 +16,27 @@ function AddEditForm(props) {
   };
 
   const submitFormAdd = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
+    
+    const validations = [
+      { field: "Username", minLength: 3, message: "Username trop court" },
+      { field: "Nom", minLength: 3, message: "Nom trop court" },
+      { field: "Prenom", minLength: 3, message: "Prenom trop court" },
+      { field: "Password", minLength: 5, message: "Mot de passe trop court" },
+    ];    
+    
+    for (const validation of validations) {
+      if (form[validation.field].length < validation.minLength) {
+        alert(validation.message);
+        return;
+      }
+    }
+
+    if (!["admin", "user"].includes(form.Role.toLowerCase())) {
+      alert("Role doit être admin ou user");
+      return;
+    }
+    
 
     const user = {
       Nom: form.Nom, //form.Nom,
@@ -25,6 +45,8 @@ function AddEditForm(props) {
       Password: form.Password,
       Role: form.Role
     }
+    
+
 
     axios.post('http://localhost:3001/users/signup', user, {
       headers: {
@@ -47,6 +69,27 @@ function AddEditForm(props) {
 
   const submitFormEdit = (e) => {
     e.preventDefault();
+
+    const validations = [
+      { field: "Username", minLength: 3, message: "Username trop court" },
+      { field: "Nom", minLength: 3, message: "Nom trop court" },
+      { field: "Prenom", minLength: 3, message: "Prenom trop court" },
+      { field: "Password", minLength: 5, message: "Mot de passe trop court" },
+    ];    
+    
+    for (const validation of validations) {
+      if (form[validation.field].length < validation.minLength) {
+        alert(validation.message);
+        return;
+      }
+    }
+
+    if (!["admin", "user"].includes(form.Role.toLowerCase())) {
+      alert("Role doit être admin ou user");
+      return;
+    }
+    
+    
     const user = {
       Nom: form.Nom,
       Prenom: form.Prenom,
@@ -76,8 +119,8 @@ function AddEditForm(props) {
 
   useEffect(() => {
     if (props.item) {
-      const { _id, Username, Nom, Prenom, Password } = props.item;
-      setValues({ _id, Username, Nom, Prenom, Password });
+      const { _id, Username, Nom, Prenom, Password, Role } = props.item;
+      setValues({ _id, Username, Nom, Prenom, Password ,Role });
     }
   }, [props.item]);
 
@@ -91,6 +134,7 @@ function AddEditForm(props) {
           id="username"
           onChange={onChange}
           value={form.Username === null ? "" : form.Username}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -101,6 +145,7 @@ function AddEditForm(props) {
           id="nom"
           onChange={onChange}
           value={form.Nom == null ? "" : form.Nom}
+          required
         />
 
       </FormGroup>
@@ -112,6 +157,7 @@ function AddEditForm(props) {
           id="prenom"
           onChange={onChange}
           value={form.Prenom === null ? "" : form.Prenom}
+          required
         />
       </FormGroup>
       <FormGroup>
@@ -121,18 +167,20 @@ function AddEditForm(props) {
           name="Password"
           id="password"
           onChange={onChange}
-          value={form.Password === null ? "" : form.Password}
+          value={form.Password === null ? '' : form.Password}
           placeholder="Password"
+          required
         />
       </FormGroup>
       <FormGroup>
         <Label for="Role">Role</Label>
         <br />
-        <select name="Role" id="Role" onChange={onChange} value={form.Role} required  >
-          <option value="null" disabled selected >--Select--</option>
-          <option value="Admin" >Admin</option>
-          <option value="Utilisateur">User</option>
-        </select>
+        <input type="radio" name="Role" id="Admin" value="Admin" onChange={onChange}  checked={form.Role === "Admin"} required  />
+        <label htmlFor="Admin" style={{marginRight:"10px" }}>Admin</label>
+
+        <input type="radio" name="Role" id="User" value="Utilisateur" onChange={onChange} checked={form.Role === "Utilisateur"} required />
+        <label htmlFor="User">User</label>
+
         {/* <Input
        
 
