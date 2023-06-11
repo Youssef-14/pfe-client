@@ -221,8 +221,8 @@ const DataCenterComponent = () => {
       const response = await axios.post(
         'http://127.0.0.1:3001/racks/add',
         {
-          Nom: data.Nom,
-          Taille: data.Taille,
+          Nom: data.nom,
+          Taille: data.taille,
           Pod: selectedPod
         },
         {
