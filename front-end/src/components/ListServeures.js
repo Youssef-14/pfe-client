@@ -85,6 +85,7 @@ function ListServeures(props) {
                     <div className="search-container">
                         <FontAwesomeIcon icon={faSearch} className="search-icon" />
                         <input
+                            className="search"
                             type="text"
                             placeholder="Search by Owner"
                             value={searchTerm}

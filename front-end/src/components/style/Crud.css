@@ -90,3 +90,12 @@ tr:nth-child(even) {
         text-transform: uppercase;
     }
 }
+
+.search {
+
+    position: absolute;
+    top: 50%;
+    right: 29px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
