@@ -92,6 +92,7 @@ function ListServeures(props) {
                             onChange={handleSearch}
                         />
                     </div>
+
                 </Col>
             </Row>
             <Row>
