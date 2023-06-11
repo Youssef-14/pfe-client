@@ -12,6 +12,19 @@ function ListServeures(props) {
     const [items, setItems] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredItems, setFilteredItems] = useState([]);
+    const [selectedOption, setSelectedOption] = useState("Owner");
+
+    const options = [
+        "Login",
+        "Password",
+        "Model",
+        "IP",
+        "IPManagement",
+        "RAM",
+        "CPU",
+        "Owner",
+        "Role",
+    ];
 
     const getItems = () => {
         axios
@@ -56,9 +69,14 @@ function ListServeures(props) {
         setSearchTerm(searchTerm);
 
         const filteredItems = items.filter((item) =>
-            item.Owner.toLowerCase().includes(searchTerm.toLowerCase())
+            item[selectedOption].toLowerCase().includes(searchTerm.toLowerCase())
         );
         setFilteredItems(filteredItems);
+    };
+
+    const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
+        setSearchTerm(""); // Reset the search term when the option changes
     };
 
     useEffect(() => {
@@ -84,15 +102,25 @@ function ListServeures(props) {
                 <Col>
                     <div className="search-container">
                         <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                        <select
+                            className="select-option"
+                            value={selectedOption}
+                            onChange={handleSelectChange}
+                        >
+                            {options.map((option) => (
+                                <option key={option} value={option}>
+                                    {option}
+                                </option>
+                            ))}
+                        </select>
                         <input
                             className="search"
                             type="text"
-                            placeholder="Search by Owner"
+                            placeholder={`Search by ${selectedOption}`}
                             value={searchTerm}
                             onChange={handleSearch}
                         />
                     </div>
-
                 </Col>
             </Row>
             <Row>
@@ -124,6 +152,10 @@ function ListServeures(props) {
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
+          }
+
+          .select-option {
+            margin-right: 10px;
           }
         `}
             </style>

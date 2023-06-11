@@ -28,10 +28,21 @@
 #h:hover {
     color: #91edf0;
 
-    /* Replace with your desired hover color */
+
 }
 
 #h:hover::after {
     visibility: visible;
     opacity: 1;
+}
+
+.navbar-toggler {
+    padding: 0.25rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    background-color: aliceblue;
+    transition: box-shadow 0.15s ease-in-out;
 }
