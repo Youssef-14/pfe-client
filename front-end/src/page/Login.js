@@ -47,7 +47,7 @@ function Login() {
     return (        
         <div id="outer">
             <div id="container">
-                <div id="left"></div>
+                <div id="left">
                     <h1 id="welcome">Welcome</h1>
                     <p id="content">
                         Welcome to Data center Inventory
