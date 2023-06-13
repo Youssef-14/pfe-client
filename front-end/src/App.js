@@ -19,7 +19,6 @@ function App() {
         <Route path="/DC_VISUALISATION" element={<React.Fragment><Header /><DC_VISUALISATION /></React.Fragment>} />
         <Route path="/AccountsManagement" element={<React.Fragment><Header /><CrudUser /></React.Fragment>} />
         <Route path="/Reporting" element={<React.Fragment><Header /><Reporting /></React.Fragment>} />
-        {/* <Route path="/test" element={<React.Fragment><Header /><DataCenters /></React.Fragment>} /> */}
         <Route path='*' element={<NotFound />} />
       </Routes>
     </Router>
