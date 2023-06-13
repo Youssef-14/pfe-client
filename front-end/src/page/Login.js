@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../components/style/login.css';
-import { getUserRole } from "../_services/account.services";
+import {  Navigate } from 'react-router-dom';
+import { getUserRole, isLoggedIn } from "../_services/account.services";
 
 function Login() {
     const [UserName, setEmail] = useState('');
@@ -40,10 +41,13 @@ function Login() {
         }
     }
 
-    return (
+    if(isLoggedIn()){
+        return <Navigate to="/home" replace />
+    } else{
+    return (        
         <div id="outer">
             <div id="container">
-                <div id="left">
+                <div id="left"></div>
                     <h1 id="welcome">Welcome</h1>
                     <p id="content">
                         Welcome to Data center Inventory
@@ -82,7 +86,7 @@ function Login() {
                 </div>
             </div>
         </div>
-    )
+    )}
 }
 
 export default Login;
