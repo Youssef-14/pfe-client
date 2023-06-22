@@ -113,10 +113,18 @@ const DataCenterComponent = () => {
     setShowAddDataCenterPopup(!showAddDataCenterPopup);
   };
   const toggleAddPodPopup = () => {
+    if(!selectedDataCenter) {
+      alert('Please select a data center first');
+      return;
+    }
     setShowAddPodPopup(!showAddPodPopup);
   };
 
   const toggleAddRackPopup = () => {
+    if (!selectedPod) {
+      alert('Please select a pod first');
+      return;
+    }
     setShowAddRackPopup(!showAddRackPopup);
   };
   const toggleEditDataCenterPopup = () => {
@@ -193,7 +201,7 @@ const DataCenterComponent = () => {
   };
 
 
-  const handleAddPod = async (data) => {
+  const handleAddPod = async (data) => {    
     try {
       const response = await axios.post(`http://127.0.0.1:3001/pods/add`, {
 
