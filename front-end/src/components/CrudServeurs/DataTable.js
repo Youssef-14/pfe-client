@@ -32,6 +32,7 @@ function DataTable(props) {
         <td>{item.IP}</td>
         <td>{item.IPManagement}</td>
         <td>{item.RAM}</td>
+        <td>{item.CPU}</td>
         <td>{item.Model}</td>
         <td>{item.rack}</td>
         <td>{item.pod}</td>
@@ -62,6 +63,7 @@ function DataTable(props) {
           <th>IP</th>
           <th>IP management</th>
           <th>RAM</th>
+          <th>CPU</th>
           <th>Modèle</th>
           <th>RACK</th>
           <th>POD</th>

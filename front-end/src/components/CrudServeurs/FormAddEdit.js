@@ -5,8 +5,9 @@ import { getToken } from "../../_services/account.services";
 
 function AddEditForm(props) {
   const [form, setValues] = useState({
-
+    IP: ""
   });
+  const [validationError, setValidationError] = useState(null);
   const [dataCenters, setDataCenters] = useState([]);
   const [selectedDataCenter, setSelectedDataCenter] = useState('');
   const [pods, setPods] = useState([]);
@@ -20,6 +21,12 @@ function AddEditForm(props) {
       [e.target.name]: e.target.value
     });
   };
+
+  const validateIP = (ip) => {
+    const ipAddressRegex = /^([0-9]{1,3}\.){3}[0-9]{1,3}$/;
+    return ipAddressRegex.test(ip);
+  };
+
 
   const submitFormAdd = (e) => {
     e.preventDefault();
@@ -352,7 +359,7 @@ function AddEditForm(props) {
             id="IP"
             onChange={onChange}
             value={form.IP === null ? "" : form.IP}
-            placeholder="IP"
+            placeholder="xxx.xxx.xxx.xx"
           />
         </FormGroup>
         <FormGroup>

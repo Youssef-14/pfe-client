@@ -7,11 +7,11 @@ function DataTable(props) {
   const items = props.items.map(item => {
     return (
       <tr key={item._id}>
-        <th scope="row">{item._id}</th>
+        <th scope="row">{item.n}</th>
         <td>{item.IP}</td>
         <td>{item.ConsommationRAM}</td>
         <td>{item.ConsommationCPU}</td>
-        <td>{item.Uptime}</td>
+        <td>{item.Uptime}s</td>
 
 
 
