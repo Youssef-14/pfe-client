@@ -33,7 +33,7 @@ function AddEditForm(props) {
       }
     }
 
-    if (!["admin", "user"].includes(form.Role.toLowerCase())) {
+    if (!["admin", "utilisateur"].includes(form.Role.toLowerCase())) {
       setValidationErrors("Role doit être admin ou user");
       return;
     }
@@ -85,7 +85,7 @@ function AddEditForm(props) {
       }
     }
 
-    if (!["admin", "user"].includes(form.Role.toLowerCase())) {
+    if (!["admin", "utilisateur"].includes(form.Role.toLowerCase())) {
       setValidationErrors("Role doit être admin ou user");
       return;
     }
