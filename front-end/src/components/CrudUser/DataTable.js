@@ -27,7 +27,7 @@ function DataTable(props) {
   const items = props.items.map(item => {
     return (
       <tr key={item._id}>
-        <th scope="row">{item._id}</th>
+        {/* <th scope="row">{item._id}</th> */}
         <td>{item.Username}</td>
         <td>{item.Nom}</td>
         <td>{item.Prenom}</td>
@@ -51,7 +51,7 @@ function DataTable(props) {
     <Table responsive hover>
       <thead>
         <tr>
-          <th>ID</th>
+          {/* <th>ID</th> */}
           <th>username</th>
           <th>Name</th>
           <th>Prenom</th>
