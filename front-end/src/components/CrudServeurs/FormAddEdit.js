@@ -409,7 +409,7 @@ function AddEditForm(props) {
         <FormGroup>
           <Label for="Uptime">Uptime</Label>
           <Input
-            type="text"
+            type="number"
             name="Uptime"
             id="Uptime"
             onChange={onChange}
