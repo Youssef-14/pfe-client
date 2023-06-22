@@ -15,8 +15,7 @@ function ListServeures(props) {
     const [selectedOption, setSelectedOption] = useState("Owner");
 
     const options = [
-        "Login",
-        "Password",
+
         "Model",
         "IP",
         "IPManagement",
