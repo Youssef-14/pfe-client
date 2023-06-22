@@ -9,9 +9,9 @@ function DataTable(props) {
       <tr key={item._id}>
         <th scope="row">{item.n}</th>
         <td>{item.IP}</td>
-        <td>{item.ConsommationRAM}</td>
-        <td>{item.ConsommationCPU}</td>
-        <td>{item.Uptime}s</td>
+        <td>{item.ConsommationRAM} %</td>
+        <td>{item.ConsommationCPU} %</td>
+        <td>{item.Uptime}   s</td>
 
 
 
